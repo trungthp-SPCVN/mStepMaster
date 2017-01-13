@@ -1,0 +1,6 @@
+# Created by .ignore support plugin (hsz.mobi)
+
+tmp/cache/models/*
+tmp/cache/persistent/*
+tmp/logs/*
+tmp/sessions/*

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.contextmenu.r2.js"></script>
+    <script type="text/javascript" src="assets/js/spc_tpl.js"></script>
+    <script type="text/javascript" src="assets/js/spc_api_request.js"></script>
+    <script type="text/javascript" src="assets/js/spc_number.js"></script>
+    <script type="text/javascript" src="assets/js/spc_element.function.js"></script>
+    <script type="text/javascript" src="assets/js/spc_functions.js"></script>
+    <!--<link rel="stylesheet" type="text/css" media="all" href="assets/css/style.css" />-->
+    <!--<link rel="stylesheet" type="text/css" media="all" href="assets/css/common.css" />-->
+    <link rel="shortcut icon" href="dandori.ico">
+
+    <!--Yen start-->
+    <!-- Bootstrap core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./assets/css/style.css" rel="stylesheet">
+    <link href="./assets/css/login.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./assets/js/ie-emulation-modes-warning.js"></script>
+
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!--Yen end-->
+</head>
+
+<body id="body">
+
+<div class="content" id="login-page">
+      <div class="container">
+        <div class="row">
+            <div class="login">
+                <h1 class="login-logo"><img src="./assets/img/logo/login_logo_02.png" alt="" /></h1>
+                <form name="login_form" class="form-signin" action="" method="post">
+                    <!-- <p>パスワードが違います。</p> -->
+
+                    <label for="inputId" class="sr-only">ID（メールアドレス）</label>
+                        <input type="text" id="inputId" name="data[TblMstepMasterUser][login_id]" class="form-control" placeholder="メールアドレス" required autofocus>
+                    <label for="inputPassword" class="sr-only">パスワード</label>
+                        <input type="password" name="data[TblMstepMasterUser][login_pass]" id="inputPassword" class="form-control" placeholder="パスワード" required>
+                        <label class="sr-only error-text"><?php print_r( $this->Session->flash())?></label>
+                    <input class="btn btn-lg btn-primary btn-block hover-img" type="submit">ログイン</input>
+                    <!-- <p class="forgot-password">
+                        <a href="#">≫パスワードを忘れた方はこちら ?</a>
+                    </p> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('header').remove();
+        });
+    </script>
+</body>
+</html>
