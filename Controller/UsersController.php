@@ -22,6 +22,8 @@ class UsersController extends AppController {
 
 	public function beforeFilter() {
 
+		$this->Auth->loginError='';
+		
 		parent::beforeFilter();
 	}
 

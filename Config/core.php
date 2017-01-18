@@ -186,6 +186,10 @@ Configure::write('App.encoding', 'UTF-8');
  */
 //Configure::write('Cache.viewPrefix', 'prefix');
 
+/** Multiple language */
+// Set default language
+Configure::write('Config.language', LANGUAGE_DEFAULT);
+
 /**
  * Session configuration.
  *
