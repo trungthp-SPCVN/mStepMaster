@@ -56,6 +56,7 @@ class AppController extends Controller {
 			'authorize' => array('Controller'),
 		),
 		'Acl',
+		'Cookie'
 	);
 
 	function __getLogPath(){
@@ -67,20 +68,26 @@ class AppController extends Controller {
 	}
 
 	function beforeFilter() {
-
-			parent::beforeFilter();
-
-			if($this->data){
-
-					$post=$this->data;
-					$log_path=$this->__getLogPath();
-					@file_put_contents($log_path,serialize($post));
-			}
-
-			if(!defined("UNIQUE_KEY")) define("UNIQUE_KEY",'sample_unique_key');
-
-			$this->check_authentication = $this->Auth->user("authority") === "master";
-			$this->set('role', $this->check_authentication);
+		$this->__setLanguage();
+		
+		parent::beforeFilter();
+		
+		if($this->data){
+			
+			$post=$this->data;
+			$log_path=$this->__getLogPath();
+			@file_put_contents($log_path,serialize($post));
+		}
+		
+		if(!defined("UNIQUE_KEY")) define("UNIQUE_KEY",'sample_unique_key');
+		
+		$this->check_authentication = $this->Auth->user("authority") === "master";
+		$this->set('role', $this->check_authentication);
+		
+	}
+	
+	function __setLanguage(){
+		$this->Session->write('Config.language', Configure::read('Config.language'));
 	}
 
 	function __output($res = array()) {
@@ -109,8 +116,11 @@ class AppController extends Controller {
 	# @author Kiyosawa
 	# @date 2011/05/07 14:44:59
 	function beforeRender() {
-
+		
 		parent::beforeRender();
+		if($this->name=="CakeError") {
+			$this->layout='error';
+		}
 	}
 
 	function __arrangeAry($data = array(), $key) {

@@ -3,7 +3,7 @@
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
-		<title>ログイン</title>
+		<title><?php echo __('Login title page');?></title>
 
 		<meta name="description" content="User login page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
@@ -40,66 +40,7 @@
 			<div class="main-content">
 				<div class="row">
 					<div class="col-sm-10 col-sm-offset-1">
-						<div class="login-container">
-							<div class="center">
-								<img src="/assets/images/logo/login_logo_02.png">
-							</div>
-
-							<div class="space-6"></div>
-
-							<div class="position-relative">
-								<div id="login-box" class="login-box visible widget-box no-border">
-									<div class="widget-body">
-										<div class="widget-main">
-											<h4 class="header blue lighter bigger">ログイン</h4>
-
-											<div class="space-6"></div>
-
-											<form action="" method="post">
-												<fieldset>
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="text" name="data[TblMstepMasterUser][login_id]" class="form-control" placeholder="メールアドレス" />
-															<i class="ace-icon fa fa-user"></i>
-														</span>
-													</label>
-
-													<label class="block clearfix">
-														<span class="block input-icon input-icon-right">
-															<input type="password" name="data[TblMstepMasterUser][login_pass]" class="form-control" placeholder="パスワード" />
-															<i class="ace-icon fa fa-lock"></i>
-														</span>
-													</label>
-
-													<div class="space"></div>
-
-													<div class="clearfix">
-														<label class="inline">
-															<input type="checkbox" class="ace" />
-															<span class="lbl"> ログイン</span>
-														</label>
-
-														<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
-															<i class="ace-icon fa fa-key"></i>
-															<span class="bigger-110">ログイン</span>
-														</button>
-													</div>
-
-													<div class="space-4"></div>
-												</fieldset>
-											</form>
-
-
-										</div><!-- /.widget-main -->
-
-
-									</div><!-- /.widget-body -->
-								</div><!-- /.login-box -->
-
-
-							</div><!-- /.position-relative -->
-
-						</div>
+						<?php echo $this->fetch('content');?>
 					</div><!-- /.col -->
 				</div><!-- /.row -->
 			</div><!-- /.main-content -->

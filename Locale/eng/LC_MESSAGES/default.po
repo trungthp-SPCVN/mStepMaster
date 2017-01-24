@@ -1,0 +1,136 @@
+# English Locale
+
+msgid "Dashboard"
+msgstr "Dashboard"
+
+msgid "overview &amp; stats"
+msgstr "overview &amp; stats"
+
+msgid "Toggle sidebar"
+msgstr "Toggle sidebar"
+
+msgid "Software Update"
+msgstr "Software Update"
+
+msgid "Hardware Upgrade"
+msgstr "Hardware Upgrade"
+
+msgid "Unit Testing"
+msgstr "Unit Testing"
+
+msgid "Bug Fixes"
+msgstr "Bug Fixes"
+
+msgid "See tasks with details"
+msgstr "See tasks with details"
+
+msgid "4 Tasks to complete"
+msgstr "4 Tasks to complete"
+
+msgid "8 Notifications"
+msgstr "8 Notifications"
+
+msgid "New Comments"
+msgstr "New Comments"
+
+msgid "Bob just signed up as an editor ..."
+msgstr "Bob just signed up as an editor ..."
+
+msgid "New Orders"
+msgstr "New Orders"
+
+msgid "Followers"
+msgstr "Followers"
+
+msgid "See all notifications"
+msgstr "See all notifications"
+
+msgid "5 Messages"
+msgstr "5 Messages"
+
+msgid "a moment ago"
+msgstr "a moment ago"
+
+msgid "20 minutes ago"
+msgstr "20 minutes ago"
+
+msgid "3:15 pm"
+msgstr "3:15 pm"
+
+msgid "3:15 am"
+msgstr "3:15 am"
+
+msgid "See all messages"
+msgstr "See all messages"
+
+msgid "Welcome"
+msgstr "Welcome"
+
+msgid "Settings"
+msgstr "Settings"
+
+msgid "Profile"
+msgstr "Profile"
+
+msgid "Logout"
+msgstr "Logout"
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Fixed Navbar"
+msgstr "Fixed Navbar"
+
+msgid "Fixed Sidebar"
+msgstr "Fixed Sidebar"
+
+msgid "Fixed Breadcrumbs"
+msgstr "Fixed Breadcrumbs"
+
+msgid "Right To Left (rtl)"
+msgstr "Right To Left (rtl)"
+
+msgid "Choose Skin"
+msgstr "Choose Skin"
+
+msgid "Inside"
+msgstr "Inside"
+
+msgid ".container"
+msgstr ".container"
+
+msgid "Submenu on Hover"
+msgstr "Submenu on Hover"
+
+msgid "Compact Sidebar"
+msgstr "Compact Sidebar"
+
+msgid "Alt. Active Item"
+msgstr "Alt. Active Item"
+
+msgid "Login title page"
+msgstr "Login page"
+
+msgid "Login title"
+msgstr "Login"
+
+msgid "Login button"
+msgstr "Login"
+
+msgid "Email address"
+msgstr "Email address"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Remember password"
+msgstr "Remember password"
+
+msgid "Client sidebar"
+msgstr "Client"
+
+msgid "Client list sidebar"
+msgstr "Client list"
+
+msgid "Add new Client sidebar"
+msgstr "Add new Client"
