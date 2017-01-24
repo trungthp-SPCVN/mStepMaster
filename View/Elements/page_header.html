@@ -1,9 +1,11 @@
 <div class="page-header">
 	<h1>
-		<?php echo __('Dashboard'); ?>
+		<?php echo ((!empty($page_title))?$page_title:''); ?>
+		<?php if(!empty($page_desc)) :?>
 		<small>
 			<i class="ace-icon fa fa-angle-double-right"></i>
-			<?php echo __('overview &amp; stats');?>
+			<?php echo $page_desc;?>
 		</small>
+		<?php endif;?>
 	</h1>
 </div><!-- /.page-header -->

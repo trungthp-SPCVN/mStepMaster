@@ -134,3 +134,9 @@ msgstr "Client list"
 
 msgid "Add new Client sidebar"
 msgstr "Add new Client"
+
+msgid "Client management"
+msgstr "Client management"
+
+msgid "Manage all data about Client"
+msgstr "Manage all data about Client"

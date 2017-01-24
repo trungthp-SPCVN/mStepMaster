@@ -84,6 +84,9 @@ class AppController extends Controller {
 		$this->check_authentication = $this->Auth->user("authority") === "master";
 		$this->set('role', $this->check_authentication);
 		
+		$this->page_title='';
+		$this->page_desc='';
+		
 	}
 	
 	function __setLanguage(){
@@ -116,11 +119,14 @@ class AppController extends Controller {
 	# @author Kiyosawa
 	# @date 2011/05/07 14:44:59
 	function beforeRender() {
-		
 		parent::beforeRender();
+		
 		if($this->name=="CakeError") {
 			$this->layout='error';
 		}
+		
+		$this->set('page_title',(!empty($this->page_title)?$this->page_title:$this->name));
+		$this->set('page_desc',$this->page_desc);
 	}
 
 	function __arrangeAry($data = array(), $key) {
