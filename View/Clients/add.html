@@ -1,0 +1,354 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="widget-box">
+			<div class="widget-header widget-header-blue widget-header-flat">
+				<h4 class="widget-title lighter">Add New Client</h4>
+			</div>
+			<div class="widget-body">
+				<div class="widget-main">
+					<div id="fuelux-wizard-container">
+						<div class="steps-container">
+							<ul class="steps">
+								<li data-step="1" class="active">
+									<span class="step">1</span>
+									<span class="title">Input</span>
+								</li>
+
+								<li data-step="2">
+									<span class="step">2</span>
+									<span class="title">Confirm</span>
+								</li>
+
+								<li data-step="3">
+									<span class="step">3</span>
+									<span class="title">Finish</span>
+								</li>
+							</ul>
+						</div>
+						<hr>
+						<div class="step-content pos-rel">
+							<div class="step-pane active" data-step="1">
+
+								<form class="form-horizontal" id="sample-form">
+									<h3 class="lighter block green">General Information</h3>
+									<div class="form-group">
+										<label for="client-name" class="col-xs-12 col-sm-3 control-label no-padding-right">Client Name</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="client-name" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-user"></i>
+											</span>
+										</div>
+										<div class="help-block col-xs-12 col-sm-reset inline"> * </div>
+									</div>
+									<div class="form-group">
+										<label for="address" class="col-xs-12 col-sm-3 control-label no-padding-right">Address</label>
+										<div class="col-xs-12 col-sm-7">
+											<span class="block input-icon">
+												<input type="text" id="address" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-map-marker"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="phone" class="col-xs-12 col-sm-3 control-label no-padding-right">Phone</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="phone" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-phone"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="fax" class="col-xs-12 col-sm-3 control-label no-padding-right">Fax</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="fax" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-fax"></i>
+											</span>
+										</div>
+									</div>
+
+									<h3 class="lighter block green">Contact Information</h3>
+									<div class="form-group">
+										<label for="contact-name" class="col-xs-12 col-sm-3 control-label no-padding-right">Contact Name</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="contact-name" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-user"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="job-title" class="col-xs-12 col-sm-3 control-label no-padding-right">Job title</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="job-title" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-ellipsis-h"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="email" class="col-xs-12 col-sm-3 control-label no-padding-right">Email</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="email" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-envelope"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="mobile" class="col-xs-12 col-sm-3 control-label no-padding-right">Mobile</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="mobile" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-mobile"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="phone-c" class="col-xs-12 col-sm-3 control-label no-padding-right">Phone</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="phone-c" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-phone"></i>
+											</span>
+										</div>
+										<div class="help-block col-xs-12 col-sm-reset inline">
+											<div class="checkbox">
+												<label>
+													<input name="form-field-checkbox" type="checkbox" class="ace">
+													<span class="lbl"> Using Company Phone</span>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<h3 class="lighter block green">System Information</h3>
+									<div class="form-group">
+										<label for="domain" class="col-xs-12 col-sm-3 control-label no-padding-right">Domain</label>
+										<div class="col-xs-12 col-sm-4">
+											<span class="block input-icon">
+												<input type="text" id="domain" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-globe"></i>
+											</span>
+										</div>
+										<div class="help-block col-xs-12 col-sm-reset inline"> .mstep.com </div>
+									</div>
+									<div class="form-group">
+										<label for="db-host" class="col-xs-12 col-sm-3 control-label no-padding-right">DB Host</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="db-host" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-server"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="db-name" class="col-xs-12 col-sm-3 control-label no-padding-right">DB Name</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="db-name" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-database"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="db-user" class="col-xs-12 col-sm-3 control-label no-padding-right">DB User</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="db-user" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-user"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="db-password" class="col-xs-12 col-sm-3 control-label no-padding-right">DB Password</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="password" id="db-password" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-key"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="email-s" class="col-xs-12 col-sm-3 control-label no-padding-right">Email</label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" id="email-s" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-envelope"></i>
+											</span>
+										</div>
+										<div class="help-block col-xs-12 col-sm-reset inline">
+											<div class="checkbox">
+												<label>
+													<input name="form-field-checkbox" type="checkbox" class="ace">
+													<span class="lbl"> Using Contact Email</span>
+												</label>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="step-pane" data-step="2">
+								<div>
+									<div class="alert alert-success">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="ace-icon fa fa-fw fa-times"></i>
+										</button>
+
+										<strong>
+											<i class="ace-icon fa fa-fw fa-check"></i>
+											Well done!
+										</strong>
+
+										You successfully read this important alert message.
+										<br />
+									</div>
+
+									<div class="alert alert-danger">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="ace-icon fa fa-fw fa-times"></i>
+										</button>
+
+										<strong>
+											<i class="ace-icon fa fa-fw fa-times"></i>
+											Oh snap!
+										</strong>
+
+										Change a few things up and try submitting again.
+										<br />
+									</div>
+
+									<div class="alert alert-warning">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="ace-icon fa fa-fw fa-times"></i>
+										</button>
+										<strong>Warning!</strong>
+
+										Best check yo self, you're not looking too good.
+										<br />
+									</div>
+
+									<div class="alert alert-info">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="ace-icon fa fa-fw fa-times"></i>
+										</button>
+										<strong>Heads up!</strong>
+
+										This alert needs your attention, but it's not super important.
+										<br />
+									</div>
+								</div>
+							</div>
+							<div class="step-pane" data-step="3">
+								<div>
+									<div class="alert alert-success">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="ace-icon fa fa-fw fa-times"></i>
+										</button>
+
+										<strong>
+											<i class="ace-icon fa fa-fw fa-check"></i>
+											Well done!
+										</strong>
+
+										You successfully read this important alert message.
+										<br />
+									</div>
+
+									<div class="alert alert-danger">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="ace-icon fa fa-fw fa-times"></i>
+										</button>
+
+										<strong>
+											<i class="ace-icon fa fa-fw fa-times"></i>
+											Oh snap!
+										</strong>
+
+										Change a few things up and try submitting again.
+										<br />
+									</div>
+
+									<div class="alert alert-warning">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="ace-icon fa fa-fw fa-times"></i>
+										</button>
+										<strong>Warning!</strong>
+
+										Best check yo self, you're not looking too good.
+										<br />
+									</div>
+
+									<div class="alert alert-info">
+										<button type="button" class="close" data-dismiss="alert">
+											<i class="ace-icon fa fa-fw fa-times"></i>
+										</button>
+										<strong>Heads up!</strong>
+
+										This alert needs your attention, but it's not super important.
+										<br />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr />
+					<div class="wizard-actions">
+						<button class="btn btn-prev">
+							<i class="ace-icon fa fa-fw fa-arrow-left"></i>
+							Prev
+						</button>
+
+						<button class="btn btn-success btn-next" data-last="Finish">
+							Next
+							<i class="ace-icon fa fa-fw fa-arrow-right icon-on-right"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="/assets/js/bootstrap.min.js"></script>
+<script src="/assets/js/wizard.min.js"></script>
+<script src="/assets/js/jquery.validate.min.js"></script>
+<script src="/assets/js/jquery-additional-methods.min.js"></script>
+<script src="/assets/js/bootbox.js"></script>
+<script src="/assets/js/jquery.maskedinput.min.js"></script>
+<script src="/assets/js/select2.min.js"></script>
+<script src="/assets/js/ace-elements.min.js"></script>
+<script src="/assets/js/ace.min.js"></script>
+<script type="text/javascript">
+	$('[data-rel=tooltip]').tooltip();
+	$('.select2').css('width','200px').select2({allowClear:true})
+	.on('change', function(){
+		$(this).closest('form').validate().element($(this));
+	});
+	var $validation = false;
+	$('#fuelux-wizard-container')
+	.ace_wizard({
+		//step: 2 //optional argument. wizard will jump to step "2" at first
+		//buttons: '.wizard-actions:eq(0)'
+	})
+	.on('actionclicked.fu.wizard' , function(e, info){
+		if(info.step == 1 && $validation) {
+			if(!$('#validation-form').valid()) e.preventDefault();
+		}
+	})
+	.on('finished.fu.wizard', function(e) {
+		bootbox.dialog({
+			message: "Thank you! Your information was successfully saved!", 
+			buttons: {
+				"success" : {
+					"label" : "OK",
+					"className" : "btn-sm btn-primary"
+				}
+			}
+		});
+	}).on('stepclick.fu.wizard', function(e){
+		//e.preventDefault();//this will prevent clicking and selecting steps
+	});
+</script>
