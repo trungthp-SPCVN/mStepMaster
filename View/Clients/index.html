@@ -20,50 +20,52 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Jason</td>
-                        <td>jason.mstep.com</td>
-                        <td>Mr.Jason</td>
-                        <td>273.238.08</td>
-                        <td>active</td>
-                        <td>jason</td>
+                    <?php foreach ($clients as $client): ?>
+                    <tr data-client-id="<?= $client['ClientProfile']['id']?>" data-type="tr-client-info">
+                        <td><?= $client['ClientProfile']['id']?></td>
+                        <td data-type="client-name"><?= $client['ClientProfile']['client_name']?></td>
+                        <td><?= $client['Clients'][0]['short_name']?></td>
+                        <td><?= $client['ClientProfile']['contact_name']?></td>
+                        <td><?= $client['ClientProfile']['contact_mobile']?></td>
+                        <td data-type="client-status"><?= ($client['Clients'][0]['del_flg']==0)?'Active':'Deactive'?></td>
+                        <td><?= $client['Clients'][0]['db_status']?>
+                        </td>
                         <td class="actions">
-                            <div class="hidden-sm hidden-xs action-buttons">
-                                <a class="orange" href="#">
+                            <div class="hidden-sm hidden-xs action-buttons button-list">
+                                <a class="orange" onclick="return false;" data-type="btn-active" href="" <?=($client['Clients'][0]['del_flg']==0)?"style='display:none'":""?>>
                                     <i class="ace-icon fa fa-check bigger-130"></i>
                                 </a>
 
-                                <a class="red" href="#">
+                                <a class="red" onclick="return false;" data-type="btn-deactive" href="" <?=($client['Clients'][0]['del_flg']==1)?"style='display:none'":""?>>
                                     <i class="ace-icon fa fa-ban bigger-130"></i>
                                 </a>
 
-                                <a class="green" href="#">
+                                <a class="green" href="/clients/add/<?=$client['ClientProfile']['id']?>">
                                     <i class="ace-icon fa fa-pencil bigger-130"></i>
                                 </a>
 
-                                <a class="blue" href="/clients/detail">
+                                <a class="blue" href="/clients/detail/<?=$client['ClientProfile']['id']?>">
                                     <i class="ace-icon fa fa-eye bigger-130"></i>
                                 </a>
                             </div>
 
-                            <div class="hidden-md hidden-lg">
+                            <div class="hidden-md hidden-lg button-list">
                                 <div class="inline pos-rel">
                                     <button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
                                         <i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
                                     </button>
 
                                     <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                        <li>
-                                            <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
+                                        <li data-type="btn-active" <?=($client['Clients'][0]['del_flg']==0)?"style='display:none'":""?>>
+                                            <a href="" onclick="return false;" class="tooltip-info" data-rel="tooltip" title="View">
                                                 <span class="orange">
                                                     <i class="ace-icon fa fa-check bigger-120"></i>
                                                 </span>
                                             </a>
                                         </li>
 
-                                        <li>
-                                            <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                                        <li data-type="btn-deactive" <?=($client['Clients'][0]['del_flg']==1)?"style='display:none'":""?>>
+                                            <a href="" onclick="return false;" class="tooltip-error" data-rel="tooltip" title="Delete">
                                                 <span class="red">
                                                     <i class="ace-icon fa fa-ban bigger-120"></i>
                                                 </span>
@@ -71,7 +73,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
+                                            <a href="/clients/add/<?=$client['ClientProfile']['id']?>" class="tooltip-success" data-rel="tooltip" title="Edit">
                                                 <span class="green">
                                                     <i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
                                                 </span>
@@ -79,7 +81,7 @@
                                         </li>
 
                                         <li>
-                                            <a href="/clients/detail" class="tooltip-info" data-rel="tooltip" title="View">
+                                            <a href="/clients/detail/<?=$client['ClientProfile']['id']?>" class="tooltip-info" data-rel="tooltip" title="View">
                                                 <span class="blue">
                                                     <i class="ace-icon fa fa-eye bigger-120"></i>
                                                 </span>
@@ -90,56 +92,7 @@
                             </div>
                         </td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jason</td>
-                        <td>jason.mstep.com</td>
-                        <td>Mr.Jason</td>
-                        <td>273.238.08</td>
-                        <td>active</td>
-                        <td>jason</td>
-                        <td class="actions"></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jason</td>
-                        <td>jason.mstep.com</td>
-                        <td>Mr.Jason</td>
-                        <td>273.238.08</td>
-                        <td>active</td>
-                        <td>jason</td>
-                        <td class="actions"></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Jason</td>
-                        <td>jason.mstep.com</td>
-                        <td>Mr.Jason</td>
-                        <td>273.238.08</td>
-                        <td>active</td>
-                        <td>jason</td>
-                        <td class="actions"></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Jason</td>
-                        <td>jason.mstep.com</td>
-                        <td>Mr.Jason</td>
-                        <td>273.238.08</td>
-                        <td>active</td>
-                        <td>jason</td>
-                        <td class="actions"></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Jason</td>
-                        <td>jason.mstep.com</td>
-                        <td>Mr.Jason</td>
-                        <td>273.238.08</td>
-                        <td>active</td>
-                        <td>jason</td>
-                        <td class="actions"></td>
-                    </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
@@ -215,5 +168,146 @@
             .find('a').attr('href', '#').wrap("<li />")
         }
         $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
+    });
+    
+    $(function(){
+    	var host=location.host;
+        var API_VERSION=1;
+        var DEVELOP_MODE=(host.indexOf("local")>-1)?true:false;
+        var BASE_URL   ="//"+host+"/";
+        
+        var uiAlert=function(params){
+
+        	var settings={"buttons":{}};
+        	settings["title"]=(!!params["title"]?params["title"]:"&nbsp;");
+    		settings["main_title"]=(!!params["main_title"]?params["main_title"]:settings["title"]);
+        	settings["name"]=(!!params["name"]?params["name"]:"&nbsp;");
+        	settings["message"]=(!!params["message"]?params["message"]:"&nbsp;");
+    		settings["main_title"]=(!!params["main_title"]?params["main_title"]:params["title"]);
+    		settings["close"]=($.isFunction(params["close"])?params["close"]:false);
+
+        	if(!!params["yes"]){
+
+        	    settings["buttons"]["YES"]={};
+        	    settings["buttons"]["YES"]["class"]="blue";
+        	    settings["buttons"]["YES"]["action"]=function(){
+
+        	        	params["yes"]();
+        	    };
+        	}
+
+        	if(!!params["no"]){
+
+        	    settings["buttons"]["NO"]={};
+        	    settings["buttons"]["NO"]["class"]="gray";
+        	    settings["buttons"]["NO"]["action"]=function(){
+
+        	        	params["no"]();
+        	    };
+        	}
+
+    		var js=document.location.protocol+BASE_URL+"assets/js/jquery.confirm.js";
+    		loadScript(js,function(){
+    				jQuery.confirm(settings);
+    		});
+    	}
+    	
+    	$(document).on("mouseup", '[data-type=\"btn-active\"]',function(e){
+    		var target=$(this);
+    		var client_list_tr=target.parents("tr[data-type=\"tr-client-info\"]");
+    		var div_button_parent = target.parent("div.button-list");
+    		var client_deactive_btn = div_button_parent.children("[data-type=\"btn-deactive\"]");
+            var client_id=client_list_tr.attr("data-client-id");
+            var client_name=client_list_tr.children("td[data-type=\"client-name\"]").text();
+            var client_status=client_list_tr.children("td[data-type=\"client-status\"]");
+            
+            uiAlert({
+
+				"main_title":"Alert",
+                "title"     :"Active",
+                "message"   :"Do you want to active client "+client_name,
+                "yes"       :function(){
+	                        var params={};
+	                        params["client_id"]=client_id;
+	                        params["status"]=0;
+	                        $.post(BASE_URL+'clients/updateStatus', params, function (res) {
+	                        	if (res.status=='YES') {
+	                        		client_status.html('Active');
+	                        		target.css("display","none");
+	                        		client_deactive_btn.css("display","inline-block");
+	                        		uiAlert({
+										'title': "Alert",
+										'main-title':"Active",
+										'message': 'Success',
+										'yes': function () {
+											target.one(e.type,arguments.callee);
+										}
+									});
+	                        	}else{
+	                        		uiAlert({
+										'title': "Alert",
+										'main-title':"Active",
+										'message': 'Fail',
+										'yes': function () {
+											target.one(e.type,arguments.callee);
+										}
+									});
+	                        	}
+							}, 'json');
+	                },
+                "no"     :function(){
+                        target.one(e.type,arguments.callee);
+                },
+        	});
+    	});
+    	
+    	$(document).on("mouseup", '[data-type=\"btn-deactive\"]',function(e){
+    		var target=$(this);
+    		var client_list_tr=target.parents("tr[data-type=\"tr-client-info\"]");
+    		var div_button_parent = target.parent("div.button-list");
+    		var client_active_btn = div_button_parent.children("[data-type=\"btn-active\"]");
+            var client_id=client_list_tr.attr("data-client-id");
+            var client_name=client_list_tr.children("td[data-type=\"client-name\"]").text();
+            var client_status=client_list_tr.children("td[data-type=\"client-status\"]");
+            
+            uiAlert({
+
+				"main_title":"Alert",
+                "title"     :"Deactive",
+                "message"   :"Do you want to deactive client "+client_name,
+                "yes"       :function(){
+	                        var params={};
+	                        params["client_id"]=client_id;
+	                        params["status"]=1;
+	                        $.post(BASE_URL+'clients/updateStatus', params, function (res) {
+	                        	if (res.status=='YES') {
+	                        		client_status.html('Deactive');
+	                        		target.css("display","none");
+	                        		client_active_btn.css("display","inline-block");
+	                        		uiAlert({
+										'title': "Alert",
+										'main-title':"Deactive",
+										'message': 'Success',
+										'yes': function () {
+											target.one(e.type,arguments.callee);
+										}
+									});
+	                        	}else{
+	                        		uiAlert({
+										'title': "Alert",
+										'main-title':"Deactive",
+										'message': 'Fail',
+										'yes': function () {
+											target.one(e.type,arguments.callee);
+										}
+									});
+	                        	}
+							}, 'json');
+	                },
+                "no"     :function(){
+                        target.one(e.type,arguments.callee);
+                },
+        	});
+    	});
     });
 </script>
