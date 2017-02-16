@@ -69,5 +69,52 @@ class ClientsController extends AppController {
 	        }
 	    }
 	}
-	public function add(){}
+	
+	public function add($client_id = null){
+	    $client = [];
+	    
+	    if(!empty($client_id)){
+	        $this->ClientProfile->bindModel(array(
+	                'hasMany' => array(
+	                        'Clients' => array(
+	                                'className' => 'Clients',
+	                                'foreignKey' => 'id'
+	                        )
+	                )
+	           )
+            );
+	        $client = $this->ClientProfile->findById($client_id);
+	        
+	        if(!$client || !is_numeric($client_id)){
+	            throw new NotFoundException();
+	        }
+	    }
+	    $this->set(compact('client'));
+	}
+	
+	public function saveData(){
+	    if($this->request->is("post")){
+	        $post = $_POST;
+	        
+	        if(isset($post['client_id'])){
+	            $this->ClientProfile->id = $post['client_id'];
+	            $this->Clients->id = $post['client_id'];
+	        }else{
+	            $this->Clients->create();
+	            $this->ClientProfile->create();
+	        }
+	        
+	        if(!$this->Clients->save($post)){
+	            $res['status'] = "NO";
+	        }else{
+	            $client_id = $this->Clients->getLastInsertID();
+	            $post['id'] = $client_id;
+	        }
+	        if(!$this->ClientProfile->save($post)){
+	            $res['status'] = "NO";
+	        }
+	        $res['status'] = "YES";
+	        Output::__output($res);
+	    }
+	}
 }

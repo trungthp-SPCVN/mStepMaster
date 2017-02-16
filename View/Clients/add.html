@@ -43,7 +43,7 @@
 									</div>
 									<div class="form-group">
 										<label for="address" class="col-xs-12 col-sm-3 control-label no-padding-right">Address</label>
-										<div class="col-xs-12 col-sm-7">
+										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" id="address" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-map-marker"></i>
@@ -322,6 +322,86 @@
 <script src="/assets/js/ace-elements.min.js"></script>
 <script src="/assets/js/ace.min.js"></script>
 <script type="text/javascript">
+
+	var host=location.host;
+	var BASE_URL   ="//"+host+"/";
+	var PATHNAME = window.location.pathname;
+	var client_id = PATHNAME.substring(PATHNAME.lastIndexOf('/') + 1);
+	var values={};
+	
+	var client_name = $('#client-name');
+	var address = $('#address');
+	var phone = $('#phone');
+	var fax = $('#fax');
+	var contact_name = $('#contact-name');
+	var job_title = $('#job-title');
+	var email = $('#email');
+	var mobile = $('#mobile');
+	var phone_c = $('#phone-c');
+	var domain = $('#domain');
+	var db_host = $('#db-host');
+	var db_name = $('#db-name');
+	var db_user = $('#db-user');
+	var db_password = $('#db-password');
+	var email_s = $('#email-s');
+	
+	var uiAlert=function(params){
+	
+		var settings={"buttons":{}};
+		settings["title"]=(!!params["title"]?params["title"]:"&nbsp;");
+		settings["main_title"]=(!!params["main_title"]?params["main_title"]:settings["title"]);
+		settings["name"]=(!!params["name"]?params["name"]:"&nbsp;");
+		settings["message"]=(!!params["message"]?params["message"]:"&nbsp;");
+		settings["main_title"]=(!!params["main_title"]?params["main_title"]:params["title"]);
+		settings["close"]=($.isFunction(params["close"])?params["close"]:false);
+	
+		if(!!params["yes"]){
+	
+		    settings["buttons"]["YES"]={};
+		    settings["buttons"]["YES"]["class"]="blue";
+		    settings["buttons"]["YES"]["action"]=function(){
+	
+		        	params["yes"]();
+		    };
+		}
+	
+		if(!!params["no"]){
+	
+		    settings["buttons"]["NO"]={};
+		    settings["buttons"]["NO"]["class"]="gray";
+		    settings["buttons"]["NO"]["action"]=function(){
+	
+		        	params["no"]();
+		    };
+		}
+	
+		var js=document.location.protocol+BASE_URL+"assets/js/jquery.confirm.js";
+		loadScript(js,function(){
+				jQuery.confirm(settings);
+		});
+	}
+	
+	if($.isNumeric(client_id)) {
+		var client = <?php echo json_encode($client); ?>;
+		values["client_id"] = client_id;
+		
+		client_name.val(client['ClientProfile']['client_name']);
+		address.val(client['ClientProfile']['client_address']);
+		phone.val(client['ClientProfile']['client_tel']);
+		fax.val(client['ClientProfile']['client_fax']);
+		contact_name.val(client['ClientProfile']['contact_name']);
+		job_title.val(client['ClientProfile']['contact_jobtitle']);
+		email.val(client['ClientProfile']['contact_email']);
+		mobile.val(client['ClientProfile']['contact_mobile']);
+		phone_c.val(client['ClientProfile']['contact_tel']);
+		domain.val(client['Clients'][0]['short_name']);
+		db_host.val(client['Clients'][0]['db_host']);
+		db_name.val(client['Clients'][0]['db_name']);
+		db_user.val(client['Clients'][0]['db_user']);
+		db_password.val(client['Clients'][0]['db_password']);
+		email_s.val(client['ClientProfile']['client_email']);
+	}
+	
 	$('[data-rel=tooltip]').tooltip();
 	$('.select2').css('width','200px').select2({allowClear:true})
 	.on('change', function(){
@@ -339,16 +419,49 @@
 		}
 	})
 	.on('finished.fu.wizard', function(e) {
-		bootbox.dialog({
-			message: "Thank you! Your information was successfully saved!", 
-			buttons: {
-				"success" : {
-					"label" : "OK",
-					"className" : "btn-sm btn-primary"
-				}
-			}
-		});
+		values['client_name'] = client_name.val();
+    	values['client_address'] = address.val();
+    	values['client_tel'] = phone.val();
+    	values['client_fax'] = fax.val();
+    	values['contact_name'] = contact_name.val();
+    	values['contact_jobtitle'] = job_title.val();
+    	values['contact_email'] = email.val();
+    	values['contact_mobile'] = mobile.val();
+    	values['contact_tel'] = phone_c.val();
+    	values['short_name'] = domain.val();
+    	values['db_host'] = db_host.val();
+    	values['db_name'] = db_name.val();
+    	values['db_user'] = db_user.val();
+    	values['db_password'] = db_password.val();
+    	values['client_email'] = email_s.val();
+		
+        $.post(BASE_URL+'clients/saveData', values, function (res) {
+        	if (res.status=='YES') {
+        		uiAlert({
+					'title': "Alert",
+					'main-title':"Save",
+					'message': 'Success',
+					'yes': function () {
+						window.location=BASE_URL+"clients";
+					},
+					'close': function(){
+						window.location=BASE_URL+"clients";
+					}
+				});
+        	}else{
+        		uiAlert({
+					'title': "Alert",
+					'main-title':"Save",
+					'message': 'Fail',
+					'yes': function () {
+						target.one(e.type,arguments.callee);
+					}
+				});
+        	}
+		}, 'json');
 	}).on('stepclick.fu.wizard', function(e){
 		//e.preventDefault();//this will prevent clicking and selecting steps
 	});
+	
+	
 </script>
