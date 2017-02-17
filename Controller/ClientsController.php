@@ -96,23 +96,42 @@ class ClientsController extends AppController {
 	    if($this->request->is("post")){
 	        $post = $_POST;
 	        
+	        $datasource = $this->Clients->getDataSource();
+	        $datasource->begin();
+	        
 	        if(isset($post['client_id'])){
 	            $this->ClientProfile->id = $post['client_id'];
 	            $this->Clients->id = $post['client_id'];
+	            
+	            if(!$this->Clients->save($post)){
+	                $res['status'] = "NO";
+	                Output::__output($res);
+	            }
+	            
+	            if(!$this->ClientProfile->save($post)){
+	                $res['status'] = "NO";
+	                Output::__output($res);
+	            }
 	        }else{
 	            $this->Clients->create();
 	            $this->ClientProfile->create();
-	        }
-	        
-	        if(!$this->Clients->save($post)){
-	            $res['status'] = "NO";
-	        }else{
+	            
+	            if(!$this->Clients->save($post)){
+	                $res['status'] = "NO";
+	                Output::__output($res);
+	            }
+	            
 	            $client_id = $this->Clients->getLastInsertID();
 	            $post['id'] = $client_id;
+	             
+	            if(!$this->ClientProfile->save($post)){
+	                $res['status'] = "NO";
+	                Output::__output($res);
+	            }
 	        }
-	        if(!$this->ClientProfile->save($post)){
-	            $res['status'] = "NO";
-	        }
+	        
+	        $datasource->commit();
+	        
 	        $res['status'] = "YES";
 	        Output::__output($res);
 	    }
