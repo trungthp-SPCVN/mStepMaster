@@ -28,8 +28,7 @@
                         <td><?= $client['ClientProfile']['contact_name']?></td>
                         <td><?= $client['ClientProfile']['contact_mobile']?></td>
                         <td data-type="client-status"><?= ($client['Clients'][0]['del_flg']==0)?'Activated':'Deactivated'?></td>
-                        <td><?= $client['Clients'][0]['db_status']?>
-                        </td>
+                        <td data-type="check-db-status" data-db='{"host":"<?=$client['Clients'][0]['db_host']?>","user":"<?=$client['Clients'][0]['db_user']?>","name":"<?=$client['Clients'][0]['db_name']?>","pass":"<?=$client['Clients'][0]['db_password']?>"}'>Checking...</td>
                         <td class="actions">
                             <div class="hidden-sm hidden-xs action-buttons button-list">
                                 <a class="orange" onclick="return false;" data-type="btn-active" href="" <?=($client['Clients'][0]['del_flg']==0)?"style='display:none'":""?>>
@@ -209,6 +208,13 @@
     				jQuery.confirm(settings);
     		});
     	}
+        $("td[data-type=\"check-db-status\"]").each(function(){
+        	var target = $(this);
+        	var params = target.data('db');
+        	$.post(BASE_URL+'clients/checkConnectDB', params, function (res) {
+            	target.html(res['status']);
+			}, 'json');
+        });
     	
     	$(document).on("mouseup", '[data-type=\"btn-active\"]',function(e){
     		var target=$(this);

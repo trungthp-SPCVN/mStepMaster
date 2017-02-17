@@ -27,13 +27,13 @@ class ClientsController extends AppController {
 	    
 	    $old_config_debug = Configure::read('debug');
 	    Configure::write('debug', 0);
-	    foreach($clients as &$client){
-            if($conn = mysqli_connect($client['Clients'][0]['db_host'], $client['Clients'][0]['db_user'], $client['Clients'][0]['db_password'], $client['Clients'][0]['db_name'])){
-                $client['Clients'][0]['db_status'] = "OK";
-            }else{
-                $client['Clients'][0]['db_status'] = "Fail";
-            }
-	    }
+// 	    foreach($clients as &$client){
+//             if($conn = mysqli_connect($client['Clients'][0]['db_host'], $client['Clients'][0]['db_user'], $client['Clients'][0]['db_password'], $client['Clients'][0]['db_name'])){
+//                 $client['Clients'][0]['db_status'] = "OK";
+//             }else{
+//                 $client['Clients'][0]['db_status'] = "Fail";
+//             }
+// 	    }
 	    Configure::write('debug', $old_config_debug);
 	    $this->set(compact('clients'));
 	}
@@ -134,6 +134,22 @@ class ClientsController extends AppController {
 	        
 	        $res['status'] = "YES";
 	        Output::__output($res);
+	    }
+	}
+	
+	public function checkConnectDB(){
+	    if($this->request->is("post")){
+	        $post = $_POST;
+	        
+	        $old_config_debug = Configure::read('debug');
+	        Configure::write('debug', 0);
+            if($conn = mysqli_connect($post['host'], $post['user'], $post['pass'], $post['name'])){
+                $res['status'] = "OK";
+            }else{
+                $res['status'] = "Fail";
+            }
+            Output::__output($res);
+	        Configure::write('debug', $old_config_debug);
 	    }
 	}
 }
