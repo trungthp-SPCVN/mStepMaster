@@ -1,0 +1,171 @@
+<div class="row">
+	<div class="col-xs-12">
+		<div class="clearfix">
+			<div class="pull-right tableTools-container"></div>
+		</div>
+		<div class="table-header">Clients
+		</div>
+		<div class="dataTables_wrapper">
+			<table id="request_table" class="table table-bordered table-hover">
+				<thead>
+				<tr>
+					<th><?= __('No.') ?></th>
+					<th><?= __('Requester') ?></th>
+					<th><?= __('Date request') ?></th>
+					<th><?= __('Client name') ?></th>
+					<th><?= __('Status') ?></th>
+					<th><?= __('Created by') ?></th>
+					<th><?= __('Action') ?></th>
+				</tr>
+				</thead>
+				<tbody>
+				<?php
+				 $n=1;
+				if(!empty($request) and sizeof($request)) :
+					foreach($request as $row) : ?>
+				<tr>
+					<td><?php echo $n++;?><input type="hidden" name="request_id" value="<?php echo $row['TblMstepClientRequest']['id'];?>"/></td>
+					<td><?php echo $row['Requester']['first_name'].$row['Requester']['last_name'];?></td>
+					<td><?php echo $row['TblMstepClientRequest']['created_date'];?></td>
+					<td><?php echo $row['TblMstepClientRequest']['client_name'];?></td>
+					<td><?php echo mb_strtoupper($row['TblMstepClientRequest']['status']);?></td>
+					<td><?php echo $row['Creator']['first_name'].$row['Creator']['last_name'];?></td>
+					<td>
+						<button class="btn-detail btn btn-info btn-xs" title="Detail">
+							<i class="fa ace-icon fa-eye bigger-130 icon-only"></i>
+						</button>
+						<button class="btn-return btn btn-warning btn-xs" title="Return">
+							<i class="fa ace-icon fa-reply bigger-130 icon-only"></i>
+						</button>
+						<button class="btn-reject btn btn-danger btn-xs" title="Reject">
+							<i class="fa ace-icon fa-times bigger-130 icon-only"></i>
+						</button>
+						<button class="btn-create btn btn-success btn-xs" title="Create">
+							<i class="fa ace-icon fa-share bigger-130 icon-only"></i>
+						</button>
+						<button class="btn-edit btn btn-grey btn-xs" title="Edit">
+							<i class="fa ace-icon fa-edit bigger-130 icon-only"></i>
+						</button>
+						<button class="btn-delete btn btn-danger btn-xs" title="Delete">
+							<i class="fa ace-icon fa-trash bigger-130 icon-only"></i>
+						</button>
+					</td>
+				</tr>
+				<?php endforeach;
+				endif; ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function() {
+		// edit request
+		$('#request_table button.btn-edit').on('click',function(e){
+			var obj=$(this);
+			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
+			location.href='<?php echo Router::url(array("controller"=>"client_request","action"=>"edit"))?>/'+request_id;
+		});
+		// create client
+		$('#request_table button.btn-create').on('click',function(e){
+			var obj=$(this);
+			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
+			var client_name=obj.parents('tr').first().find('td:first').next().next().next().text();
+			$.confirm({
+				title:'Confirm!',
+				content:"Would you like continue to deploy system for client "+client_name,
+				buttons:{
+					formSubmit:{
+						text: '<?php echo __('Create');?>',
+						btnClass: 'btn-success',
+						action: function(){
+							location.href='<?php echo Router::url(array("controller"=>"clients","action"=>"add"))?>/'+request_id;
+						}
+					},
+					cancel: function(){
+						// close
+					}
+				}
+			});
+		});
+
+		// create client
+		$('#request_table button.btn-delete').on('click',function(e){
+			var obj=$(this);
+			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
+			var client_name=obj.parents('tr').first().find('td:first').next().next().next().text();
+			$.confirm({
+				title:'Confirm!',
+				content:"Would you like continue to remove request to deploy system of client "+client_name,
+				buttons:{
+					formSubmit:{
+						text: '<?php echo __('Create');?>',
+						btnClass: 'btn-success',
+						action: function(){
+							location.href='<?php echo Router::url(array("controller"=>"clients","action"=>"add"))?>/'+request_id;
+						}
+					},
+					cancel: function(){
+						// close
+					}
+				}
+			});
+		});
+
+		// create view detail
+		$('#request_table button.btn-detail').on('click',function(e){
+			var obj=$(this);
+			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
+			location.href='<?php echo Router::url(array("controller"=>"client_request","action"=>"detail"))?>/'+request_id;
+		});
+
+		// return button
+		$('button.btn-return').on('click',function(e){
+			var obj=$(this);
+			var request_id=obj.parents('tr').first().find(':hidden[name=id]').val();
+			$.confirm({
+				title:'<?php echo __('Return');?>!',
+				content:"<form>" +
+				"<div class='form-group'>" +
+				"<label><?php echo __('Please tell reason that you would like to Return this Request.')?></label>" +
+				"<textarea class='form-control' name='reason'></textarea>" +
+				"</div>" +
+				"</form>",
+				buttons:{
+					formSubmit:{
+						text: '<?php echo __('Return');?>',
+						btnClass: 'btn-warning',
+						action: function(){}
+					},
+					cancel: function(){
+						// close
+					}
+				}
+			});
+		});
+		// reject button
+		$('button.btn-reject').on('click',function(e){
+			var obj=$(this);
+			var request_id=obj.parents('tr').first().find(':hidden[name=id]').val();
+			$.confirm({
+				title:'<?php echo __('Reject');?>!',
+				content:"<form>" +
+				"<div class='form-group'>" +
+				"<label><?php echo __('Please tell reason that you would like to Reject this Request.')?></label>" +
+				"<textarea class='form-control' name='reason'></textarea>" +
+				"</div>" +
+				"</form>",
+				buttons:{
+					formSubmit:{
+						text: '<?php echo __('Reject');?>',
+						btnClass: 'btn-danger',
+						action: function(){}
+					},
+					cancel: function(){
+						// close
+					}
+				}
+			});
+		});
+	});
+</script>

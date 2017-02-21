@@ -25,13 +25,8 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-  //Router::connect('/', array('controller' => 'user', 'action' => 'index'));
+//    Router::connect('/client_request/edit/:id', array('controller' => 'client_request', 'action' => 'edit'));
     Router::connect('/', array('controller' => 'clients', 'action' => 'index'));
-    // Router::connect('scenes', array('controller' => 'sitelist', 'action' => 'index'));
-    //Router::connect('sample', array('controller' => 'sample', 'action' => 'index'));
-    //Router::connect('site', array('controller' => 'site', 'action' => 'index'));
-    //Router::connect('/',array('controller' => 'top', 'action' => 'index'));
-    //Router::connect('/home/',array('controller' => 'home's, 'action' => 'index'));
 
 /**
  * ...and connect the rest of 'Pages' controller's URLs.

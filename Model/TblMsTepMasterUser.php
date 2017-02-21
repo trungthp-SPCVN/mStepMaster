@@ -30,9 +30,9 @@ class TblMstepMasterUser extends AppModel {
 
 	// Update 2016.11.04 Hung Nguyen
 	// Add virtual field fullname
-	var $virtualFields = array(
+	/*var $virtualFields = array(
 		'full_name' => 'CONCAT(TblMstepMasterUser.first_name, " ",TblMstepMasterUser.last_name)',
-	);
+	);*/
 
 	// Update 2016.11.04 Hung Nguyen end
 
