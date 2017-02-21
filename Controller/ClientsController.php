@@ -99,7 +99,7 @@ class ClientsController extends AppController {
 	        $datasource = $this->Clients->getDataSource();
 	        $datasource->begin();
 	        
-	        if(isset($post['client_id'])){
+	        if(!empty($post['client_id'])){
 	            $this->ClientProfile->id = $post['client_id'];
 	            $this->Clients->id = $post['client_id'];
 	            
