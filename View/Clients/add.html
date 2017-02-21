@@ -2,7 +2,7 @@
 	<div class="col-xs-12">
 		<div class="widget-box">
 			<div class="widget-header widget-header-blue widget-header-flat">
-				<h4 class="widget-title lighter">Add New Client</h4>
+				<h4 class="widget-title lighter"><?= __('Add New Client') ?></h4>
 			</div>
 			<div class="widget-body">
 				<div class="widget-main">
@@ -11,106 +11,124 @@
 							<ul class="steps">
 								<li data-step="1" class="active">
 									<span class="step">1</span>
-									<span class="title">Input</span>
+									<span class="title"><?= __('Input') ?></span>
 								</li>
 
 								<li data-step="2">
 									<span class="step">2</span>
-									<span class="title">Confirm</span>
+									<span class="title"><?= __('Confirm') ?></span>
 								</li>
 
 								<li data-step="3">
 									<span class="step">3</span>
-									<span class="title">Finish</span>
+									<span class="title"><?= __('Finish') ?></span>
 								</li>
 							</ul>
 						</div>
 						<hr>
 						<div class="step-content pos-rel">
-							<div class="step-pane active" data-step="1">
+							<div class="step-pane active input-step" data-step="1">
 
-								<form class="form-horizontal" id="sample-form">
-									<h3 class="lighter block green">General Information</h3>
+								<form class="form-horizontal" id="client-form">
+									<input type="hidden" name="client_id" id="client-id" />
+									<h3 class="lighter block green"><?= __('General Information') ?></h3>
 									<div class="form-group">
-										<label for="client-name" class="col-xs-12 col-sm-3 control-label no-padding-right">Client Name</label>
+										<label for="client-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Client Name') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="client-name" class="width-100" />
+												<input type="text" name="client_name" id="client-name" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-user"></i>
 											</span>
 										</div>
 										<div class="help-block col-xs-12 col-sm-reset inline"> * </div>
 									</div>
 									<div class="form-group">
-										<label for="address" class="col-xs-12 col-sm-3 control-label no-padding-right">Address</label>
-										<div class="col-xs-12 col-sm-7">
+										<label for="address" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Address') ?></label>
+										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="address" class="width-100" />
+												<input type="text" name="client_address" id="address" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-map-marker"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="phone" class="col-xs-12 col-sm-3 control-label no-padding-right">Phone</label>
+										<label for="phone" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Phone') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="phone" class="width-100" />
+												<input type="tel" name="client_tel" id="phone" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-phone"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="fax" class="col-xs-12 col-sm-3 control-label no-padding-right">Fax</label>
+										<label for="fax" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Fax') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="fax" class="width-100" />
+												<input type="tel" name="client_fax" id="fax" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-fax"></i>
 											</span>
 										</div>
 									</div>
-
-									<h3 class="lighter block green">Contact Information</h3>
 									<div class="form-group">
-										<label for="contact-name" class="col-xs-12 col-sm-3 control-label no-padding-right">Contact Name</label>
+										<label for="email-s" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="contact-name" class="width-100" />
+												<input type="email" name="client_email" id="email-s" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-envelope"></i>
+											</span>
+										</div>
+										<div class="help-block col-xs-12 col-sm-reset inline">
+											<div class="checkbox">
+												<label>
+													<input name="form-field-checkbox" type="checkbox" class="ace">
+													<span class="lbl"><?= __('Using Contact Email') ?></span>
+												</label>
+											</div>
+										</div>
+									</div>
+
+									<h3 class="lighter block green"><?= __('Contact Information') ?></h3>
+									<div class="form-group">
+										<label for="contact-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Contact Name') ?></label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" name="contact_name" id="contact-name" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-user"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="job-title" class="col-xs-12 col-sm-3 control-label no-padding-right">Job title</label>
+										<label for="job-title" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Job title') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="job-title" class="width-100" />
+												<input type="text" name="contact_jobtitle" id="job-title" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-ellipsis-h"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="email" class="col-xs-12 col-sm-3 control-label no-padding-right">Email</label>
+										<label for="email" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="email" class="width-100" />
+												<input type="email" name="contact_email" id="email" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-envelope"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="mobile" class="col-xs-12 col-sm-3 control-label no-padding-right">Mobile</label>
+										<label for="mobile" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Mobile') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="mobile" class="width-100" />
+												<input type="tel" name="contact_mobile" id="mobile" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-mobile"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="phone-c" class="col-xs-12 col-sm-3 control-label no-padding-right">Phone</label>
+										<label for="phone-c" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Phone') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="phone-c" class="width-100" />
+												<input type="tel" name="contact_tel" id="phone-c" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-phone"></i>
 											</span>
 										</div>
@@ -118,177 +136,105 @@
 											<div class="checkbox">
 												<label>
 													<input name="form-field-checkbox" type="checkbox" class="ace">
-													<span class="lbl"> Using Company Phone</span>
+													<span class="lbl"><?= __('Using Company Phone') ?></span>
 												</label>
 											</div>
 										</div>
 									</div>
 
-									<h3 class="lighter block green">System Information</h3>
+									<h3 class="lighter block green"><?= __('System Information') ?></h3>
 									<div class="form-group">
-										<label for="domain" class="col-xs-12 col-sm-3 control-label no-padding-right">Domain</label>
+										<label for="domain" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Domain') ?></label>
 										<div class="col-xs-12 col-sm-4">
 											<span class="block input-icon">
-												<input type="text" id="domain" class="width-100" />
+												<input type="text" name="short_name" id="domain" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-globe"></i>
 											</span>
 										</div>
 										<div class="help-block col-xs-12 col-sm-reset inline"> .mstep.com </div>
 									</div>
 									<div class="form-group">
-										<label for="db-host" class="col-xs-12 col-sm-3 control-label no-padding-right">DB Host</label>
+										<label for="db-host" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Host') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="db-host" class="width-100" />
+												<input type="text" name="db_host" id="db-host" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-server"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="db-name" class="col-xs-12 col-sm-3 control-label no-padding-right">DB Name</label>
+										<label for="db-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Name') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="db-name" class="width-100" />
+												<input type="text" name="db_name" id="db-name" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-database"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="db-user" class="col-xs-12 col-sm-3 control-label no-padding-right">DB User</label>
+										<label for="db-user" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB User') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" id="db-user" class="width-100" />
+												<input type="text" name="db_user" id="db-user" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-user"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="db-password" class="col-xs-12 col-sm-3 control-label no-padding-right">DB Password</label>
+										<label for="db-password" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Password') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="password" id="db-password" class="width-100" />
+												<input type="password" name="db_password" id="db-password" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-key"></i>
 											</span>
 										</div>
 									</div>
-									<div class="form-group">
-										<label for="email-s" class="col-xs-12 col-sm-3 control-label no-padding-right">Email</label>
-										<div class="col-xs-12 col-sm-5">
-											<span class="block input-icon">
-												<input type="text" id="email-s" class="width-100" />
-												<i class="ace-icon fa fa-fw fa-envelope"></i>
-											</span>
-										</div>
-										<div class="help-block col-xs-12 col-sm-reset inline">
-											<div class="checkbox">
-												<label>
-													<input name="form-field-checkbox" type="checkbox" class="ace">
-													<span class="lbl"> Using Contact Email</span>
-												</label>
-											</div>
-										</div>
-									</div>
 								</form>
 							</div>
-							<div class="step-pane" data-step="2">
-								<div>
-									<div class="alert alert-success">
-										<button type="button" class="close" data-dismiss="alert">
-											<i class="ace-icon fa fa-fw fa-times"></i>
-										</button>
-
-										<strong>
-											<i class="ace-icon fa fa-fw fa-check"></i>
-											Well done!
-										</strong>
-
-										You successfully read this important alert message.
-										<br />
-									</div>
-
-									<div class="alert alert-danger">
-										<button type="button" class="close" data-dismiss="alert">
-											<i class="ace-icon fa fa-fw fa-times"></i>
-										</button>
-
-										<strong>
-											<i class="ace-icon fa fa-fw fa-times"></i>
-											Oh snap!
-										</strong>
-
-										Change a few things up and try submitting again.
-										<br />
-									</div>
-
-									<div class="alert alert-warning">
-										<button type="button" class="close" data-dismiss="alert">
-											<i class="ace-icon fa fa-fw fa-times"></i>
-										</button>
-										<strong>Warning!</strong>
-
-										Best check yo self, you're not looking too good.
-										<br />
-									</div>
-
-									<div class="alert alert-info">
-										<button type="button" class="close" data-dismiss="alert">
-											<i class="ace-icon fa fa-fw fa-times"></i>
-										</button>
-										<strong>Heads up!</strong>
-
-										This alert needs your attention, but it's not super important.
-										<br />
-									</div>
-								</div>
-							</div>
+							<div class="step-pane confirm-step" data-step="2"></div>
 							<div class="step-pane" data-step="3">
-								<div>
-									<div class="alert alert-success">
-										<button type="button" class="close" data-dismiss="alert">
-											<i class="ace-icon fa fa-fw fa-times"></i>
-										</button>
-
-										<strong>
-											<i class="ace-icon fa fa-fw fa-check"></i>
-											Well done!
-										</strong>
-
-										You successfully read this important alert message.
-										<br />
-									</div>
-
-									<div class="alert alert-danger">
-										<button type="button" class="close" data-dismiss="alert">
-											<i class="ace-icon fa fa-fw fa-times"></i>
-										</button>
-
-										<strong>
-											<i class="ace-icon fa fa-fw fa-times"></i>
-											Oh snap!
-										</strong>
-
-										Change a few things up and try submitting again.
-										<br />
-									</div>
-
-									<div class="alert alert-warning">
-										<button type="button" class="close" data-dismiss="alert">
-											<i class="ace-icon fa fa-fw fa-times"></i>
-										</button>
-										<strong>Warning!</strong>
-
-										Best check yo self, you're not looking too good.
-										<br />
-									</div>
-
-									<div class="alert alert-info">
-										<button type="button" class="close" data-dismiss="alert">
-											<i class="ace-icon fa fa-fw fa-times"></i>
-										</button>
-										<strong>Heads up!</strong>
-
-										This alert needs your attention, but it's not super important.
-										<br />
+								<div class="finish-step">
+									<div class="row">
+										<div class="col col-lg-2 col-md-2"></div>
+										<div class="col col-lg-8 col-md-8">
+											<h3 class="text-center block blue">CONGRATULATION !</h3>
+											<div class="profile-user-info">
+												<div class="profile-info-row">
+													<label class="col col-lg-3 col-md-4 profile-info-name">CLIENT</label>
+													<span class="profile-info-value col col-lg-9 col-md-8">.mstep.com</span>
+												</div>
+												<div class="profile-info-row">
+													<label class="col col-lg-3 col-md-4 profile-info-name">Domain</label>
+													<span class="profile-info-value col col-lg-9 col-md-8"></span>
+												</div>
+												<div class="profile-info-row">
+													<label class="col col-lg-3 col-md-4 profile-info-name">Contact Name</label>
+													<span class="profile-info-value col col-lg-9 col-md-8"></span>
+												</div>
+												<div class="profile-info-row">
+													<label class="col col-lg-3 col-md-4 profile-info-name">Contact Email</label>
+													<span class="profile-info-value col col-lg-9 col-md-8"></span>
+												</div>
+												<h4 class="lighter block blue">Access Information</h4>
+												<div class="profile-info-row">
+													<label class="col col-lg-3 col-md-4 profile-info-name">Domain</label>
+													<span class="profile-info-value col col-lg-9 col-md-8">.mstep.com</span>
+												</div>
+												<div class="profile-info-row">
+													<label class="col col-lg-3 col-md-4 profile-info-name">User(Master)</label>
+													<span class="profile-info-value col col-lg-9 col-md-8"></span>
+												</div>
+												<div class="profile-info-row">
+													<label class="col col-lg-3 col-md-4 profile-info-name">Password</label>
+													<span class="profile-info-value col col-lg-9 col-md-8"></span>
+												</div>
+												<div class="profile-info-row">
+													<label class="col col-lg-3 col-md-4 profile-info-name">Email</label>
+													<span class="profile-info-value col col-lg-9 col-md-8"></span>
+												</div>
+											</div>
+										</div>
+										<div class="col col-lg-2 col-md-2"></div>
 									</div>
 								</div>
 							</div>
@@ -297,12 +243,10 @@
 					<hr />
 					<div class="wizard-actions">
 						<button class="btn btn-prev">
-							<i class="ace-icon fa fa-fw fa-arrow-left"></i>
-							Prev
+							<i class="ace-icon fa fa-fw fa-arrow-left"></i> Prev
 						</button>
 
-						<button class="btn btn-success btn-next" data-last="Finish">
-							Next
+						<button class="btn btn-success btn-next" data-last="Finish"> Next
 							<i class="ace-icon fa fa-fw fa-arrow-right icon-on-right"></i>
 						</button>
 					</div>
@@ -311,7 +255,6 @@
 		</div>
 	</div>
 </div>
-
 <script src="/assets/js/bootstrap.min.js"></script>
 <script src="/assets/js/wizard.min.js"></script>
 <script src="/assets/js/jquery.validate.min.js"></script>
@@ -322,20 +265,136 @@
 <script src="/assets/js/ace-elements.min.js"></script>
 <script src="/assets/js/ace.min.js"></script>
 <script type="text/javascript">
+	var host=location.host;
+	var BASE_URL   ="//"+host+"/";
+	var PATHNAME = window.location.pathname;
+	var client_id = PATHNAME.substring(PATHNAME.lastIndexOf('/') + 1);
+	var values={};
+	
+	var client_name = $('#client-name');
+	var address = $('#address');
+	var phone = $('#phone');
+	var fax = $('#fax');
+	var contact_name = $('#contact-name');
+	var job_title = $('#job-title');
+	var email = $('#email');
+	var mobile = $('#mobile');
+	var phone_c = $('#phone-c');
+	var domain = $('#domain');
+	var db_host = $('#db-host');
+	var db_name = $('#db-name');
+	var db_user = $('#db-user');
+	var db_password = $('#db-password');
+	var email_s = $('#email-s');
+	
+	var uiAlert=function(params){
+	
+		var settings={"buttons":{}};
+		settings["title"]=(!!params["title"]?params["title"]:"&nbsp;");
+		settings["main_title"]=(!!params["main_title"]?params["main_title"]:settings["title"]);
+		settings["name"]=(!!params["name"]?params["name"]:"&nbsp;");
+		settings["message"]=(!!params["message"]?params["message"]:"&nbsp;");
+		settings["main_title"]=(!!params["main_title"]?params["main_title"]:params["title"]);
+		settings["close"]=($.isFunction(params["close"])?params["close"]:false);
+	
+		if(!!params["yes"]){
+	
+		    settings["buttons"]["YES"]={};
+		    settings["buttons"]["YES"]["class"]="blue";
+		    settings["buttons"]["YES"]["action"]=function(){
+	
+		        	params["yes"]();
+		    };
+		}
+	
+		if(!!params["no"]){
+	
+		    settings["buttons"]["NO"]={};
+		    settings["buttons"]["NO"]["class"]="gray";
+		    settings["buttons"]["NO"]["action"]=function(){
+	
+		        	params["no"]();
+		    };
+		}
+	
+		var js=document.location.protocol+BASE_URL+"assets/js/jquery.confirm.js";
+		loadScript(js,function(){
+				jQuery.confirm(settings);
+		});
+	}
+	
+	if($.isNumeric(client_id)) {
+		var client = <?php echo json_encode($client); ?>;
+		$("#client-id").val(client_id);
+		
+		client_name.val(client['ClientProfile']['client_name']);
+		address.val(client['ClientProfile']['client_address']);
+		phone.val(client['ClientProfile']['client_tel']);
+		fax.val(client['ClientProfile']['client_fax']);
+		contact_name.val(client['ClientProfile']['contact_name']);
+		job_title.val(client['ClientProfile']['contact_jobtitle']);
+		email.val(client['ClientProfile']['contact_email']);
+		mobile.val(client['ClientProfile']['contact_mobile']);
+		phone_c.val(client['ClientProfile']['contact_tel']);
+		domain.val(client['Clients'][0]['short_name']);
+		db_host.val(client['Clients'][0]['db_host']);
+		db_name.val(client['Clients'][0]['db_name']);
+		db_user.val(client['Clients'][0]['db_user']);
+		db_password.val(client['Clients'][0]['db_password']);
+		email_s.val(client['ClientProfile']['client_email']);
+	}
+	
 	$('[data-rel=tooltip]').tooltip();
 	$('.select2').css('width','200px').select2({allowClear:true})
 	.on('change', function(){
 		$(this).closest('form').validate().element($(this));
 	});
-	var $validation = false;
 	$('#fuelux-wizard-container')
 	.ace_wizard({
 		//step: 2 //optional argument. wizard will jump to step "2" at first
 		//buttons: '.wizard-actions:eq(0)'
 	})
 	.on('actionclicked.fu.wizard' , function(e, info){
-		if(info.step == 1 && $validation) {
-			if(!$('#validation-form').valid()) e.preventDefault();
+		if(info.step == 1){
+			// validate form
+			if(!$('#client-form').valid()){
+				e.preventDefault();
+			}else{
+				$('.input-step form').find('input').each(function(index, el) {
+					var lag = $(this).attr('id');
+					if(lag == 'domain'){
+						$('.confirm-step').find('span#'+lag).html($(this).val() + '<span style="color:red">.mstep.com</span>');
+					}
+					else if(lag == 'db-password'){
+						$('.confirm-step').find('span#'+lag).html('********');
+					}
+					else{
+						if($(this).is(":hidden")){
+							$('.confirm-step').find('span#'+lag).html($(this).val()).css("display", "none");
+						}else{
+							$('.confirm-step').find('span#'+lag).html($(this).val());
+						}
+					}
+				});
+			}
+		}
+		else if(info.step == 2){
+			// Save to data
+			var dataForm = $("#client-form").serialize();
+			
+			$.post(BASE_URL+'clients/saveData', dataForm, function (res) {
+	        	if (res.status!='YES'){
+	        		e.preventDefault();
+	        		uiAlert({
+						'title': "Alert",
+						'main-title':"Save",
+						'message': 'Fail',
+						'yes': function () {
+							target.one(e.type,arguments.callee);
+						}
+					});
+	        	}
+			}, 'json');
 		}
 	})
 	.on('finished.fu.wizard', function(e) {
@@ -349,6 +408,57 @@
 			}
 		});
 	}).on('stepclick.fu.wizard', function(e){
-		//e.preventDefault();//this will prevent clicking and selecting steps
+		e.preventDefault();//this will prevent clicking and selecting steps
+		console.log(info.step);
+	});
+	
+	$('#client-form').validate({
+		errorElement: 'div',
+		errorClass: 'invalid',
+		focusInvalid: false,
+		ignore: "",
+		highlight: function (e) {
+			$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+		},
+
+		success: function (e) {
+			$(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+			$(e).remove();
+		},
+
+		errorPlacement: function (error, element) {
+			if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+				var controls = element.closest('div[class*="col-"]');
+				if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+				else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+			}
+			else if(element.is('.select2')) {
+				error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+			}
+			else if(element.is('.chosen-select')) {
+				error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+			}
+			else error.insertAfter(element.parent());
+		},
+
+		submitHandler: function (form) {
+		},
+		invalidHandler: function (form) {
+		}
+	});
+	// Update html step2
+	$(document).ready(function() {
+		var _step2 = $('.confirm-step').html($('.input-step').html());
+		_step2.find('input').each(function(index, el) {
+			$(this).replaceWith($('<span id="' + $(this).attr('id') + '" style="vertical-align:-webkit-baseline-middle">' + $(this).val() + '</span>'));
+		});
+		_step2.find('label').addClass('grey');
+		_step2.find('i').remove();
+		_step2.find('.help-block').remove();
+		_step2.find('.form-group > div').css({
+			'height': '28px',
+			'border-bottom': '1px dotted #ccc',
+			'margin-left': '10px'
+		});
 	});
 </script>

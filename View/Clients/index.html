@@ -27,9 +27,8 @@
                         <td><?= $client['Clients'][0]['short_name']?></td>
                         <td><?= $client['ClientProfile']['contact_name']?></td>
                         <td><?= $client['ClientProfile']['contact_mobile']?></td>
-                        <td data-type="client-status"><?= ($client['Clients'][0]['del_flg']==0)?'Active':'Deactive'?></td>
-                        <td><?= $client['Clients'][0]['db_status']?>
-                        </td>
+                        <td data-type="client-status"><?= ($client['Clients'][0]['del_flg']==0)?'Activated':'Deactivated'?></td>
+                        <td data-type="check-db-status" data-db='{"host":"<?=$client['Clients'][0]['db_host']?>","user":"<?=$client['Clients'][0]['db_user']?>","name":"<?=$client['Clients'][0]['db_name']?>","pass":"<?=$client['Clients'][0]['db_password']?>"}'>Checking...</td>
                         <td class="actions">
                             <div class="hidden-sm hidden-xs action-buttons button-list">
                                 <a class="orange" onclick="return false;" data-type="btn-active" href="" <?=($client['Clients'][0]['del_flg']==0)?"style='display:none'":""?>>
@@ -172,8 +171,6 @@
     
     $(function(){
     	var host=location.host;
-        var API_VERSION=1;
-        var DEVELOP_MODE=(host.indexOf("local")>-1)?true:false;
         var BASE_URL   ="//"+host+"/";
         
         var uiAlert=function(params){
@@ -211,6 +208,13 @@
     				jQuery.confirm(settings);
     		});
     	}
+        $("td[data-type=\"check-db-status\"]").each(function(){
+        	var target = $(this);
+        	var params = target.data('db');
+        	$.post(BASE_URL+'clients/checkConnectDB', params, function (res) {
+            	target.html(res['status']);
+			}, 'json');
+        });
     	
     	$(document).on("mouseup", '[data-type=\"btn-active\"]',function(e){
     		var target=$(this);
@@ -232,7 +236,7 @@
 	                        params["status"]=0;
 	                        $.post(BASE_URL+'clients/updateStatus', params, function (res) {
 	                        	if (res.status=='YES') {
-	                        		client_status.html('Active');
+	                        		client_status.html('Activated');
 	                        		target.css("display","none");
 	                        		client_deactive_btn.css("display","inline-block");
 	                        		uiAlert({
@@ -281,7 +285,7 @@
 	                        params["status"]=1;
 	                        $.post(BASE_URL+'clients/updateStatus', params, function (res) {
 	                        	if (res.status=='YES') {
-	                        		client_status.html('Deactive');
+	                        		client_status.html('Deactivated');
 	                        		target.css("display","none");
 	                        		client_active_btn.css("display","inline-block");
 	                        		uiAlert({

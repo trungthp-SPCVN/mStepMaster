@@ -83,6 +83,10 @@ class AppController extends Controller {
 		
 		$this->check_authentication = $this->Auth->user("authority") === "master";
 		$this->set('role', $this->check_authentication);
+		//Update 2017.02.20 Hung Nguyen start
+		// add name for show on header
+		$this->set("login_name",($this->Auth->user("first_name").$this->Auth->user("last_name")));
+		//Update 2017.02.20 Hung Nguyen end
 		
 		$this->page_title='';
 		$this->page_desc='';
