@@ -40,7 +40,6 @@
 												<i class="ace-icon fa fa-fw fa-user"></i>
 											</span>
 										</div>
-										<div class="help-block col-xs-12 col-sm-reset inline"> * </div>
 									</div>
 									<div class="form-group">
 										<label for="address" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Address') ?></label>
@@ -158,6 +157,15 @@
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="db_host" id="db-host" required class="width-100" />
+												<i class="ace-icon fa fa-fw fa-server"></i>
+											</span>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="db-port" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Port') ?></label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="text" name="db_port" id="db-port" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-server"></i>
 											</span>
 										</div>
@@ -282,6 +290,7 @@
 	var phone_c = $('#phone-c');
 	var domain = $('#domain');
 	var db_host = $('#db-host');
+	var db_port = $('#db-port');
 	var db_name = $('#db-name');
 	var db_user = $('#db-user');
 	var db_password = $('#db-password');
@@ -338,6 +347,7 @@
 		phone_c.val(client['ClientProfile']['contact_tel']);
 		domain.val(client['Clients'][0]['short_name']);
 		db_host.val(client['Clients'][0]['db_host']);
+		db_port.val(client['Clients'][0]['db_port']);
 		db_name.val(client['Clients'][0]['db_name']);
 		db_user.val(client['Clients'][0]['db_user']);
 		db_password.val(client['Clients'][0]['db_password']);

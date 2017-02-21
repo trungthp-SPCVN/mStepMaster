@@ -143,7 +143,7 @@ class ClientsController extends AppController {
 	        
 	        $old_config_debug = Configure::read('debug');
 	        Configure::write('debug', 0);
-            if($conn = mysqli_connect($post['host'], $post['user'], $post['pass'], $post['name'])){
+            if($conn = mysqli_connect($post['host'], $post['user'], $post['pass'], $post['name'], $post['port'])){
                 $res['status'] = "OK";
             }else{
                 $res['status'] = "Fail";
