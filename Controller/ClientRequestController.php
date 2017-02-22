@@ -10,7 +10,11 @@ class ClientRequestController extends AppController {
 	var $name = "ClientRequest";
 	var $uses = array('TblMstepClientRequest');
 	
-	public function beforeFilter(){}
+	public function beforeFilter(){
+		parent::beforeFilter();
+		
+		$this->page_title=__('Client Request', true);
+	}
 	
 	public function index(){
 		$this->paginate=[

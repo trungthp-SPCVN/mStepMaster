@@ -34,6 +34,7 @@ class ErrorsController extends AppController {
 	public function beforeFilter() {
 
 		parent::beforeFilter();
+		$this->layout='error';
 		$this->Auth->allow('error404', 'unAuthorizedException');
 	}
 

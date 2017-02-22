@@ -22,6 +22,9 @@ require_once "SetModel.php";
  * @package       app.Controller
  * @since         CakePHP(tm) v 0.2.9
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ *
+ * @property 	RequestHandlerComponent $RequestHandler
+ *
  */
 
 App::uses('Controller', 'Controller');
@@ -56,7 +59,8 @@ class AppController extends Controller {
 			'authorize' => array('Controller'),
 		),
 		'Acl',
-		'Cookie'
+		'Cookie',
+		'RequestHandler'
 	);
 
 	function __getLogPath(){
@@ -91,6 +95,26 @@ class AppController extends Controller {
 		$this->page_title='';
 		$this->page_desc='';
 		
+		$is_mobile=$this->RequestHandler->isMobile();
+		$authority=$this->Auth->user('authority');
+		
+		$this->role=array(
+			'spc'=>array(
+				'Clients.index'=>(($authority=='spc' and !$is_mobile)?true:false),
+				'Clients.add'=>(($authority=='spc' and !$is_mobile)?true:false),
+				'ClientRequest.index'=>(($authority=='spc' and !$is_mobile)?true:false),
+				'ClientRequest.edit'=>false,
+				'ClientRequest.add'=>false,
+			),
+			'mstep'=>array(
+				'Clients.index'=>(($authority=='mstep' and !$is_mobile)?true:false),
+				'Clients.add'=>false,
+				'ClientRequest.index'=>true,
+				'ClientRequest.edit'=>true,
+				'ClientRequest.add'=>true,
+			)
+		);
+		
 	}
 	
 	function __setLanguage(){
@@ -111,10 +135,11 @@ class AppController extends Controller {
 	public function isAuthorized($user) {
 
 		// Admin can access every action
-		if (isset($user['authority']) && $user['authority'] === 'master') {
+		if (isset($user['authority']) && $user['authority'] === 'master' or
+			(isset($this->role[$user['authority']][$this->name.'.'.$this->action]) and $this->role[$user['authority']][$this->name.'.'.$this->action])) {
 			return true;
 		}
-
+		
 		// Default deny
 		throw new unAuthorizedException();
 	}
@@ -128,9 +153,10 @@ class AppController extends Controller {
 		if($this->name=="CakeError") {
 			$this->layout='error';
 		}
-		
+
 		$this->set('page_title',(!empty($this->page_title)?$this->page_title:$this->name));
 		$this->set('page_desc',$this->page_desc);
+		$this->set('auth', $this->Auth->user());
 	}
 
 	function __arrangeAry($data = array(), $key) {
