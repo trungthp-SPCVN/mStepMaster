@@ -389,12 +389,19 @@
 			}
 		}
 		else if(info.step == 2){
+			e.preventDefault();
 			// Save to data
 			var dataForm = $("#client-form").serialize();
 			
 			$.post(BASE_URL+'clients/saveData', dataForm, function (res) {
-	        	if (res.status!='YES'){
-	        		e.preventDefault();
+	        	if (res.status=='YES'){
+	        		$('.confirm-step').find('.input-icon > span').each(function(index, el) {
+	    				var __id = $(this).attr('id');
+	    				$('.finish-step').find('span.'+__id).html($(this).html());
+	    			});
+	        		
+	        		$('#fuelux-wizard-container').wizard('selectedItem', {step: 3});
+	        	}else{
 	        		uiAlert({
 						'title': "Alert",
 						'main-title':"Save",
@@ -405,11 +412,6 @@
 					});
 	        	}
 			}, 'json');
-
-			$('.confirm-step').find('.input-icon > span').each(function(index, el) {
-				var __id = $(this).attr('id');
-				$('.finish-step').find('span.'+__id).html($(this).html());
-			});
 		}
 	})
 	.on('finished.fu.wizard', function(e) {
@@ -424,7 +426,6 @@
 		});
 	}).on('stepclick.fu.wizard', function(e){
 		e.preventDefault();//this will prevent clicking and selecting steps
-		console.log(info.step);
 	});
 	
 	$('#client-form').validate({
