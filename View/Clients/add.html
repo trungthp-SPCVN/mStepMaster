@@ -33,7 +33,7 @@
 									<input type="hidden" name="client_id" id="client-id" />
 									<h3 class="lighter block green"><?= __('General Information') ?></h3>
 									<div class="form-group">
-										<label for="client-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Client Name') ?></label>
+										<label for="client-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Client Name') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="client_name" id="client-name" required class="width-100" />
@@ -42,7 +42,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="address" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Address') ?></label>
+										<label for="address" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Address') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="client_address" id="address" required class="width-100" />
@@ -51,7 +51,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="phone" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Phone') ?></label>
+										<label for="phone" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Phone') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="tel" name="client_tel" id="phone" required class="width-100" />
@@ -69,17 +69,17 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="email-s" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?></label>
+										<label for="email-s" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="email" name="client_email" id="email-s" class="width-100" />
+												<input type="email" name="client_email" id="email-s" required class="width-100" />
 												<i class="ace-icon fa fa-fw fa-envelope"></i>
 											</span>
 										</div>
 										<div class="help-block col-xs-12 col-sm-reset inline">
 											<div class="checkbox">
 												<label>
-													<input name="form-field-checkbox" type="checkbox" class="ace">
+													<input name="form-field-checkbox" type="checkbox" class="ace cp_chk" data-s="#email" data-d="#email-s">
 													<span class="lbl"><?= __('Using Contact Email') ?></span>
 												</label>
 											</div>
@@ -88,7 +88,7 @@
 
 									<h3 class="lighter block green"><?= __('Contact Information') ?></h3>
 									<div class="form-group">
-										<label for="contact-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Contact Name') ?></label>
+										<label for="contact-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Contact Name') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="contact_name" id="contact-name" required class="width-100" />
@@ -97,7 +97,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="job-title" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Job title') ?></label>
+										<label for="job-title" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Job title') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="contact_jobtitle" id="job-title" required class="width-100" />
@@ -106,7 +106,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="email" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?></label>
+										<label for="email" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="email" name="contact_email" id="email" required class="width-100" />
@@ -134,7 +134,7 @@
 										<div class="help-block col-xs-12 col-sm-reset inline">
 											<div class="checkbox">
 												<label>
-													<input name="form-field-checkbox" type="checkbox" class="ace">
+													<input name="form-field-checkbox" type="checkbox" class="ace cp_chk" data-s="#phone" data-d="#phone-c">
 													<span class="lbl"><?= __('Using Company Phone') ?></span>
 												</label>
 											</div>
@@ -143,7 +143,7 @@
 
 									<h3 class="lighter block green"><?= __('System Information') ?></h3>
 									<div class="form-group">
-										<label for="domain" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Domain') ?></label>
+										<label for="domain" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Domain') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-4">
 											<span class="block input-icon">
 												<input type="text" name="short_name" id="domain" required class="width-100" />
@@ -153,7 +153,7 @@
 										<div class="help-block col-xs-12 col-sm-reset inline"> .mstep.com </div>
 									</div>
 									<div class="form-group">
-										<label for="db-host" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Host') ?></label>
+										<label for="db-host" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Host') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="db_host" id="db-host" required class="width-100" />
@@ -162,7 +162,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="db-port" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Port') ?></label>
+										<label for="db-port" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Port') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="db_port" id="db-port" required class="width-100" />
@@ -171,7 +171,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="db-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Name') ?></label>
+										<label for="db-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Name') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="db_name" id="db-name" required class="width-100" />
@@ -180,7 +180,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="db-user" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB User') ?></label>
+										<label for="db-user" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB User') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
 												<input type="text" name="db_user" id="db-user" required class="width-100" />
@@ -230,11 +230,11 @@
 												</div>
 												<div class="profile-info-row">
 													<label class="col col-lg-3 col-md-4 profile-info-name">User(Master)</label>
-													<span class="profile-info-value col col-lg-9 col-md-8"></span>
+													<span class="profile-info-value col col-lg-9 col-md-8">admin</span>
 												</div>
 												<div class="profile-info-row">
 													<label class="col col-lg-3 col-md-4 profile-info-name">Password</label>
-													<span class="profile-info-value col col-lg-9 col-md-8"></span>
+													<span class="profile-info-value col col-lg-9 col-md-8">123456</span>
 												</div>
 												<div class="profile-info-row">
 													<label class="col col-lg-3 col-md-4 profile-info-name">Email</label>
@@ -354,6 +354,26 @@
 		email_s.val(client['ClientProfile']['client_email']);
 	}
 	
+	$(':checkbox.cp_chk').each(function () {
+		var obj = $(this);
+		var s=$(this).data('s'),
+			d=$(this).data('d');
+
+		obj.on('change', function () {
+			if (obj.is(':checked')) {
+				$(d).val($(s).val()).prop('readonly', true);
+			} else {
+				$(d).prop('readonly', false);
+			}
+		});
+		
+		$(s).on('keyup', function () {
+			if (obj.is(':checked')) {
+				$(d).val($(this).val());
+			}
+		});
+	});
+	
 	$('[data-rel=tooltip]').tooltip();
 	$('.select2').css('width','200px').select2({allowClear:true})
 	.on('change', function(){
@@ -402,14 +422,25 @@
 	        		
 	        		$('#fuelux-wizard-container').wizard('selectedItem', {step: 3});
 	        	}else{
-	        		uiAlert({
-						'title': "Alert",
-						'main-title':"Save",
-						'message': 'Fail',
-						'yes': function () {
-							target.one(e.type,arguments.callee);
-						}
-					});
+	        		if(res.status=='DB'){
+		        		uiAlert({
+							'title': "Alert",
+							'main-title':"Save",
+							'message': 'DB connect fail',
+							'yes': function () {
+								
+							}
+						});
+	        		}else{
+	        			uiAlert({
+							'title': "Alert",
+							'main-title':"Save",
+							'message': 'Fail',
+							'yes': function () {
+								window.location=BASE_URL+"clients/add";
+							}
+						});
+	        		}
 	        	}
 			}, 'json');
 		}
@@ -425,7 +456,7 @@
 			}
 		});
 	}).on('stepclick.fu.wizard', function(e){
-		e.preventDefault();//this will prevent clicking and selecting steps
+		
 	});
 	
 	$('#client-form').validate({
