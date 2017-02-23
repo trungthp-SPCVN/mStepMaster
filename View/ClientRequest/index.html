@@ -34,6 +34,12 @@
 						<button class="btn-detail btn btn-info btn-xs" title="Detail">
 							<i class="fa ace-icon fa-eye bigger-130 icon-only"></i>
 						</button>
+						<button class="btn-edit btn btn-success btn-xs" title="Edit">
+							<i class="fa ace-icon fa-edit bigger-130 icon-only"></i>
+						</button>
+						<button class="btn-delete btn btn-danger btn-xs" title="Delete">
+							<i class="fa ace-icon fa-trash bigger-130 icon-only"></i>
+						</button>
 						<button class="btn-return btn btn-warning btn-xs" title="Return">
 							<i class="fa ace-icon fa-reply bigger-130 icon-only"></i>
 						</button>
@@ -42,12 +48,6 @@
 						</button>
 						<button class="btn-create btn btn-success btn-xs" title="Create">
 							<i class="fa ace-icon fa-share bigger-130 icon-only"></i>
-						</button>
-						<button class="btn-edit btn btn-grey btn-xs" title="Edit">
-							<i class="fa ace-icon fa-edit bigger-130 icon-only"></i>
-						</button>
-						<button class="btn-delete btn btn-danger btn-xs" title="Delete">
-							<i class="fa ace-icon fa-trash bigger-130 icon-only"></i>
 						</button>
 					</td>
 				</tr>
@@ -101,10 +101,29 @@
 				content:"Would you like continue to remove request to deploy system of client "+client_name,
 				buttons:{
 					formSubmit:{
-						text: '<?php echo __('Create');?>',
-						btnClass: 'btn-success',
+						text: '<?php echo __('Delete');?>',
+						btnClass: 'btn-danger',
 						action: function(){
-							location.href='<?php echo Router::url(array("controller"=>"clients","action"=>"add"))?>/'+request_id;
+							$.post('<?php echo Router::url(['controller'=>'client_request','action'=>'delete']);?>', {id:request_id}, function(res){
+								$.confirm({
+									title:'Alert!',
+									content: res.message,
+									buttons:{
+										ok:{
+											text:'<?php echo __('Ok',true)?>',
+											btnClass:'btn-danger',
+											action:function(){
+												if(res.status=='YES') {
+//													$('body').reload();
+//													return false;
+												} else {
+													return false;
+												}
+											}
+										}
+									}
+								});
+							}, 'json');
 						}
 					},
 					cancel: function(){
@@ -118,7 +137,7 @@
 		$('#request_table button.btn-detail').on('click',function(e){
 			var obj=$(this);
 			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
-			location.href='<?php echo Router::url(array("controller"=>"client_request","action"=>"detail"))?>/'+request_id;
+			location.href='<?php echo Router::url(array("controller"=>"ClientRequest","action"=>"detail"))?>/'+request_id;
 		});
 
 		// return button
@@ -129,15 +148,43 @@
 				title:'<?php echo __('Return');?>!',
 				content:"<form>" +
 				"<div class='form-group'>" +
-				"<label><?php echo __('Please tell reason that you would like to Return this Request.')?></label>" +
+				"<label><?php echo __('Please tell reason that you would like to return this Request.')?></label>" +
 				"<textarea class='form-control' name='reason'></textarea>" +
+				"<p id='p_error' class='text-danger help-block' style='display:none;'><?php echo __("Please don't keep the reason field is empty!");?></p>" +
 				"</div>" +
 				"</form>",
 				buttons:{
 					formSubmit:{
 						text: '<?php echo __('Return');?>',
 						btnClass: 'btn-warning',
-						action: function(){}
+						action: function(){
+							var reason=this.$content.find('[name=reason]');
+							if(!reason.val()){
+								this.$content.find('p#p_error').slideDown();
+								reason.focus();
+								return false;
+							}
+
+							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'update_status']);?>',{id:request_id, status:'status',value:'returned',reason:reason.val()},function(res){
+								$.confirm({
+									title:'Alert!',
+									content: res.message,
+									buttons:{
+										ok:{
+											text:'<?php echo __('Ok',true);?>',
+											btnClass:'btn-danger',
+											action:function(){
+												if(res.status=="YES"){
+//													return true;
+												} else {
+													return false;
+												}
+											}
+										}
+									}
+								});
+							},'json');
+						}
 					},
 					cancel: function(){
 						// close
@@ -153,15 +200,43 @@
 				title:'<?php echo __('Reject');?>!',
 				content:"<form>" +
 				"<div class='form-group'>" +
-				"<label><?php echo __('Please tell reason that you would like to Reject this Request.')?></label>" +
+				"<label><?php echo __('Please tell reason that you would like to reject this Request.')?></label>" +
 				"<textarea class='form-control' name='reason'></textarea>" +
+				"<p id='p_error' class='text-danger help-block' style='display:none;'><?php echo __("Please don't keep the reason field is empty!");?></p>" +
 				"</div>" +
 				"</form>",
 				buttons:{
 					formSubmit:{
 						text: '<?php echo __('Reject');?>',
 						btnClass: 'btn-danger',
-						action: function(){}
+						action: function(){
+							var reason=this.$content.find('[name=reason]');
+							if(!reason.val()){
+								this.$content.find('p#p_error').slideDown();
+								reason.focus();
+								return false;
+							}
+
+							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'update_status']);?>', {id:request_id, status:'status',value:'rejected',reason:reason.val()}, function(res){
+								$.confirm({
+									title:'Alert!',
+									content: res.message,
+									buttons:{
+										ok:{
+											text:'<?php echo __('Ok',true);?>',
+											btnClass:'btn-danger',
+											action:function(){
+												if(res.status=="YES"){
+//													return false;
+												} else {
+													return false;
+												}
+											}
+										}
+									}
+								});
+							},'json');
+						}
 					},
 					cancel: function(){
 						// close

@@ -103,15 +103,16 @@ class AppController extends Controller {
 				'Clients.index'=>(($authority=='spc' and !$is_mobile)?true:false),
 				'Clients.add'=>(($authority=='spc' and !$is_mobile)?true:false),
 				'ClientRequest.index'=>(($authority=='spc' and !$is_mobile)?true:false),
-				'ClientRequest.edit'=>false,
-				'ClientRequest.add'=>false,
+				'ClientRequest.update_status'=>true,
 			),
 			'mstep'=>array(
 				'Clients.index'=>(($authority=='mstep' and !$is_mobile)?true:false),
-				'Clients.add'=>false,
 				'ClientRequest.index'=>true,
 				'ClientRequest.edit'=>true,
 				'ClientRequest.add'=>true,
+				'ClientRequest.detail'=>true,
+				'ClientRequest.save_process'=>true,
+				'ClientRequest.delete'=>true,
 			)
 		);
 		
