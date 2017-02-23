@@ -296,42 +296,6 @@
 	var db_password = $('#db-password');
 	var email_s = $('#email-s');
 	
-	var uiAlert=function(params){
-	
-		var settings={"buttons":{}};
-		settings["title"]=(!!params["title"]?params["title"]:"&nbsp;");
-		settings["main_title"]=(!!params["main_title"]?params["main_title"]:settings["title"]);
-		settings["name"]=(!!params["name"]?params["name"]:"&nbsp;");
-		settings["message"]=(!!params["message"]?params["message"]:"&nbsp;");
-		settings["main_title"]=(!!params["main_title"]?params["main_title"]:params["title"]);
-		settings["close"]=($.isFunction(params["close"])?params["close"]:false);
-	
-		if(!!params["yes"]){
-	
-		    settings["buttons"]["YES"]={};
-		    settings["buttons"]["YES"]["class"]="blue";
-		    settings["buttons"]["YES"]["action"]=function(){
-	
-		        	params["yes"]();
-		    };
-		}
-	
-		if(!!params["no"]){
-	
-		    settings["buttons"]["NO"]={};
-		    settings["buttons"]["NO"]["class"]="gray";
-		    settings["buttons"]["NO"]["action"]=function(){
-	
-		        	params["no"]();
-		    };
-		}
-	
-		var js=document.location.protocol+BASE_URL+"assets/js/jquery.confirm.js";
-		loadScript(js,function(){
-				jQuery.confirm(settings);
-		});
-	}
-	
 	if($.isNumeric(client_id)) {
 		var client = <?php echo json_encode($client); ?>;
 		$("#client-id").val(client_id);
@@ -423,21 +387,31 @@
 	        		$('#fuelux-wizard-container').wizard('selectedItem', {step: 3});
 	        	}else{
 	        		if(res.status=='DB'){
-		        		uiAlert({
-							'title': "Alert",
-							'main-title':"Save",
-							'message': 'DB connect fail',
-							'yes': function () {
-								
+	        			$.confirm({
+	        				title: "Alert",
+	        				content:'DB connect fail',
+							buttons: {
+								yes:{
+									text: 'Yes',
+						            btnClass: 'btn-blue',
+						            action: function () {
+						                
+						            }
+								}
 							}
 						});
 	        		}else{
-	        			uiAlert({
-							'title': "Alert",
-							'main-title':"Save",
-							'message': 'Fail',
-							'yes': function () {
-								window.location=BASE_URL+"clients/add";
+	        			$.confirm({
+	        				title: "Alert",
+	        				content:'Fail',
+							buttons: {
+								yes:{
+									text: 'Yes',
+						            btnClass: 'btn-blue',
+						            action: function () {
+						            	window.location=BASE_URL+"clients/add";
+						            }
+								}
 							}
 						});
 	        		}
