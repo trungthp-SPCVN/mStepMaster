@@ -128,6 +128,19 @@ class ClientsController extends AppController {
 	                $res['status'] = "NO";
 	                Output::__output($res);
 	            }
+	            
+	            // create database for host
+	            $old_config_debug = Configure::read('debug');
+	            Configure::write('debug', 0);
+	            if($conn = mysqli_connect($post['db_host'], $post['db_user'], $post['db_password'], $post['db_name'], $post['db_port'])){
+	                $sql = file_get_contents(SQL.'database_structure.sql');
+	                mysqli_multi_query($conn, $sql);
+	                mysqli_close($conn);
+	            }else{
+	                $res['status'] = "DB";
+	                Output::__output($res);
+	            }
+	            Configure::write('debug', $old_config_debug);
 	        }
 	        
 	        $datasource->commit();
