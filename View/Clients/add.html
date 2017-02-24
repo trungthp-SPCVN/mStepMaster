@@ -389,10 +389,10 @@
 	        		if(res.status=='DB'){
 	        			$.confirm({
 	        				title: "Alert",
-	        				content:'DB connect fail',
+	        				content:'DB connect fail!',
 							buttons: {
 								yes:{
-									text: 'Yes',
+									text: 'OK',
 						            btnClass: 'btn-blue',
 						            action: function () {
 						                
@@ -403,10 +403,10 @@
 	        		}else{
 	        			$.confirm({
 	        				title: "Alert",
-	        				content:'Fail',
+	        				content:'Fail!',
 							buttons: {
 								yes:{
-									text: 'Yes',
+									text: 'OK',
 						            btnClass: 'btn-blue',
 						            action: function () {
 						            	window.location=BASE_URL+"clients/add";

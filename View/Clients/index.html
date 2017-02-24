@@ -135,41 +135,6 @@
     	var host=location.host;
         var BASE_URL   ="//"+host+"/";
         
-        var uiAlert=function(params){
-
-        	var settings={"buttons":{}};
-        	settings["title"]=(!!params["title"]?params["title"]:"&nbsp;");
-    		settings["main_title"]=(!!params["main_title"]?params["main_title"]:settings["title"]);
-        	settings["name"]=(!!params["name"]?params["name"]:"&nbsp;");
-        	settings["message"]=(!!params["message"]?params["message"]:"&nbsp;");
-    		settings["main_title"]=(!!params["main_title"]?params["main_title"]:params["title"]);
-    		settings["close"]=($.isFunction(params["close"])?params["close"]:false);
-
-        	if(!!params["yes"]){
-
-        	    settings["buttons"]["YES"]={};
-        	    settings["buttons"]["YES"]["class"]="blue";
-        	    settings["buttons"]["YES"]["action"]=function(){
-
-        	        	params["yes"]();
-        	    };
-        	}
-
-        	if(!!params["no"]){
-
-        	    settings["buttons"]["NO"]={};
-        	    settings["buttons"]["NO"]["class"]="gray";
-        	    settings["buttons"]["NO"]["action"]=function(){
-
-        	        	params["no"]();
-        	    };
-        	}
-
-    		var js=document.location.protocol+BASE_URL+"assets/js/jquery.confirm.js";
-    		loadScript(js,function(){
-    				jQuery.confirm(settings);
-    		});
-    	}
         $("td[data-type=\"check-db-status\"]").each(function(){
         	var target = $(this);
         	var params = target.data('db');
@@ -180,7 +145,7 @@
         // button edit and detail
         $(document).on('click', '.btn-redirect',function(e){
             var obj=$(this);
-            if($.hasData(obj) && obj.data('href')!=undefined) {
+            if(obj.data('href')!=undefined) {
                 location.href=obj.data('href');
             }
             return false;
@@ -195,12 +160,15 @@
             var client_name=client_list_tr.children("td[data-type=\"client-name\"]").text();
             var client_status=client_list_tr.children("td[data-type=\"client-status\"]");
             
-            uiAlert({
+            $.confirm({
 
-				"main_title":"Alert",
-                "title"     :"Active",
-                "message"   :"Do you want to active client "+client_name,
-                "yes"       :function(){
+				title     :"Active",
+				content   :"Do you want to active client "+client_name,
+				buttons   : {
+					yes:{
+						text: 'YES',
+			            btnClass: 'btn-blue',
+			            action:function(){
 	                        var params={};
 	                        params["client_id"]=client_id;
 	                        params["status"]=0;
@@ -209,29 +177,48 @@
 	                        		client_status.html('Activated');
 	                        		target.css("display","none");
 	                        		client_deactive_btn.css("display","inline-block");
-	                        		uiAlert({
-										'title': "Alert",
-										'main-title':"Active",
-										'message': 'Success',
-										'yes': function () {
-											target.one(e.type,arguments.callee);
-										}
-									});
+	                        		
+	                        		$.confirm({
+
+	                    				title     :"Active",
+	                    				content   :'Success',
+	                    				buttons   : {
+	                    					yes:{
+	                    						text: 'OK',
+	                    			            btnClass: 'btn-blue',
+	                    			            action:function(){
+	                    			            	target.one(e.type,arguments.callee);
+	                    			            }
+	                    					}
+	                    				}
+	                        		});
 	                        	}else{
-	                        		uiAlert({
-										'title': "Alert",
-										'main-title':"Active",
-										'message': 'Fail',
-										'yes': function () {
-											target.one(e.type,arguments.callee);
-										}
-									});
+	                        		$.confirm({
+
+	                    				title     :"Active",
+	                    				content   :'Fail',
+	                    				buttons   : {
+	                    					yes:{
+	                    						text: 'OK',
+	                    			            btnClass: 'btn-blue',
+	                    			            action:function(){
+	                    			            	target.one(e.type,arguments.callee);
+	                    			            }
+	                    					}
+	                    				}
+	                        		});
 	                        	}
 							}, 'json');
-	                },
-                "no"     :function(){
-                        target.one(e.type,arguments.callee);
-                },
+		                }
+					},
+	                cancel:{
+	                	text: 'NO',
+			            btnClass: 'btn-red',
+	                	action: function(){
+	                        target.one(e.type,arguments.callee);
+	                	}
+	                }
+				}
         	});
     	});
     	
@@ -244,12 +231,15 @@
             var client_name=client_list_tr.children("td[data-type=\"client-name\"]").text();
             var client_status=client_list_tr.children("td[data-type=\"client-status\"]");
             
-            uiAlert({
+            $.confirm({
 
-				"main_title":"Alert",
-                "title"     :"Deactive",
-                "message"   :"Do you want to deactive client "+client_name,
-                "yes"       :function(){
+				title     :"Active",
+				content   :"Do you want to deactive client "+client_name,
+				buttons   : {
+					yes:{
+						text: 'YES',
+			            btnClass: 'btn-blue',
+			            action:function(){
 	                        var params={};
 	                        params["client_id"]=client_id;
 	                        params["status"]=1;
@@ -258,29 +248,47 @@
 	                        		client_status.html('Deactivated');
 	                        		target.css("display","none");
 	                        		client_active_btn.css("display","inline-block");
-	                        		uiAlert({
-										'title': "Alert",
-										'main-title':"Deactive",
-										'message': 'Success',
-										'yes': function () {
-											target.one(e.type,arguments.callee);
-										}
-									});
+	                        		$.confirm({
+
+	                    				title     :"Active",
+	                    				content   :'Success',
+	                    				buttons   : {
+	                    					yes:{
+	                    						text: 'OK',
+	                    			            btnClass: 'btn-blue',
+	                    			            action:function(){
+	                    			            	target.one(e.type,arguments.callee);
+	                    			            }
+	                    					}
+	                    				}
+	                        		});
 	                        	}else{
-	                        		uiAlert({
-										'title': "Alert",
-										'main-title':"Deactive",
-										'message': 'Fail',
-										'yes': function () {
-											target.one(e.type,arguments.callee);
-										}
-									});
+	                        		$.confirm({
+
+	                    				title     :"Active",
+	                    				content   :'Fail',
+	                    				buttons   : {
+	                    					yes:{
+	                    						text: 'OK',
+	                    			            btnClass: 'btn-blue',
+	                    			            action:function(){
+	                    			            	target.one(e.type,arguments.callee);
+	                    			            }
+	                    					}
+	                    				}
+	                        		});
 	                        	}
 							}, 'json');
-	                },
-                "no"     :function(){
-                        target.one(e.type,arguments.callee);
-                },
+		                }
+					},
+	                cancel:{
+	                	text: 'NO',
+			            btnClass: 'btn-red',
+	                	action: function(){
+	                        target.one(e.type,arguments.callee);
+	                	}
+	                }
+				}
         	});
     	});
     });
