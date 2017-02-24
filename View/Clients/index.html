@@ -97,44 +97,16 @@
         </div>
     </div>
 </div>
-
-<script src="/assets/js/bootstrap.min.js"></script>
-<script src="/assets/js/jquery.dataTables.min.js"></script>
-<script src="/assets/js/dataTables.buttons.min.js"></script>
-<script src="/assets/js/buttons.flash.min.js"></script>
-<script src="/assets/js/buttons.html5.min.js"></script>
-<script src="/assets/js/buttons.print.min.js"></script>
-<script src="/assets/js/buttons.colVis.min.js"></script>
-<script src="/assets/js/dataTables.select.min.js"></script>
-<script src="/assets/js/jquery.dataTables.bootstrap.min.js"></script>
+<?php echo $this->Html->script(['/assets/js/jquery.dataTables.min','/assets/js/dataTables.select.min','/assets/js/jquery.dataTables.bootstrap.min'],array('block'=>'script_library'));?>
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-    var myTable = $('#dynamic-table').DataTable();
-    $.fn.dataTable.Buttons.defaults.dom.container.className = 'dt-buttons btn-overlap btn-group btn-overlap';
+    $('#dynamic-table').DataTable();
 
-    //style the message box
-    var defaultCopyAction = myTable.button(1).action();
-    myTable.button(1).action(function (e, dt, button, config) {
-        defaultCopyAction(e, dt, button, config);
-        $('.dt-button-info').addClass('gritter-item-wrapper gritter-info gritter-center white');
-    });
-    
-    var defaultColvisAction = myTable.button(0).action();
-    myTable.button(0).action(function (e, dt, button, config) {
-        defaultColvisAction(e, dt, button, config);
-        if($('.dt-button-collection > .dropdown-menu').length == 0) {
-            $('.dt-button-collection')
-            .wrapInner('<ul class="dropdown-menu dropdown-light dropdown-caret dropdown-caret" />')
-            .find('a').attr('href', '#').wrap("<li />")
-        }
-        $('.dt-button-collection').appendTo('.tableTools-container .dt-buttons')
-    });
-    
     $(function(){
     	var host=location.host;
         var BASE_URL   ="//"+host+"/";
-        
+
         $("td[data-type=\"check-db-status\"]").each(function(){
         	var target = $(this);
         	var params = target.data('db');
@@ -159,67 +131,60 @@
             var client_id=client_list_tr.attr("data-client-id");
             var client_name=client_list_tr.children("td[data-type=\"client-name\"]").text();
             var client_status=client_list_tr.children("td[data-type=\"client-status\"]");
-            
+
             $.confirm({
+                title: '<?php echo __('Alert');?>',
+                content:'<?php echo __('Do you want to active client');?> ' +client_name,
+                buttons:{
+                    yes:{
+                        text:'<?php echo __('Yes');?>',
+                        btnClass:'btn-success',
+                        action:function(){
+                            var params={};
+                            params["client_id"]=client_id;
+                            params["status"]=0;
+                            $.post(BASE_URL+'clients/updateStatus', params, function (res) {
+                                if (res.status=='YES') {
+                                    client_status.html('Activated');
+                                    target.css("display","none");
+                                    client_deactive_btn.css("display","inline-block");
+                                    $.confirm({
+                                        title: "<?php echo __('Alert');?>",
+                                        content: '<?php echo __('Success');?>',
+                                        buttons: {
+                                            yes: {
+                                                text: '<?php echo __('Ok');?>',
+                                                btnClass: 'btn-danger',
+                                                action: function () {
+                                                    target.one(e.type, arguments.callee);
+                                                }
+                                            }
+                                        }
+                                    });
+                                }else{
+                                    $.confirm({
+                                        title: "<?php echo __('Alert');?>",
+                                        content: '<?php echo __('Fail');?>',
+                                        buttons: {
+                                            yes: {
+                                                text: '<?php echo __('Ok');?>',
+                                                btnClass: 'btn-danger',
+                                                action: function () {
+                                                    target.one(e.type, arguments.callee);
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                            }, 'json');
+                        }
+                    },
+                    cancel:function(){
+                        target.one(e.type,arguments.callee);
+                    }
+                }
+            });
 
-				title     :"Active",
-				content   :"Do you want to active client "+client_name,
-				buttons   : {
-					yes:{
-						text: 'YES',
-			            btnClass: 'btn-blue',
-			            action:function(){
-	                        var params={};
-	                        params["client_id"]=client_id;
-	                        params["status"]=0;
-	                        $.post(BASE_URL+'clients/updateStatus', params, function (res) {
-	                        	if (res.status=='YES') {
-	                        		client_status.html('Activated');
-	                        		target.css("display","none");
-	                        		client_deactive_btn.css("display","inline-block");
-	                        		
-	                        		$.confirm({
-
-	                    				title     :"Active",
-	                    				content   :'Success',
-	                    				buttons   : {
-	                    					yes:{
-	                    						text: 'OK',
-	                    			            btnClass: 'btn-blue',
-	                    			            action:function(){
-	                    			            	target.one(e.type,arguments.callee);
-	                    			            }
-	                    					}
-	                    				}
-	                        		});
-	                        	}else{
-	                        		$.confirm({
-
-	                    				title     :"Active",
-	                    				content   :'Fail',
-	                    				buttons   : {
-	                    					yes:{
-	                    						text: 'OK',
-	                    			            btnClass: 'btn-blue',
-	                    			            action:function(){
-	                    			            	target.one(e.type,arguments.callee);
-	                    			            }
-	                    					}
-	                    				}
-	                        		});
-	                        	}
-							}, 'json');
-		                }
-					},
-	                cancel:{
-	                	text: 'NO',
-			            btnClass: 'btn-red',
-	                	action: function(){
-	                        target.one(e.type,arguments.callee);
-	                	}
-	                }
-				}
-        	});
     	});
     	
     	$(document).on("mouseup", '[data-type=\"btn-deactive\"]',function(e){
@@ -232,63 +197,56 @@
             var client_status=client_list_tr.children("td[data-type=\"client-status\"]");
             
             $.confirm({
-
-				title     :"Active",
-				content   :"Do you want to deactive client "+client_name,
-				buttons   : {
-					yes:{
-						text: 'YES',
-			            btnClass: 'btn-blue',
-			            action:function(){
-	                        var params={};
-	                        params["client_id"]=client_id;
-	                        params["status"]=1;
-	                        $.post(BASE_URL+'clients/updateStatus', params, function (res) {
-	                        	if (res.status=='YES') {
-	                        		client_status.html('Deactivated');
-	                        		target.css("display","none");
-	                        		client_active_btn.css("display","inline-block");
-	                        		$.confirm({
-
-	                    				title     :"Active",
-	                    				content   :'Success',
-	                    				buttons   : {
-	                    					yes:{
-	                    						text: 'OK',
-	                    			            btnClass: 'btn-blue',
-	                    			            action:function(){
-	                    			            	target.one(e.type,arguments.callee);
-	                    			            }
-	                    					}
-	                    				}
-	                        		});
-	                        	}else{
-	                        		$.confirm({
-
-	                    				title     :"Active",
-	                    				content   :'Fail',
-	                    				buttons   : {
-	                    					yes:{
-	                    						text: 'OK',
-	                    			            btnClass: 'btn-blue',
-	                    			            action:function(){
-	                    			            	target.one(e.type,arguments.callee);
-	                    			            }
-	                    					}
-	                    				}
-	                        		});
-	                        	}
-							}, 'json');
-		                }
-					},
-	                cancel:{
-	                	text: 'NO',
-			            btnClass: 'btn-red',
-	                	action: function(){
-	                        target.one(e.type,arguments.callee);
-	                	}
-	                }
-				}
+				title:"<?php echo __('Alert');?>",
+                content:"<?php echo __('Do you want to deactive client');?> "+client_name,
+                buttons:{
+				    yes:{
+				        text:'<?php echo __('Ok');?>',
+                        btnClass:'btn-danger',
+                        action:function(){
+                            var params={};
+                            params["client_id"]=client_id;
+                            params["status"]=1;
+                            $.post(BASE_URL+'clients/updateStatus', params, function (res) {
+                                if (res.status=='YES') {
+                                    client_status.html('Deactivated');
+                                    target.css("display","none");
+                                    client_active_btn.css("display","inline-block");
+                                    $.confirm({
+                                        title: "<?php echo __('Alert');?>",
+                                        content: '<?php echo __('Success');?>',
+                                        buttons:{
+                                            yes: {
+                                                text: '<?php echo __('Ok');?>',
+                                                btnClass: 'btn-danger',
+                                                action: function () {
+                                                    target.one(e.type, arguments.callee);
+                                                }
+                                            }
+                                        }
+                                    });
+                                }else{
+                                    $.confirm({
+                                        title: "<?php echo __('Alert');?>",
+                                        content: '<?php echo __('Fail');?>',
+                                        buttons:{
+                                            yes:{
+                                                text: '<?php echo __('Ok');?>',
+                                                btnClass:'btn-danger',
+                                                action:function () {
+                                                    target.one(e.type,arguments.callee);
+                                                }
+                                            }
+                                        }
+                                    });
+                                }
+                            }, 'json');
+                        }
+                    },
+                    cancel:function(){
+                        target.one(e.type,arguments.callee);
+                    },
+                }
         	});
     	});
     });

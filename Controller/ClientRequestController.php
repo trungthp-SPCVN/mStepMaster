@@ -50,30 +50,46 @@ class ClientRequestController extends AppController {
 	}
 	
 	public function save_process(){
+		if(!$this->request->is('ajax')){return false;}
 		if(!$this->data) {return false;}
 		$data=$this->data;
+		$res['status']=__('');
+		
 		if(!empty($data['id'])){
 			$data['modified_date']=date('Y-m-d H:i:s');
+			$this->TblMstepClientRequest->id=$data['id'];
+			unset($data['id']);
 		} else {
 			$data['requester']=$this->Auth->user('id');
 			$data['created_date']=date('Y-m-d H:i:s');
+			$this->TblMstepClientRequest->create();
 		}
 		
-		$status=$this->__save_request($this->data);
-		Output::__outputYes();
+		$res=$this->TblMstepClientRequest->save($data);
+		Output::__outputYes($res);
 	}
 	
-	public function __save_request($data){
-		if(!$data) { return false; }
-		if(!empty($data['id'])) {
-			$this->TblMstepClientRequest->id=$data['id'];
-			unset($data['id']);
+	public function update_status() {
+		if (!$this->request->is('ajax')) {
+			return false;
+		}
+		if (!$this->data) {
+			return false;
+		}
+		$res['message']=__('Status has beed updated success to '.$this->data['value'],true);
+		
+		Output::__outputYes($res);
+	}
+	public function delete() {
+		if (!$this->request->is('ajax')) {
+			return false;
+		}
+		if (!$this->data) {
+			return false;
 		}
 		
-		return $this->TblMstepClientRequest->save($data);
-	}
-	
-	public function __update_status(){
+		$res['message']=__('Request has been deleted success',true);
 		
+		Output::__outputYes($res);
 	}
 }

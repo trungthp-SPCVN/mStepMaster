@@ -68,9 +68,12 @@
 		</div>
 
 		<div class="clearfix form-actions">
-			<div class="col-md-offset-3 col-md-9">
+			<div class="col-md-offset-1 col-md-9">
 				<input type="hidden" name="id" value="<?php echo ((isset($request['TblMstepClientRequest']['id']))?$request['TblMstepClientRequest']['id']:'');?>"/>
-				<button class="btn btn-info" id="btn_edit"><?php echo __('Edit');?></button>
+				<input type="hidden" name="client_name" value="<?php echo ((isset($request['TblMstepClientRequest']['client_name']))?$request['TblMstepClientRequest']['client_name']:'-')?>"/>
+				<button class="btn btn-grey" id="btn_back"><?php echo __('Back');?></button>
+				<button class="btn btn-success" id="btn_edit"><?php echo __('Edit');?></button>
+				<button class="btn btn-danger" id="btn_delete"><?php echo __('Delete');?></button>
 				<button class="btn btn-warning" id="btn_return"><?php echo __('Return');?></button>
 				<button class="btn btn-danger" id="btn_reject"><?php echo __('Reject');?></button>
 				<button class="btn btn-success" id="btn_create"><?php echo __('Create');?></button>
@@ -84,22 +87,64 @@
 		$('form').on('submit',function(e){
 			e.preventDefault();
 		})
+
+		// Edit
+		$('button#btn_back').on('click',function(e){
+			history.back();
+		});
+
+		// Edit
 		$('button#btn_edit').on('click',function(e){
 			var obj=$(this);
 			var request_id=obj.parent().find(':hidden[name=id]').val();
 			location.href='<?php echo Router::url(array('controller'=>'client_request','action'=>'edit'));?>/'+request_id;
 		});
+
+		// return button
 		$('button#btn_return').on('click',function(e){
 			var obj=$(this);
 			var request_id=obj.parent().find(':hidden[name=id]').val();
 			$.confirm({
-				title:'Confirm!',
-				content:"<form><textarea name='reason'></textarea></form>",
+				title:'<?php echo __('Return');?>!',
+				content:"<form>" +
+				"<div class='form-group'>" +
+				"<label><?php echo __('Please tell reason that you would like to return this Request.')?></label>" +
+				"<textarea class='form-control' name='reason'></textarea>" +
+				"<p id='p_error' class='text-danger help-block' style='display:none;'><?php echo __("Please don't keep the reason field is empty!");?></p>" +
+				"</div>" +
+				"</form>",
 				buttons:{
 					formSubmit:{
 						text: '<?php echo __('Return');?>',
 						btnClass: 'btn-warning',
-						action: function(){}
+						action: function(){
+							var reason=this.$content.find('[name=reason]');
+							if(!reason.val()){
+								this.$content.find('p#p_error').slideDown();
+								reason.focus();
+								return false;
+							}
+
+							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'update_status']);?>',{id:request_id, status:'status',value:'returned',reason:reason.val()},function(res){
+								$.confirm({
+									title:'Alert!',
+									content: res.message,
+									buttons:{
+										ok:{
+											text:'<?php echo __('Ok',true);?>',
+											btnClass:'btn-danger',
+											action:function(){
+												if(res.status=="YES"){
+//													return true;
+												} else {
+													return false;
+												}
+											}
+										}
+									}
+								});
+							},'json');
+						}
 					},
 					cancel: function(){
 						// close
@@ -107,17 +152,52 @@
 				}
 			});
 		});
+
+		// reject button
 		$('button#btn_reject').on('click',function(e){
 			var obj=$(this);
 			var request_id=obj.parent().find(':hidden[name=id]').val();
 			$.confirm({
-				title:'Confirm!',
-				content:"<form><textarea name='reason'></textarea></form>",
+				title:'<?php echo __('Reject');?>!',
+				content:"<form>" +
+				"<div class='form-group'>" +
+				"<label><?php echo __('Please tell reason that you would like to reject this Request.')?></label>" +
+				"<textarea class='form-control' name='reason'></textarea>" +
+				"<p id='p_error' class='text-danger help-block' style='display:none;'><?php echo __("Please don't keep the reason field is empty!");?></p>" +
+				"</div>" +
+				"</form>",
 				buttons:{
 					formSubmit:{
 						text: '<?php echo __('Reject');?>',
 						btnClass: 'btn-danger',
-						action: function(){}
+						action: function(){
+							var reason=this.$content.find('[name=reason]');
+							if(!reason.val()){
+								this.$content.find('p#p_error').slideDown();
+								reason.focus();
+								return false;
+							}
+
+							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'update_status']);?>', {id:request_id, status:'status',value:'rejected',reason:reason.val()}, function(res){
+								$.confirm({
+									title:'Alert!',
+									content: res.message,
+									buttons:{
+										ok:{
+											text:'<?php echo __('Ok',true);?>',
+											btnClass:'btn-danger',
+											action:function(){
+												if(res.status=="YES"){
+//													return false;
+												} else {
+													return false;
+												}
+											}
+										}
+									}
+								});
+							},'json');
+						}
 					},
 					cancel: function(){
 						// close
@@ -125,17 +205,65 @@
 				}
 			});
 		});
+
+
+		// create client
 		$('button#btn_create').on('click',function(e){
 			var obj=$(this);
 			var request_id=obj.parent().find(':hidden[name=id]').val();
+			var client_name=obj.parent().find(':hidden[name=client_name]').val();
 			$.confirm({
 				title:'Confirm!',
-				content:"Would you like continue to deploy system for client <?php echo ((isset($request['TblMstepClientRequest']['client_name']))?$request['TblMstepClientRequest']['client_name']:'-')?>",
+				content:"Would you like continue to deploy system for client "+client_name,
 				buttons:{
 					formSubmit:{
 						text: '<?php echo __('Create');?>',
 						btnClass: 'btn-success',
-						action: function(){}
+						action: function(){
+							location.href='<?php echo Router::url(array("controller"=>"clients","action"=>"add"))?>/'+request_id;
+						}
+					},
+					cancel: function(){
+						// close
+					}
+				}
+			});
+		});
+
+		// create client
+		$('button#btn_delete').on('click',function(e){
+			var obj=$(this);
+			var request_id=obj.parent().find(':hidden[name=id]').val();
+			var client_name=obj.parent().find(':hidden[name=client_name]').val();
+			$.confirm({
+				title:'Confirm!',
+				content:"Would you like continue to remove request to deploy system of client "+client_name,
+				buttons:{
+					formSubmit:{
+						text: '<?php echo __('Delete');?>',
+						btnClass: 'btn-danger',
+						action: function(){
+							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'delete']);?>', {id:request_id}, function(res){
+								$.confirm({
+									title:'Alert!',
+									content: res.message,
+									buttons:{
+										ok:{
+											text:'<?php echo __('Ok',true)?>',
+											btnClass:'btn-danger',
+											action:function(){
+												if(res.status=='YES') {
+//													$('body').reload();
+//													return false;
+												} else {
+													return false;
+												}
+											}
+										}
+									}
+								});
+							}, 'json');
+						}
 					},
 					cancel: function(){
 						// close

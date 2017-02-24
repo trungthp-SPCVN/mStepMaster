@@ -71,7 +71,7 @@
 				<label class="col-sm-3 control-label no-padding-right" for="txt_contact_tel"><?php echo __('Phone');?></label>
 				<div class="col-sm-9">
 					<input type="tel" name="contact_tel" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_tel']))?$request['TblMstepClientRequest']['contact_tel']:'')?>" id="txt_contact_tel" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Phone');?>"/>
-					<span class="help-inline col-xs-12 col-sm-7" id="23423424">
+					<span class="help-inline col-xs-12 col-sm-7">
 						<label class="middle">
 							<input class="ace cp_chk" type="checkbox" id="cp_phone_check" data-s="#txt_client_tel" data-d="#txt_contact_tel"/>
 							<span class="lbl"> <?php echo __('Using company phone');?></span>
@@ -114,7 +114,20 @@
 		$('form[name="frm_request"]').validate({
 			submitHandler: function(form){
 				$.post($(form).attr('action'), $(form).serialize(), function(res){
-					console.log(res);
+					$.confirm({
+						title: 'Alert!',
+						content: '<?php echo __('ABC',true);?>',
+						buttons: {
+							ok: {
+								btnClass: 'btn-danger',
+								action: function (e) {
+									if(res.status=="YES"){
+										location.href='<?php echo Router::url(['controller'=>'ClientRequest','action'=>'index']);?>';
+									} else {}
+								}
+							}
+						}
+					});
 				},'json');
 			}
 		});
