@@ -1,93 +1,92 @@
 <div class="row">
-	<div class="col-sm-6">
-		<form name="frm_request" class="form-horizontal" role="form" action="/client_request/save_process" method="post" novalidate>
+	<form name="frm_request" class="form-horizontal" role="form" action="/client_request/save_process" method="post" novalidate>
+		<div class="col col-xs-12">
 			<input type="hidden" name="id" value="<?php echo ((isset($request['TblMstepClientRequest']['id']))?$request['TblMstepClientRequest']['id']:'');?>"/>
-			<h4><?php echo __('Client information');?></h4>
-			<hr>
+			<h4 class="lighter block green"><?php echo __('Client information');?></h4>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_name"><?php echo __('Name');?><span class="required">※</span> </label>
-				<div class="col-sm-9">
-					<input type="text" name="client_name" value="<?php echo ((isset($request['TblMstepClientRequest']['client_name']))?$request['TblMstepClientRequest']['client_name']:'')?>" id="txt_client_name" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Client name')?>"/>
+				<div class="col-sm-5">
+					<input type="text" name="client_name" value="<?php echo ((isset($request['TblMstepClientRequest']['client_name']))?$request['TblMstepClientRequest']['client_name']:'')?>" id="txt_client_name" class="form-control" placeholder="<?php echo __('Client name')?>"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_address"><?php echo __('Address');?><span class="required">※</span> </label>
-				<div class="col-sm-9">
-					<input type="text" name="client_address" value="<?php echo ((isset($request['TblMstepClientRequest']['client_address']))?$request['TblMstepClientRequest']['client_address']:'')?>" id="txt_client_address" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Client address')?>"/>
+				<div class="col-sm-5">
+					<input type="text" name="client_address" value="<?php echo ((isset($request['TblMstepClientRequest']['client_address']))?$request['TblMstepClientRequest']['client_address']:'')?>" id="txt_client_address" class="form-control" placeholder="<?php echo __('Client address')?>"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_email"><?php echo __('Email');?><span class="required">※</span> </label>
-				<div class="col-sm-9">
-					<input type="text" name="client_email" value="<?php echo ((isset($request['TblMstepClientRequest']['client_email']))?$request['TblMstepClientRequest']['client_email']:'')?>" id="txt_client_email" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Client Email')?>"/>
+				<div class="col-sm-5">
+					<input type="text" name="client_email" value="<?php echo ((isset($request['TblMstepClientRequest']['client_email']))?$request['TblMstepClientRequest']['client_email']:'')?>" id="txt_client_email" class="form-control" placeholder="<?php echo __('Client Email')?>"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_tel"><?php echo __('Phone');?><span class="required">※</span> </label>
-				<div class="col-sm-9">
-					<input type="tel" name="client_tel" value="<?php echo ((isset($request['TblMstepClientRequest']['client_tel']))?$request['TblMstepClientRequest']['client_tel']:'')?>" id="txt_client_tel" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Client phone')?>"/>
+				<div class="col-sm-5">
+					<input type="tel" name="client_tel" value="<?php echo ((isset($request['TblMstepClientRequest']['client_tel']))?$request['TblMstepClientRequest']['client_tel']:'')?>" id="txt_client_tel" class="form-control" placeholder="<?php echo __('Client phone')?>"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_fax"><?php echo __('Fax');?> </label>
-				<div class="col-sm-9">
-					<input type="tel" name="client_fax" value="<?php echo ((isset($request['TblMstepClientRequest']['client_fax']))?$request['TblMstepClientRequest']['client_fax']:'')?>" id="txt_client_fax" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Client fax')?>"/>
+				<div class="col-sm-5">
+					<input type="tel" name="client_fax" value="<?php echo ((isset($request['TblMstepClientRequest']['client_fax']))?$request['TblMstepClientRequest']['client_fax']:'')?>" id="txt_client_fax" class="form-control" placeholder="<?php echo __('Client fax')?>"/>
 				</div>
 			</div>
-			<div class="space-4"></div>
-			<h4><?php echo __('Contact information');?></h4>
-			<hr>
+		</div>
+		<div class="col col-xs-12">
+			<h4 class="lighter block green"><?php echo __('Contact information');?></h4>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_contact_name"><?php echo __('Contact name');?></label>
-				<div class="col-sm-9">
-					<input type="text" name="contact_name" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_name']))?$request['TblMstepClientRequest']['contact_name']:'')?>" id="txt_contact_name" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Contact name');?>"/>
+				<div class="col-sm-5">
+					<input type="text" name="contact_name" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_name']))?$request['TblMstepClientRequest']['contact_name']:'')?>" id="txt_contact_name" class="form-control" placeholder="<?php echo __('Contact name');?>"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_job_title"><?php echo __('Job title');?></label>
-				<div class="col-sm-9">
-					<input type="text" name="contact_jobtitle" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_jobtitle']))?$request['TblMstepClientRequest']['contact_jobtitle']:'')?>" id="txt_job_title" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Job title');?>"/>
+				<div class="col-sm-5">
+					<input type="text" name="contact_jobtitle" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_jobtitle']))?$request['TblMstepClientRequest']['contact_jobtitle']:'')?>" id="txt_job_title" class="form-control" placeholder="<?php echo __('Job title');?>"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_contact_email"><?php echo __('Email');?></label>
-				<div class="col-sm-9">
-					<input type="text" name="contact_email" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_email']))?$request['TblMstepClientRequest']['contact_email']:'')?>" id="txt_contact_email" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Email');?>"/>
-					<span class="help-inline col-xs-12 col-sm-7">
-						<label class="middle">
-							<input class="ace cp_chk" type="checkbox" id="cp_email_check" data-s="#txt_client_email" data-d="#txt_contact_email"/>
-							<span class="lbl"> <?php echo __('Using company email');?></span>
-						</label>
-					</span>
+				<div class="col-sm-5">
+					<input type="text" name="contact_email" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_email']))?$request['TblMstepClientRequest']['contact_email']:'')?>" id="txt_contact_email" class="form-control" placeholder="<?php echo __('Email');?>"/>
 				</div>
+				<span class="help-inline col-sm-4">
+					<label class="middle">
+						<input class="ace cp_chk" type="checkbox" id="cp_email_check" data-s="#txt_client_email" data-d="#txt_contact_email"/>
+						<span class="lbl"> <?php echo __('Using company email');?></span>
+					</label>
+				</span>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_contact_mobile"><?php echo __('Mobile');?></label>
-				<div class="col-sm-9">
-					<input type="tel" name="contact_mobile" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_mobile']))?$request['TblMstepClientRequest']['contact_mobile']:'')?>" id="txt_contact_mobile" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Mobile');?>"/>
+				<div class="col-sm-5">
+					<input type="tel" name="contact_mobile" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_mobile']))?$request['TblMstepClientRequest']['contact_mobile']:'')?>" id="txt_contact_mobile" class="form-control" placeholder="<?php echo __('Mobile');?>"/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_contact_tel"><?php echo __('Phone');?></label>
-				<div class="col-sm-9">
-					<input type="tel" name="contact_tel" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_tel']))?$request['TblMstepClientRequest']['contact_tel']:'')?>" id="txt_contact_tel" class="col-xs-10 col-sm-5" placeholder="<?php echo __('Phone');?>"/>
-					<span class="help-inline col-xs-12 col-sm-7">
-						<label class="middle">
-							<input class="ace cp_chk" type="checkbox" id="cp_phone_check" data-s="#txt_client_tel" data-d="#txt_contact_tel"/>
-							<span class="lbl"> <?php echo __('Using company phone');?></span>
-						</label>
-					</span>
+				<div class="col-sm-5">
+					<input type="tel" name="contact_tel" value="<?php echo ((isset($request['TblMstepClientRequest']['contact_tel']))?$request['TblMstepClientRequest']['contact_tel']:'')?>" id="txt_contact_tel" class="form-control" placeholder="<?php echo __('Phone');?>"/>
 				</div>
+				<span class="help-inline col-sm-4">
+					<label class="middle">
+						<input class="ace cp_chk" type="checkbox" id="cp_phone_check" data-s="#txt_client_tel" data-d="#txt_contact_tel"/>
+						<span class="lbl"> <?php echo __('Using company phone');?></span>
+					</label>
+				</span>
 			</div>
 
 			<div class="clearfix form-actions">
-				<div class="col-md-offset-3 col-md-9">
-					<button type="submit" class="btn btn-info" id="btn_submit"><?php echo __('Save');?></button>
+				<div class="col-md-offset-3 col-md-9 text-right">
 					<button type="reset" class="btn" name="btn_cancel"><?php echo __('Cancel');?></button>
+					<button type="submit" class="btn btn-info" id="btn_submit"><?php echo __('Save');?></button>
 				</div>
 			</div>
-		</form>
-	</div>
+		</div>
+	</form>
 </div>
 <script type="text/javascript">
 	$(function () {
