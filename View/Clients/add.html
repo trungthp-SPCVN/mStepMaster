@@ -31,6 +31,7 @@
 
 								<form class="form-horizontal" id="client-form">
 									<input type="hidden" name="client_id" id="client-id" />
+									<input type="hidden" name="request_id" id="request-id" />
 									<h3 class="lighter block green"><?= __('General Information') ?></h3>
 									<div class="form-group">
 										<label for="client-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Client Name') ?><span class="required">※</span></label>
@@ -299,6 +300,7 @@
 	
 	if(is_request){
 		var request = <?php echo json_encode($request); ?>;
+		$("#request-id").val(request['TblMstepClientRequest']['id']);
 		
 		client_name.val(request['TblMstepClientRequest']['client_name']);
 		address.val(request['TblMstepClientRequest']['client_address']);

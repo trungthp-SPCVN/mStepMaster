@@ -156,6 +156,14 @@ class ClientsController extends AppController {
 	                Output::__output($res);
 	            }
 	            
+	            if(!empty($post['request_id'])){
+	                $this->TblMstepClientRequest->id = $post['request_id'];
+	                $data = [];
+	                $data['status'] = 'created';
+	                $data['client_id'] = $client_id;
+	                $this->TblMstepClientRequest->save($data);
+	            }
+	            
 	            // create database for host
 	            if($conn = mysqli_connect($post['db_host'], $post['db_user'], $post['db_password'], $post['db_name'], $post['db_port'])){
 	                $sql = file_get_contents(SQL.'database_structure.sql');
