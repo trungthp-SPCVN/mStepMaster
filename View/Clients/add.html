@@ -278,6 +278,7 @@
 	var PATHNAME = window.location.pathname;
 	var client_id = PATHNAME.substring(PATHNAME.lastIndexOf('/') + 1);
 	var values={};
+	var is_request = <?php echo json_encode($is_request); ?>;
 	
 	var client_name = $('#client-name');
 	var address = $('#address');
@@ -296,26 +297,41 @@
 	var db_password = $('#db-password');
 	var email_s = $('#email-s');
 	
-	if($.isNumeric(client_id)) {
-		var client = <?php echo json_encode($client); ?>;
-		$("#client-id").val(client_id);
+	if(is_request){
+		var request = <?php echo json_encode($request); ?>;
 		
-		client_name.val(client['ClientProfile']['client_name']);
-		address.val(client['ClientProfile']['client_address']);
-		phone.val(client['ClientProfile']['client_tel']);
-		fax.val(client['ClientProfile']['client_fax']);
-		contact_name.val(client['ClientProfile']['contact_name']);
-		job_title.val(client['ClientProfile']['contact_jobtitle']);
-		email.val(client['ClientProfile']['contact_email']);
-		mobile.val(client['ClientProfile']['contact_mobile']);
-		phone_c.val(client['ClientProfile']['contact_tel']);
-		domain.val(client['Clients'][0]['short_name']);
-		db_host.val(client['Clients'][0]['db_host']);
-		db_port.val(client['Clients'][0]['db_port']);
-		db_name.val(client['Clients'][0]['db_name']);
-		db_user.val(client['Clients'][0]['db_user']);
-		db_password.val(client['Clients'][0]['db_password']);
-		email_s.val(client['ClientProfile']['client_email']);
+		client_name.val(request['TblMstepClientRequest']['client_name']);
+		address.val(request['TblMstepClientRequest']['client_address']);
+		phone.val(request['TblMstepClientRequest']['client_tel']);
+		fax.val(request['TblMstepClientRequest']['client_fax']);
+		contact_name.val(request['TblMstepClientRequest']['contact_name']);
+		job_title.val(request['TblMstepClientRequest']['contact_jobtitle']);
+		email.val(request['TblMstepClientRequest']['contact_email']);
+		mobile.val(request['TblMstepClientRequest']['contact_mobile']);
+		phone_c.val(request['TblMstepClientRequest']['contact_tel']);
+		email_s.val(request['TblMstepClientRequest']['client_email']);
+	}else{
+		if($.isNumeric(client_id)) {
+			var client = <?php echo json_encode($client); ?>;
+			$("#client-id").val(client_id);
+			
+			client_name.val(client['ClientProfile']['client_name']);
+			address.val(client['ClientProfile']['client_address']);
+			phone.val(client['ClientProfile']['client_tel']);
+			fax.val(client['ClientProfile']['client_fax']);
+			contact_name.val(client['ClientProfile']['contact_name']);
+			job_title.val(client['ClientProfile']['contact_jobtitle']);
+			email.val(client['ClientProfile']['contact_email']);
+			mobile.val(client['ClientProfile']['contact_mobile']);
+			phone_c.val(client['ClientProfile']['contact_tel']);
+			domain.val(client['Clients'][0]['short_name']);
+			db_host.val(client['Clients'][0]['db_host']);
+			db_port.val(client['Clients'][0]['db_port']);
+			db_name.val(client['Clients'][0]['db_name']);
+			db_user.val(client['Clients'][0]['db_user']);
+			db_password.val(client['Clients'][0]['db_password']);
+			email_s.val(client['ClientProfile']['client_email']);
+		}
 	}
 	
 	$(':checkbox.cp_chk').each(function () {
@@ -373,62 +389,56 @@
 			}
 		}
 		else if(info.step == 2){
-			e.preventDefault();
-			// Save to data
-			var dataForm = $("#client-form").serialize();
-			
-			$.post(BASE_URL+'clients/saveData', dataForm, function (res) {
-	        	if (res.status=='YES'){
-	        		$('.confirm-step').find('.input-icon > span').each(function(index, el) {
-	    				var __id = $(this).attr('id');
-	    				$('.finish-step').find('span.'+__id).html($(this).html());
-	    			});
-	        		
-	        		$('#fuelux-wizard-container').wizard('selectedItem', {step: 3});
-	        	}else{
-	        		if(res.status=='DB'){
-	        			$.confirm({
-	        				title: "Alert",
-	        				content:'DB connect fail!',
-							buttons: {
-								yes:{
-									text: 'OK',
-						            btnClass: 'btn-blue',
-						            action: function () {
-						                
-						            }
+			if(info.direction == "next"){
+				e.preventDefault();
+				// Save to data
+				var dataForm = $("#client-form").serialize();
+				
+				$.post(BASE_URL+'clients/saveData', dataForm, function (res) {
+		        	if (res.status=='YES'){
+		        		$('.confirm-step').find('.input-icon > span').each(function(index, el) {
+		    				var __id = $(this).attr('id');
+		    				$('.finish-step').find('span.'+__id).html($(this).html());
+		    			});
+		        		
+		        		$('#fuelux-wizard-container').wizard('selectedItem', {step: 3});
+		        	}else{
+		        		if(res.status=='DB'){
+		        			$.confirm({
+		        				title: "<?php echo __('Alert');?>",
+		        				content:"<?php echo __('DB connect fail!');?>",
+								buttons: {
+									yes:{
+										text: 'OK',
+							            btnClass: 'btn-blue',
+							            action: function () {
+							                
+							            }
+									}
 								}
-							}
-						});
-	        		}else{
-	        			$.confirm({
-	        				title: "Alert",
-	        				content:'Fail!',
-							buttons: {
-								yes:{
-									text: 'OK',
-						            btnClass: 'btn-blue',
-						            action: function () {
-						            	window.location=BASE_URL+"clients/add";
-						            }
+							});
+		        		}else{
+		        			$.confirm({
+		        				title: "<?php echo __('Alert');?>",
+		        				content:"<?php echo __('Fail!');?>",
+								buttons: {
+									yes:{
+										text: 'OK',
+							            btnClass: 'btn-blue',
+							            action: function () {
+							            	window.location=BASE_URL+"clients/add";
+							            }
+									}
 								}
-							}
-						});
-	        		}
-	        	}
-			}, 'json');
+							});
+		        		}
+		        	}
+				}, 'json');
+			}
 		}
 	})
 	.on('finished.fu.wizard', function(e) {
-		bootbox.dialog({
-			message: "Thank you! Your information was successfully saved!", 
-			buttons: {
-				"success" : {
-					"label" : "OK",
-					"className" : "btn-sm btn-primary"
-				}
-			}
-		});
+		window.location=BASE_URL+"clients";
 	}).on('stepclick.fu.wizard', function(e){
 		
 	});
