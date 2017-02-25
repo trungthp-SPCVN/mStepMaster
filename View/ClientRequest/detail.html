@@ -74,17 +74,28 @@
 						<input type="hidden" name="id" value="<?php echo ((isset($request['TblMstepClientRequest']['id']))?$request['TblMstepClientRequest']['id']:'');?>"/>
 						<input type="hidden" name="client_name" value="<?php echo ((isset($request['TblMstepClientRequest']['client_name']))?$request['TblMstepClientRequest']['client_name']:'-')?>"/>
 						<button class="btn btn-grey" id="btn_back"><?php echo __('Back');?></button>
+						<?php if((isset($role['ClientRequest.edit']) and $role['ClientRequest.edit']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 						<button class="btn btn-success" id="btn_edit"><?php echo __('Edit');?></button>
+						<?php endif;?>
+						<?php if((isset($role['ClientRequest.delete']) and $role['ClientRequest.delete']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 						<button class="btn btn-danger" id="btn_delete"><?php echo __('Delete');?></button>
+						<?php endif;?>
+						<?php if((isset($role['ClientRequest.update_status']) and $role['ClientRequest.update_status']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 						<button class="btn btn-warning" id="btn_return"><?php echo __('Return');?></button>
+						<?php endif;?>
+						<?php if((isset($role['ClientRequest.update_status']) and $role['ClientRequest.update_status']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 						<button class="btn btn-danger" id="btn_reject"><?php echo __('Reject');?></button>
+						<?php endif;?>
+						<?php if((isset($role['Clients.add']) and $role['Clients.add']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 						<button class="btn btn-success" id="btn_create"><?php echo __('Create');?></button>
+						<?php endif;?>
 					</div>
 				</div>
 			</div>
 		</form>
 	</div>
 </div>
+<?php $this->start('second_script');?>
 <script type="text/javascript">
 	$(function () {
 		$('form').on('submit',function(e){
@@ -277,3 +288,4 @@
 
 	});
 </script>
+<?php $this->end();?>

@@ -24,32 +24,51 @@
 				if(!empty($request) and sizeof($request)) :
 					foreach($request as $row) : ?>
 				<tr>
-					<td class="hidden-480"><?php echo $n++;?><input type="hidden" name="request_id" value="<?php echo $row['TblMstepClientRequest']['id'];?>"/></td>
+					<td class="hidden-480"><?php echo $n++;?></td>
 					<td><?php echo $row['Requester']['first_name'].$row['Requester']['last_name'];?></td>
 					<td class="hidden-480"><?php echo $row['TblMstepClientRequest']['created_date'];?></td>
 					<td><?php echo $row['TblMstepClientRequest']['client_name'];?></td>
 					<td><?php echo mb_strtoupper($row['TblMstepClientRequest']['status']);?></td>
 					<td class="hidden-480"><?php echo $row['Creator']['first_name'].$row['Creator']['last_name'];?></td>
 					<td>
+						<input type="hidden" name="request_id" value="<?php echo $row['TblMstepClientRequest']['id'];?>"/>
+						<input type="hidden" name="request_status" value="<?php echo $row['TblMstepClientRequest']['status'];?>"/>
 						<div class="hidden-sm hidden-xs action-buttons">
+							<?php if((isset($allows['ClientRequest']['detail']) and $allows['ClientRequest']['detail'])) :?>
 							<button class="btn-detail btn btn-info btn-xs" title="Detail">
 								<i class="fa ace-icon fa-eye bigger-130 icon-only"></i>
 							</button>
+							<?php endif;?>
+							<?php if((isset($allows['Clients']['detail']) and $allows['Clients']['detail']) and $row['TblMstepClientRequest']['status']=='created') :?>
+							<button class="btn-client-detail btn btn-success btn-xs" title="Client Detail">
+								<i class="fa ace-icon fa-eye bigger-130 icon-only"></i>
+							</button>
+							<?php endif;?>
+							<?php if((isset($allows['ClientRequest']['edit']) and $allows['ClientRequest']['edit']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-edit btn btn-success btn-xs" title="Edit">
 								<i class="fa ace-icon fa-edit bigger-130 icon-only"></i>
 							</button>
+							<?php endif;?>
+							<?php if((isset($allows['ClientRequest']['delete']) and $allows['ClientRequest']['delete']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-delete btn btn-danger btn-xs" title="Delete">
 								<i class="fa ace-icon fa-trash bigger-130 icon-only"></i>
 							</button>
+							<?php endif;?>
+							<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-return btn btn-warning btn-xs" title="Return">
 								<i class="fa ace-icon fa-reply bigger-130 icon-only"></i>
 							</button>
+							<?php endif;?>
+							<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-reject btn btn-danger btn-xs" title="Reject">
 								<i class="fa ace-icon fa-times bigger-130 icon-only"></i>
 							</button>
+							<?php endif;?>
+							<?php if((isset($allows['Clients']['add']) and $allows['Clients']['add']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-create btn btn-success btn-xs" title="Create">
 								<i class="fa ace-icon fa-share bigger-130 icon-only"></i>
 							</button>
+							<?php endif;?>
 						</div>
 						<div class="hidden-md hidden-lg">
 							<div class="inline pos-rel">
@@ -77,19 +96,23 @@
 	</div>
 </div>
 <?php echo $this->Html->script(['/assets/js/jquery.dataTables.min','/assets/js/dataTables.select.min','/assets/js/jquery.dataTables.bootstrap.min'],array('block'=>'script_library'));?>
+<?php $this->start('second_script');?>
 <script type="text/javascript">
+	var find_request_id=function(){
+		return $(this).parents('td').first().find(':hidden[name="request_id"]').val();
+	}
 	$('#request_table').DataTable();
 	$(function() {
 		// edit request
 		$('#request_table button.btn-edit').on('click',function(e){
 			var obj=$(this);
-			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
+			var request_id=find_request_id.call(obj);
 			location.href='<?php echo Router::url(array("controller"=>"client_request","action"=>"edit"))?>/'+request_id;
 		});
 		// create client
 		$('#request_table button.btn-create').on('click',function(e){
 			var obj=$(this);
-			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
+			var request_id=find_request_id.call(obj);
 			var client_name=obj.parents('tr').first().find('td:first').next().next().next().text();
 			$.confirm({
 				title:'Confirm!',
@@ -112,7 +135,7 @@
 		// create client
 		$('#request_table button.btn-delete').on('click',function(e){
 			var obj=$(this);
-			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
+			var request_id=find_request_id.call(obj);
 			var client_name=obj.parents('tr').first().find('td:first').next().next().next().text();
 			$.confirm({
 				title:'Confirm!',
@@ -154,14 +177,21 @@
 		// create view detail
 		$('#request_table button.btn-detail').on('click',function(e){
 			var obj=$(this);
-			var request_id=obj.parents('tr').first().find('td:first input[name="request_id"]').val();
+			var request_id=find_request_id.call(obj);
 			location.href='<?php echo Router::url(array("controller"=>"ClientRequest","action"=>"detail"))?>/'+request_id;
+		});
+
+		// create view client detail
+		$('#request_table button.btn-client-detail').on('click',function(e){
+			var obj=$(this);
+			var request_id=find_request_id.call(obj);
+			location.href='<?php echo Router::url(array("controller"=>"Clients","action"=>"detail"))?>/'+request_id;
 		});
 
 		// return button
 		$('button.btn-return').on('click',function(e){
 			var obj=$(this);
-			var request_id=obj.parents('tr').first().find(':hidden[name=id]').val();
+			var request_id=find_request_id.call(obj);
 			$.confirm({
 				title:'<?php echo __('Return');?>!',
 				content:"<form>" +
@@ -213,7 +243,7 @@
 		// reject button
 		$('button.btn-reject').on('click',function(e){
 			var obj=$(this);
-			var request_id=obj.parents('tr').first().find(':hidden[name=id]').val();
+			var request_id=find_request_id.call(obj);
 			$.confirm({
 				title:'<?php echo __('Reject');?>!',
 				content:"<form>" +
@@ -264,3 +294,4 @@
 		});
 	});
 </script>
+<?php $this->end();?>

@@ -263,15 +263,8 @@
 		</div>
 	</div>
 </div>
-<script src="/assets/js/bootstrap.min.js"></script>
-<script src="/assets/js/wizard.min.js"></script>
-<script src="/assets/js/jquery.validate.min.js"></script>
-<script src="/assets/js/jquery-additional-methods.min.js"></script>
-<script src="/assets/js/bootbox.js"></script>
-<script src="/assets/js/jquery.maskedinput.min.js"></script>
-<script src="/assets/js/select2.min.js"></script>
-<script src="/assets/js/ace-elements.min.js"></script>
-<script src="/assets/js/ace.min.js"></script>
+<?php echo $this->Html->script(['/assets/js/wizard.min','/assets/js/jquery-additional-methods.min','/assets/js/bootbox','/assets/js/jquery.maskedinput.min','/assets/js/select2.min'],['block'=>'script_library']);?>
+<?php echo $this->start('second_script');?>
 <script type="text/javascript">
 	var host=location.host;
 	var BASE_URL   ="//"+host+"/";
@@ -493,3 +486,4 @@
 		});
 	});
 </script>
+<?php $this->end();?>

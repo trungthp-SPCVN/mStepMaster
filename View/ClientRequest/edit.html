@@ -88,7 +88,8 @@
 		</div>
 	</form>
 </div>
-<?php echo $this->Html->script('/assets/js/jquery.validate_pattern.js',['block'=>'second_script']);?>
+<?php echo $this->Html->script('/assets/js/jquery.validate_pattern.js',['block'=>'script_library']);?>
+<?php $this->start('second_script');?>
 <script type="text/javascript">
 	$(function () {
 		$(':checkbox.cp_chk').each(function () {
@@ -162,3 +163,4 @@
 		});
 	});
 </script>
+<?php $this->end();?>

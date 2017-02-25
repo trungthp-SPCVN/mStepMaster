@@ -98,24 +98,36 @@ class AppController extends Controller {
 		$is_mobile=$this->RequestHandler->isMobile();
 		$authority=$this->Auth->user('authority');
 		
-		$this->role=array(
+		$this->allows=array(
 			'spc'=>array(
-				'Clients.index'=>(($authority=='spc' and !$is_mobile)?true:false),
-				'Clients.add'=>(($authority=='spc' and !$is_mobile)?true:false),
-				'ClientRequest.index'=>(($authority=='spc' and !$is_mobile)?true:false),
-				'ClientRequest.update_status'=>true,
+				'Clients'=>array(
+					'index'=>true,
+					'add'=>(!$is_mobile?true:false),
+					'detail'=>true
+				),
+				'ClientRequest'=>array(
+					'index'=>(!$is_mobile?true:false),
+					'update_status'=>(!$is_mobile?true:false),
+					'detail'=>true,
+				)
 			),
 			'mstep'=>array(
-				'Clients.index'=>(($authority=='mstep' and !$is_mobile)?true:false),
-				'ClientRequest.index'=>true,
-				'ClientRequest.edit'=>true,
-				'ClientRequest.add'=>true,
-				'ClientRequest.detail'=>true,
-				'ClientRequest.save_process'=>true,
-				'ClientRequest.delete'=>true,
+				'Clients'=>array(
+					'index'=>true,
+				),
+				'ClientRequest'=>array(
+					'index'=>true,
+					'edit'=>true,
+					'add'=>true,
+					'detail'=>true,
+					'save_process'=>true,
+					'delete'=>true,
+				)
 			)
 		);
 		
+		$this->set('allows',(empty($this->allows[$authority])?'all':$this->allows[$authority]));
+		$this->set('current_page', strtolower($this->params['controller'].$this->params['action']));
 	}
 	
 	function __setLanguage(){
@@ -137,7 +149,8 @@ class AppController extends Controller {
 
 		// Admin can access every action
 		if (isset($user['authority']) && $user['authority'] === 'master' or
-			(isset($this->role[$user['authority']][$this->name.'.'.$this->action]) and $this->role[$user['authority']][$this->name.'.'.$this->action])) {
+			(isset($this->allows[$user['authority']][$this->name][$this->action])
+				and $this->allows[$user['authority']][$this->name][$this->action])) {
 			return true;
 		}
 		
