@@ -31,6 +31,7 @@
 
 								<form class="form-horizontal" id="client-form">
 									<input type="hidden" name="client_id" id="client-id" />
+									<input type="hidden" name="request_id" id="request-id" />
 									<h3 class="lighter block green"><?= __('General Information') ?></h3>
 									<div class="form-group">
 										<label for="client-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Client Name') ?><span class="required">※</span></label>
@@ -60,15 +61,6 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="fax" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Fax') ?></label>
-										<div class="col-xs-12 col-sm-5">
-											<span class="block input-icon">
-												<input type="tel" name="client_fax" id="fax" class="width-100" />
-												<i class="ace-icon fa fa-fw fa-fax"></i>
-											</span>
-										</div>
-									</div>
-									<div class="form-group">
 										<label for="email-s" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
@@ -83,6 +75,15 @@
 													<span class="lbl"><?= __('Using Contact Email') ?></span>
 												</label>
 											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="fax" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Fax') ?></label>
+										<div class="col-xs-12 col-sm-5">
+											<span class="block input-icon">
+												<input type="tel" name="client_fax" id="fax" class="width-100" />
+												<i class="ace-icon fa fa-fw fa-fax"></i>
+											</span>
 										</div>
 									</div>
 
@@ -150,7 +151,7 @@
 												<i class="ace-icon fa fa-fw fa-globe"></i>
 											</span>
 										</div>
-										<div class="help-block col-xs-12 col-sm-reset inline"> .mstep.com </div>
+										<div class="help-block col-xs-12 col-sm-reset inline"> .<?=DOMAIN_NAME_MSTEP?></div>
 									</div>
 									<div class="form-group">
 										<label for="db-host" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Host') ?><span class="required">※</span></label>
@@ -205,39 +206,39 @@
 									<div class="row">
 										<div class="col col-lg-2 col-md-2"></div>
 										<div class="col col-lg-8 col-md-8">
-											<h3 class="text-center block blue">CONGRATULATION !</h3>
+											<h3 class="text-center block blue"><?= __('CONGRATULATION !') ?></h3>
 											<div class="profile-user-info">
 												<div class="profile-info-row">
-													<label class="col col-lg-3 col-md-4 profile-info-name">CLIENT</label>
-													<span class="profile-info-value col col-lg-9 col-md-8 client-name">.mstep.com</span>
+													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('CLIENT') ?></label>
+													<span class="profile-info-value col col-lg-9 col-md-8 client-name">.<?=DOMAIN_NAME_MSTEP?></span>
 												</div>
 												<div class="profile-info-row">
-													<label class="col col-lg-3 col-md-4 profile-info-name">Domain</label>
+													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Domain') ?></label>
 													<span class="profile-info-value col col-lg-9 col-md-8 domain"></span>
 												</div>
 												<div class="profile-info-row">
-													<label class="col col-lg-3 col-md-4 profile-info-name">Contact Name</label>
+													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Contact Name') ?></label>
 													<span class="profile-info-value col col-lg-9 col-md-8 contact-name"></span>
 												</div>
 												<div class="profile-info-row">
-													<label class="col col-lg-3 col-md-4 profile-info-name">Contact Email</label>
+													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Contact Email') ?></label>
 													<span class="profile-info-value col col-lg-9 col-md-8 email"></span>
 												</div>
-												<h4 class="lighter block blue">Access Information</h4>
+												<h4 class="lighter block blue"><?= __('Access Information') ?></h4>
 												<div class="profile-info-row">
-													<label class="col col-lg-3 col-md-4 profile-info-name">Domain</label>
-													<span class="profile-info-value col col-lg-9 col-md-8 domain">.mstep.com</span>
+													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Domain') ?></label>
+													<span class="profile-info-value col col-lg-9 col-md-8 domain">.<?=DOMAIN_NAME_MSTEP?></span>
 												</div>
 												<div class="profile-info-row">
-													<label class="col col-lg-3 col-md-4 profile-info-name">User(Master)</label>
+													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('User(Master)') ?></label>
 													<span class="profile-info-value col col-lg-9 col-md-8">admin</span>
 												</div>
 												<div class="profile-info-row">
-													<label class="col col-lg-3 col-md-4 profile-info-name">Password</label>
-													<span class="profile-info-value col col-lg-9 col-md-8">123456</span>
+													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Password') ?></label>
+													<span class="profile-info-value col col-lg-9 col-md-8 password"></span>
 												</div>
 												<div class="profile-info-row">
-													<label class="col col-lg-3 col-md-4 profile-info-name">Email</label>
+													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Email') ?></label>
 													<span class="profile-info-value col col-lg-9 col-md-8 email"></span>
 												</div>
 											</div>
@@ -254,7 +255,7 @@
 							<i class="ace-icon fa fa-fw fa-arrow-left"></i> Prev
 						</button>
 
-						<button class="btn btn-success btn-next" data-last="Finish"> Next
+						<button class="btn btn-success btn-next" data-last="OK"> Next
 							<i class="ace-icon fa fa-fw fa-arrow-right icon-on-right"></i>
 						</button>
 					</div>
@@ -292,6 +293,7 @@
 	
 	if(is_request){
 		var request = <?php echo json_encode($request); ?>;
+		$("#request-id").val(request['TblMstepClientRequest']['id']);
 		
 		client_name.val(request['TblMstepClientRequest']['client_name']);
 		address.val(request['TblMstepClientRequest']['client_address']);
@@ -366,7 +368,7 @@
 				$('.input-step form').find('input').each(function(index, el) {
 					var lag = $(this).attr('id');
 					if(lag == 'domain'){
-						$('.confirm-step').find('span#'+lag).html($(this).val() + '<span style="color:red">.mstep.com</span>');
+						$('.confirm-step').find('span#'+lag).html($(this).val() + '<span style="color:red">.<?=DOMAIN_NAME_MSTEP?></span>');
 					}
 					else if(lag == 'db-password'){
 						$('.confirm-step').find('span#'+lag).html('********');
@@ -393,6 +395,11 @@
 		    				var __id = $(this).attr('id');
 		    				$('.finish-step').find('span.'+__id).html($(this).html());
 		    			});
+		        		if(res.pass_show != undefined){
+		        			$('.finish-step').find('span.password').html(res.pass_show);
+		        		}else{
+		        			$('.finish-step').find('span.password').html("********");
+		        		}
 		        		
 		        		$('#fuelux-wizard-container').wizard('selectedItem', {step: 3});
 		        	}else{
@@ -436,7 +443,35 @@
 		
 	});
 	
+	$.validator.addMethod("notEqual", function(value, element, param) {
+		  return param.indexOf(value);
+		}, "Please specify a different (non-default) value");
+	
 	$('#client-form').validate({
+		rules: {
+			client_email:{	
+				pattern: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
+			},
+			contact_email:{
+				pattern: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
+			},
+			short_name:{
+				notEqual:["pm", "lp", "demo", "master"],
+			},
+			client_tel:{
+				pattern: /[0-9\-]+/,
+			},
+			client_fax:{
+				pattern: /[0-9\-]+/,
+			},
+			contact_mobile:{
+				pattern: /[0-9\-]+/,
+			},
+			contact_tel:{
+				pattern: /[0-9\-]+/,
+			},
+		},
+		
 		errorElement: 'div',
 		errorClass: 'invalid',
 		focusInvalid: false,
@@ -463,11 +498,6 @@
 				error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
 			}
 			else error.insertAfter(element.parent());
-		},
-
-		submitHandler: function (form) {
-		},
-		invalidHandler: function (form) {
 		}
 	});
 	// Update html step2
