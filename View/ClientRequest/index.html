@@ -81,7 +81,7 @@
 						text: '<?php echo __('Create');?>',
 						btnClass: 'btn-success',
 						action: function(){
-							location.href='<?php echo Router::url(array("controller"=>"clients","action"=>"add"))?>/'+request_id;
+							location.href='<?php echo Router::url(array("controller"=>"clients","action"=>"add"))?>/request_id='+request_id;
 						}
 					},
 					cancel: function(){

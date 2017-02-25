@@ -6,19 +6,19 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_name"><?php echo __('Name');?><span class="required">※</span> </label>
 				<div class="col-sm-5">
-					<input type="text" name="client_name" value="<?php echo ((isset($request['TblMstepClientRequest']['client_name']))?$request['TblMstepClientRequest']['client_name']:'')?>" id="txt_client_name" class="form-control" placeholder="<?php echo __('Client name')?>"/>
+					<input type="text" name="client_name" value="<?php echo ((isset($request['TblMstepClientRequest']['client_name']))?$request['TblMstepClientRequest']['client_name']:'')?>" id="txt_client_name" class="form-control" placeholder="<?php echo __('Client name')?>" data-msg="abcs" required/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_address"><?php echo __('Address');?><span class="required">※</span> </label>
 				<div class="col-sm-5">
-					<input type="text" name="client_address" value="<?php echo ((isset($request['TblMstepClientRequest']['client_address']))?$request['TblMstepClientRequest']['client_address']:'')?>" id="txt_client_address" class="form-control" placeholder="<?php echo __('Client address')?>"/>
+					<input type="text" name="client_address" value="<?php echo ((isset($request['TblMstepClientRequest']['client_address']))?$request['TblMstepClientRequest']['client_address']:'')?>" id="txt_client_address" class="form-control" placeholder="<?php echo __('Client address')?>" required/>
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_email"><?php echo __('Email');?><span class="required">※</span> </label>
 				<div class="col-sm-5">
-					<input type="text" name="client_email" value="<?php echo ((isset($request['TblMstepClientRequest']['client_email']))?$request['TblMstepClientRequest']['client_email']:'')?>" id="txt_client_email" class="form-control" placeholder="<?php echo __('Client Email')?>"/>
+					<input type="email" name="client_email" value="<?php echo ((isset($request['TblMstepClientRequest']['client_email']))?$request['TblMstepClientRequest']['client_email']:'')?>" id="txt_client_email" class="form-control" placeholder="<?php echo __('Client Email')?>" required/>
 				</div>
 			</div>
 			<div class="form-group">
@@ -110,7 +110,25 @@
 			});
 		});
 
+		var addErrorClass=function(){
+			return $(this).addClass('has-error');
+		}
+		var removeErrorClass=function(){
+			return $(this).removeClass('has-error');
+		}
+
 		$('form[name="frm_request"]').validate({
+			errorPlacement: function(err, ele){
+				addErrorClass.call(ele.parents('.form-group').first());
+				err.insertAfter(ele);
+			},
+			onkeyup:function(ele,event){
+				if($(ele).hasClass('valid')){
+					removeErrorClass.call($(ele).parents('.form-group').first());
+				} else {
+					addErrorClass.call($(ele).parents('.form-group').first());
+				}
+			},
 			submitHandler: function(form){
 				$.post($(form).attr('action'), $(form).serialize(), function(res){
 					$.confirm({
