@@ -142,7 +142,7 @@
 				$.post($(form).attr('action'), $(form).serialize(), function(res){
 					$.confirm({
 						title: 'Alert!',
-						content: '<?php echo __('ABC',true);?>',
+						content: res.message,
 						buttons: {
 							ok: {
 								btnClass: 'btn-danger',

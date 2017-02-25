@@ -161,6 +161,7 @@ class ClientsController extends AppController {
 	                $data = [];
 	                $data['status'] = 'created';
 	                $data['client_id'] = $client_id;
+					$data['creator']=$this->Auth->user('id');
 	                $this->TblMstepClientRequest->save($data);
 	            }
 	            

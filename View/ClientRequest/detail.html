@@ -70,24 +70,30 @@
 					</div>
 				</div>
 				<div class="clearfix form-actions">
-					<div class="col-md-offset-1 col-md-9">
+					<div class="col-md-offset-1 col-md-10">
 						<input type="hidden" name="id" value="<?php echo ((isset($request['TblMstepClientRequest']['id']))?$request['TblMstepClientRequest']['id']:'');?>"/>
 						<input type="hidden" name="client_name" value="<?php echo ((isset($request['TblMstepClientRequest']['client_name']))?$request['TblMstepClientRequest']['client_name']:'-')?>"/>
-						<button class="btn btn-grey" id="btn_back"><?php echo __('Back');?></button>
-						<?php if((isset($role['ClientRequest.edit']) and $role['ClientRequest.edit']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
-						<button class="btn btn-success" id="btn_edit"><?php echo __('Edit');?></button>
+						<button class="btn btn-grey" id="btn_back">
+							<i class="fa fa-arrow-left"></i>&nbsp;<?php echo __('Back');?></button>
+						<?php if((isset($allows['ClientRequest']['edit']) and $allows['ClientRequest']['edit']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+						<button class="btn btn-yellow" id="btn_edit">
+							<i class="fa fa-edit"></i>&nbsp;<?php echo __('Edit');?></button>
 						<?php endif;?>
-						<?php if((isset($role['ClientRequest.delete']) and $role['ClientRequest.delete']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
-						<button class="btn btn-danger" id="btn_delete"><?php echo __('Delete');?></button>
+						<?php if((isset($allows['ClientRequest']['delete']) and $allows['ClientRequest']['delete']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+						<button class="btn btn-danger" id="btn_delete">
+							<i class="fa fa-trash"></i>&nbsp;<?php echo __('Delete');?></button>
 						<?php endif;?>
-						<?php if((isset($role['ClientRequest.update_status']) and $role['ClientRequest.update_status']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
-						<button class="btn btn-warning" id="btn_return"><?php echo __('Return');?></button>
+						<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+						<button class="btn btn-warning" id="btn_return">
+							<i class="fa fa-reply"></i>&nbsp;<?php echo __('Return');?></button>
 						<?php endif;?>
-						<?php if((isset($role['ClientRequest.update_status']) and $role['ClientRequest.update_status']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
-						<button class="btn btn-danger" id="btn_reject"><?php echo __('Reject');?></button>
+						<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+						<button class="btn btn-danger" id="btn_reject">
+							<i class="fa fa-times"></i>&nbsp;<?php echo __('Reject');?></button>
 						<?php endif;?>
-						<?php if((isset($role['Clients.add']) and $role['Clients.add']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
-						<button class="btn btn-success" id="btn_create"><?php echo __('Create');?></button>
+						<?php if((isset($allows['Clients']['add']) and $allows['Clients']['add']) and !in_array($request['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+						<button class="btn btn-success" id="btn_create">
+							<i class="fa fa-share"></i>&nbsp;<?php echo __('Create');?></button>
 						<?php endif;?>
 					</div>
 				</div>
@@ -139,7 +145,7 @@
 								return false;
 							}
 
-							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'update_status']);?>',{id:request_id, status:'status',value:'returned',reason:reason.val()},function(res){
+							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'update_status']);?>',{id:request_id, status:'returned',reason:reason.val()},function(res){
 								$.confirm({
 									title:'Alert!',
 									content: res.message,
@@ -149,9 +155,9 @@
 											btnClass:'btn-danger',
 											action:function(){
 												if(res.status=="YES"){
-//													return true;
+													location.reload(true);
 												} else {
-													return false;
+//													return false;
 												}
 											}
 										}
@@ -192,7 +198,7 @@
 								return false;
 							}
 
-							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'update_status']);?>', {id:request_id, status:'status',value:'rejected',reason:reason.val()}, function(res){
+							$.post('<?php echo Router::url(['controller'=>'ClientRequest','action'=>'update_status']);?>', {id:request_id, status:'rejected',reason:reason.val()}, function(res){
 								$.confirm({
 									title:'Alert!',
 									content: res.message,
@@ -202,9 +208,7 @@
 											btnClass:'btn-danger',
 											action:function(){
 												if(res.status=="YES"){
-//													return false;
-												} else {
-													return false;
+													location.reload(true);
 												}
 											}
 										}
@@ -267,10 +271,9 @@
 											btnClass:'btn-danger',
 											action:function(){
 												if(res.status=='YES') {
-//													$('body').reload();
-//													return false;
+													location.reload(true);
 												} else {
-													return false;
+//													return false;
 												}
 											}
 										}

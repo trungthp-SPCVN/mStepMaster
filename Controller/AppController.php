@@ -103,7 +103,11 @@ class AppController extends Controller {
 				'Clients'=>array(
 					'index'=>true,
 					'add'=>(!$is_mobile?true:false),
-					'detail'=>true
+					'updateStatus'=>(!$is_mobile?true:false),
+					'saveData'=>(!$is_mobile?true:false),
+					'randomPassword'=>(!$is_mobile?true:false),
+					'detail'=>true,
+					'checkConnectDB'=>true,
 				),
 				'ClientRequest'=>array(
 					'index'=>(!$is_mobile?true:false),
@@ -114,6 +118,7 @@ class AppController extends Controller {
 			'mstep'=>array(
 				'Clients'=>array(
 					'index'=>true,
+					'detail'=>true,
 				),
 				'ClientRequest'=>array(
 					'index'=>true,
