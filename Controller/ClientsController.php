@@ -9,7 +9,8 @@
 class ClientsController extends AppController {
     var $uses = [
             'ClientProfile',
-            'Clients'
+            'Clients',
+            'TblMstepClientRequest'
     ];
 
 	public function index(){
@@ -72,34 +73,57 @@ class ClientsController extends AppController {
 	
 	public function add($client_id = null){
 	    $client = [];
+	    $request = [];
+	    $is_request = false;
 	    
-	    if(!empty($client_id)){
-	        $this->ClientProfile->bindModel(array(
-	                'hasMany' => array(
-	                        'Clients' => array(
-	                                'className' => 'Clients',
-	                                'foreignKey' => 'id'
-	                        )
-	                )
-	           )
-            );
-	        $client = $this->ClientProfile->findById($client_id);
+	    if(isset($this->request->query['request_id'])){
+	        $request_id=$this->request->query['request_id'];
 	        
-	        if(!$client || !is_numeric($client_id)){
+	        $this->TblMstepClientRequest->unbindFully();
+	        $request = $this->TblMstepClientRequest->findById($request_id);
+	        if(!is_numeric($request_id) || !$request){
 	            throw new NotFoundException();
+	        }else{
+	            $is_request = true;
 	        }
+	    }else{
+    	    if(!empty($client_id)){
+    	        $this->ClientProfile->bindModel(array(
+    	                'hasMany' => array(
+    	                        'Clients' => array(
+    	                                'className' => 'Clients',
+    	                                'foreignKey' => 'id'
+    	                        )
+    	                )
+    	           )
+                );
+    	        $client = $this->ClientProfile->findById($client_id);
+    	        
+    	        if(!$client || !is_numeric($client_id)){
+    	            throw new NotFoundException();
+    	        }
+    	    }
 	    }
-	    $this->set(compact('client'));
+	    $this->set(compact('is_request','client','request'));
 	}
 	
 	public function saveData(){
 	    if($this->request->is("post")){
 	        $post = $_POST;
+	        $old_config_debug = Configure::read('debug');
+	        Configure::write('debug', 0);
 	        
 	        $datasource = $this->Clients->getDataSource();
 	        $datasource->begin();
 	        
 	        if(!empty($post['client_id'])){
+	            
+	            if($conn = mysqli_connect($post['db_host'], $post['db_user'], $post['db_password'], $post['db_name'], $post['db_port'])){
+	            }else{
+	                $res['status'] = "DB";
+	                Output::__output($res);
+	            }
+	            
 	            $this->ClientProfile->id = $post['client_id'];
 	            $this->Clients->id = $post['client_id'];
 	            
@@ -130,8 +154,6 @@ class ClientsController extends AppController {
 	            }
 	            
 	            // create database for host
-	            $old_config_debug = Configure::read('debug');
-	            Configure::write('debug', 0);
 	            if($conn = mysqli_connect($post['db_host'], $post['db_user'], $post['db_password'], $post['db_name'], $post['db_port'])){
 	                $sql = file_get_contents(SQL.'database_structure.sql');
 	                mysqli_multi_query($conn, $sql);
@@ -140,10 +162,11 @@ class ClientsController extends AppController {
 	                $res['status'] = "DB";
 	                Output::__output($res);
 	            }
-	            Configure::write('debug', $old_config_debug);
 	        }
 	        
 	        $datasource->commit();
+	        
+	        Configure::write('debug', $old_config_debug);
 	        
 	        $res['status'] = "YES";
 	        Output::__output($res);

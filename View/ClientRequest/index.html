@@ -9,12 +9,12 @@
 			<table id="request_table" class="table table-striped table-bordered table-hover">
 				<thead>
 				<tr>
-					<th><?= __('No.') ?></th>
+					<th class="hidden-480"><?= __('No.') ?></th>
 					<th><?= __('Requester') ?></th>
-					<th><?= __('Date request') ?></th>
+					<th class="hidden-480"><?= __('Date request') ?></th>
 					<th><?= __('Client name') ?></th>
 					<th><?= __('Status') ?></th>
-					<th><?= __('Created by') ?></th>
+					<th class="hidden-480"><?= __('Created by') ?></th>
 					<th><?= __('Action') ?></th>
 				</tr>
 				</thead>
@@ -24,31 +24,49 @@
 				if(!empty($request) and sizeof($request)) :
 					foreach($request as $row) : ?>
 				<tr>
-					<td><?php echo $n++;?><input type="hidden" name="request_id" value="<?php echo $row['TblMstepClientRequest']['id'];?>"/></td>
+					<td class="hidden-480"><?php echo $n++;?><input type="hidden" name="request_id" value="<?php echo $row['TblMstepClientRequest']['id'];?>"/></td>
 					<td><?php echo $row['Requester']['first_name'].$row['Requester']['last_name'];?></td>
-					<td><?php echo $row['TblMstepClientRequest']['created_date'];?></td>
+					<td class="hidden-480"><?php echo $row['TblMstepClientRequest']['created_date'];?></td>
 					<td><?php echo $row['TblMstepClientRequest']['client_name'];?></td>
 					<td><?php echo mb_strtoupper($row['TblMstepClientRequest']['status']);?></td>
-					<td><?php echo $row['Creator']['first_name'].$row['Creator']['last_name'];?></td>
+					<td class="hidden-480"><?php echo $row['Creator']['first_name'].$row['Creator']['last_name'];?></td>
 					<td>
-						<button class="btn-detail btn btn-info btn-xs" title="Detail">
-							<i class="fa ace-icon fa-eye bigger-130 icon-only"></i>
-						</button>
-						<button class="btn-edit btn btn-success btn-xs" title="Edit">
-							<i class="fa ace-icon fa-edit bigger-130 icon-only"></i>
-						</button>
-						<button class="btn-delete btn btn-danger btn-xs" title="Delete">
-							<i class="fa ace-icon fa-trash bigger-130 icon-only"></i>
-						</button>
-						<button class="btn-return btn btn-warning btn-xs" title="Return">
-							<i class="fa ace-icon fa-reply bigger-130 icon-only"></i>
-						</button>
-						<button class="btn-reject btn btn-danger btn-xs" title="Reject">
-							<i class="fa ace-icon fa-times bigger-130 icon-only"></i>
-						</button>
-						<button class="btn-create btn btn-success btn-xs" title="Create">
-							<i class="fa ace-icon fa-share bigger-130 icon-only"></i>
-						</button>
+						<div class="hidden-sm hidden-xs action-buttons">
+							<button class="btn-detail btn btn-info btn-xs" title="Detail">
+								<i class="fa ace-icon fa-eye bigger-130 icon-only"></i>
+							</button>
+							<button class="btn-edit btn btn-success btn-xs" title="Edit">
+								<i class="fa ace-icon fa-edit bigger-130 icon-only"></i>
+							</button>
+							<button class="btn-delete btn btn-danger btn-xs" title="Delete">
+								<i class="fa ace-icon fa-trash bigger-130 icon-only"></i>
+							</button>
+							<button class="btn-return btn btn-warning btn-xs" title="Return">
+								<i class="fa ace-icon fa-reply bigger-130 icon-only"></i>
+							</button>
+							<button class="btn-reject btn btn-danger btn-xs" title="Reject">
+								<i class="fa ace-icon fa-times bigger-130 icon-only"></i>
+							</button>
+							<button class="btn-create btn btn-success btn-xs" title="Create">
+								<i class="fa ace-icon fa-share bigger-130 icon-only"></i>
+							</button>
+						</div>
+						<div class="hidden-md hidden-lg">
+							<div class="inline pos-rel">
+								<button class="btn btn-minier btn-yellow dropdown-toggle" data-toggle="dropdown" data-position="auto">
+									<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
+								</button>
+								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+									<li>
+										<a href="#" class="tooltip-info" data-rel="tooltip" title="Detail">
+											<span class="blue">
+												<i class="ace-icon fa fa-search-plus bigger-120"></i>
+											</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
 					</td>
 				</tr>
 				<?php endforeach;
