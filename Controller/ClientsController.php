@@ -6,6 +6,9 @@
  * Date: 1/9/17
  * Time: 5:06 PM
  */
+
+App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+
 class ClientsController extends AppController {
     var $uses = [
             'ClientProfile',
@@ -156,8 +159,15 @@ class ClientsController extends AppController {
 	            // create database for host
 	            if($conn = mysqli_connect($post['db_host'], $post['db_user'], $post['db_password'], $post['db_name'], $post['db_port'])){
 	                $sql = file_get_contents(SQL.'database_structure.sql');
+	                // add account admin
+	                $password = $this->randomPassword();
+	                $sql .= "INSERT INTO `tbl_mstep_master_users` (`id`, `worker_id`, `first_name`, `last_name`, `login_id`, `login_pass`, `email`, `area_id`, `address`, `authority`, `del_flg`, `created`, `modified`) VALUES";
+	                $sql .= "(1, 0, '', '', 'admin', '".$password['hash']."', '', 0, '', 'master', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00')";
+	                
 	                mysqli_multi_query($conn, $sql);
 	                mysqli_close($conn);
+	                
+	                $res['pass_show'] = $password['show'];
 	            }else{
 	                $res['status'] = "DB";
 	                Output::__output($res);
@@ -187,5 +197,23 @@ class ClientsController extends AppController {
             Output::__output($res);
 	        Configure::write('debug', $old_config_debug);
 	    }
+	}
+	
+	function randomPassword() {
+	    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+	    $password=[];
+	    $pass = array(); //remember to declare $pass as an array
+	    $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
+	    for ($i = 0; $i < 8; $i++) {
+	        $n = rand(0, $alphaLength);
+	        $pass[] = $alphabet[$n];
+	    }
+	    $password['show'] = implode($pass);
+	    
+	    $passwordHasher = new SimplePasswordHasher(array('hashType' => 'sha1'));
+	    $password['hash'] = $passwordHasher->hash($password['show']);
+	    
+	    return $password;
+	    
 	}
 }
