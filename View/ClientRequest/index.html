@@ -98,7 +98,7 @@
 									<?php if(($allows=='all' or (isset($allows['ClientRequest']['edit']) and $allows['ClientRequest']['edit'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-edit tooltip-success" data-rel="tooltip" title="<?php echo __('Edit');?>">
-											<span class="success">
+											<span class="green">
 												<i class="ace-icon fa fa-edit bigger-120"></i>
 											</span>
 										</a>
