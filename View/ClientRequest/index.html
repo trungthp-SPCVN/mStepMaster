@@ -32,6 +32,7 @@
 					<td class="hidden-480"><?php echo $row['Creator']['first_name'].$row['Creator']['last_name'];?></td>
 					<td>
 						<input type="hidden" name="request_id" value="<?php echo $row['TblMstepClientRequest']['id'];?>"/>
+						<input type="hidden" name="client_id" value="<?php echo $row['TblMstepClientRequest']['client_id'];?>"/>
 						<input type="hidden" name="request_status" value="<?php echo $row['TblMstepClientRequest']['status'];?>"/>
 						<div class="hidden-sm hidden-xs action-buttons">
 							<?php if((isset($allows['ClientRequest']['detail']) and $allows['ClientRequest']['detail'])) :?>
@@ -87,7 +88,7 @@
 									<?php endif;?>
 									<?php if((isset($allows['Clients']['detail']) and $allows['Clients']['detail']) and $row['TblMstepClientRequest']['status']=='created') :?>
 									<li>
-										<a href="#" class="btn-client-detail tooltip-info" data-rel="tooltip" title="<?php echo __('Client detail');?>">
+										<a href="#" class="btn-client-detail tooltip-warning" data-rel="tooltip" title="<?php echo __('Client detail');?>">
 											<span class="yellow">
 												<i class="ace-icon fa fa-external-link bigger-120"></i>
 											</span>
@@ -96,9 +97,45 @@
 									<?php endif;?>
 									<?php if((isset($allows['ClientRequest']['edit']) and $allows['ClientRequest']['edit']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
-										<a href="#" class="btn-edit tooltip-info" data-rel="tooltip" title="<?php echo __('Edit');?>">
+										<a href="#" class="btn-edit tooltip-success" data-rel="tooltip" title="<?php echo __('Edit');?>">
 											<span class="success">
-												<i class="ace-icon fa fa-success bigger-120"></i>
+												<i class="ace-icon fa fa-edit bigger-120"></i>
+											</span>
+										</a>
+									</li>
+									<?php endif;?>
+									<?php if((isset($allows['ClientRequest']['delete']) and $allows['ClientRequest']['delete']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<li>
+										<a href="#" class="btn-delete tooltip-error" data-rel="tooltip" title="<?php echo __('Delete');?>">
+											<span class="red">
+												<i class="ace-icon fa fa-trash bigger-120"></i>
+											</span>
+										</a>
+									</li>
+									<?php endif;?>
+									<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<li>
+										<a href="#" class="btn-return tooltip-warning" data-rel="tooltip" title="<?php echo __('Return');?>">
+											<span class="warning">
+												<i class="ace-icon fa fa-reply bigger-120"></i>
+											</span>
+										</a>
+									</li>
+									<?php endif;?>
+									<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<li>
+										<a href="#" class="btn-reject tooltip-error" data-rel="tooltip" title="<?php echo __('Reject');?>">
+											<span class="red2">
+												<i class="ace-icon fa fa-times bigger-120"></i>
+											</span>
+										</a>
+									</li>
+									<?php endif;?>
+									<?php if((isset($allows['Clients']['add']) and $allows['Clients']['add']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<li>
+										<a href="#" class="btn-create tooltip-success" data-rel="tooltip" title="<?php echo __('Create');?>">
+											<span class="red2">
+												<i class="ace-icon fa fa-share bigger-120"></i>
 											</span>
 										</a>
 									</li>
@@ -120,6 +157,9 @@
 <script type="text/javascript">
 	var find_request_id=function(){
 		return $(this).parents('td').first().find(':hidden[name="request_id"]').val();
+	}
+	var find_client_id=function(){
+		return $(this).parents('td').first().find(':hidden[name="client_id"]').val();
 	}
 	$('#request_table').DataTable();
 	$(function() {
@@ -201,8 +241,8 @@
 		// create view client detail
 		$('#request_table .btn-client-detail').on('click',function(e){
 			var obj=$(this);
-			var request_id=find_request_id.call(obj);
-			location.href='<?php echo Router::url(array("controller"=>"Clients","action"=>"detail"))?>/'+request_id;
+			var client_id=find_client_id.call(obj);
+			location.href='<?php echo Router::url(array("controller"=>"clients","action"=>"detail"))?>/'+client_id;
 		});
 
 		// return button
