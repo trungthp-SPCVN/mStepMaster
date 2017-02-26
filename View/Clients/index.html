@@ -31,18 +31,21 @@
                         <td data-type="check-db-status" data-db='{"host":"<?=$client['Clients'][0]['db_host']?>","user":"<?=$client['Clients'][0]['db_user']?>","name":"<?=$client['Clients'][0]['db_name']?>","pass":"<?=$client['Clients'][0]['db_password']?>","port":"<?=$client['Clients'][0]['db_port']?>"}'>Checking...</td>
                         <td class="actions">
                             <div class="hidden-sm hidden-xs action-buttons button-list">
+                                <?php if((isset($allows['Clients']['updateStatus']) and $allows['Clients']['updateStatus'])) :?>
                                 <button class="btn btn-success btn-xs" onclick="return false;" data-type="btn-active" <?=($client['Clients'][0]['del_flg']==0)?"style='display:none'":""?>>
                                     <i class="ace-icon fa fa-check bigger-130"></i>
                                 </button>
-
+                                <?php endif;?>
+                                <?php if((isset($allows['Clients']['updateStatus']) and $allows['Clients']['updateStatus'])) :?>
                                 <button class="btn btn-warning btn-xs" onclick="return false;" data-type="btn-deactive" <?=($client['Clients'][0]['del_flg']==1)?"style='display:none'":""?>>
                                     <i class="ace-icon fa fa-ban bigger-130"></i>
                                 </button>
-
+                                <?php endif;?>
+                                <?php if((isset($allows['Clients']['add']) and $allows['Clients']['add'])) :?>
                                 <button class="btn-redirect btn btn-success btn-xs" data-href="/clients/add/<?=$client['ClientProfile']['id']?>">
                                     <i class="ace-icon fa fa-edit bigger-130"></i>
                                 </button>
-
+                                <?php endif;?>
                                 <button class="btn-redirect btn btn-info btn-xs" data-href="/clients/detail/<?=$client['ClientProfile']['id']?>">
                                     <i class="ace-icon fa fa-eye bigger-130"></i>
                                 </button>
