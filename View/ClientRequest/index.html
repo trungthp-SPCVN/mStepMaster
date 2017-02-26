@@ -104,13 +104,13 @@
 	$('#request_table').DataTable();
 	$(function() {
 		// edit request
-		$('#request_table button.btn-edit').on('click',function(e){
+		$('#request_table .btn-edit').on('click',function(e){
 			var obj=$(this);
 			var request_id=find_request_id.call(obj);
 			location.href='<?php echo Router::url(array("controller"=>"client_request","action"=>"edit"))?>/'+request_id;
 		});
 		// create client
-		$('#request_table button.btn-create').on('click',function(e){
+		$('#request_table .btn-create').on('click',function(e){
 			var obj=$(this);
 			var request_id=find_request_id.call(obj);
 			var client_name=obj.parents('tr').first().find('td:first').next().next().next().text();
@@ -133,7 +133,7 @@
 		});
 
 		// create client
-		$('#request_table button.btn-delete').on('click',function(e){
+		$('#request_table .btn-delete').on('click',function(e){
 			var obj=$(this);
 			var request_id=find_request_id.call(obj);
 			var client_name=obj.parents('tr').first().find('td:first').next().next().next().text();
@@ -172,21 +172,21 @@
 		});
 
 		// create view detail
-		$('#request_table button.btn-detail').on('click',function(e){
+		$('#request_table .btn-detail').on('click',function(e){
 			var obj=$(this);
 			var request_id=find_request_id.call(obj);
 			location.href='<?php echo Router::url(array("controller"=>"ClientRequest","action"=>"detail"))?>/'+request_id;
 		});
 
 		// create view client detail
-		$('#request_table button.btn-client-detail').on('click',function(e){
+		$('#request_table .btn-client-detail').on('click',function(e){
 			var obj=$(this);
 			var request_id=find_request_id.call(obj);
 			location.href='<?php echo Router::url(array("controller"=>"Clients","action"=>"detail"))?>/'+request_id;
 		});
 
 		// return button
-		$('button.btn-return').on('click',function(e){
+		$('#request_table .btn-return').on('click',function(e){
 			var obj=$(this);
 			var request_id=find_request_id.call(obj);
 			$.confirm({
@@ -236,7 +236,7 @@
 			});
 		});
 		// reject button
-		$('button.btn-reject').on('click',function(e){
+		$('#request_table .btn-reject').on('click',function(e){
 			var obj=$(this);
 			var request_id=find_request_id.call(obj);
 			$.confirm({
