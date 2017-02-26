@@ -119,6 +119,7 @@ class AppController extends Controller {
 				'Clients'=>array(
 					'index'=>true,
 					'detail'=>true,
+					'checkConnectDB'=>true
 				),
 				'ClientRequest'=>array(
 					'index'=>true,

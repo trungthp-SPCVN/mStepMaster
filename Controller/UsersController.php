@@ -12,6 +12,7 @@
  */
 
 App::uses('AuthComponent', 'Controller/Component');
+
 /**
  * Users Controller
  *
@@ -55,8 +56,8 @@ class UsersController extends AppController {
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
 				// check Allow ip address
+				$ip_address=$this->request->clientIp();
 				if(!empty(ALLOW_IP_ADRR[$this->Auth->user('authority')])){
-					$ip_address=$this->request->clientIp();
 					$allow_address=ALLOW_IP_ADRR[$this->Auth->user('authority')];
 					if(!is_array($allow_address)){
 						$allow_address=preg_split('/[,;]/', $allow_address);
@@ -69,12 +70,16 @@ class UsersController extends AppController {
 					}
 				}
 				
+				file_put_contents(LOGS . 'logged.log', 'Last logged: '.date('D M dS Y H:i:s')." from ".$ip_address);
 				// allow access
 				$this->redirect($this->Auth->redirectUrl());
 			} else {
-				$this->Session->setFlash(__('パスワードが違います。'));
+				$this->Session->setFlash(__('Email address or password is wrong.'));
 			}
 		}
+		
+		$last_logged=file_get_contents(LOGS . 'logged.log');
+		$this->set('last_logged',$last_logged);
 	}
 
 	public function logout() {

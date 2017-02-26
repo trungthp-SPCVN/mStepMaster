@@ -5,9 +5,12 @@
  * User: Edward
  * Date: 1/9/17
  * Time: 5:06 PM
+ *
+ * @property TblMstepClientRequest $TblMstepClientRequest
  */
 
 App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
+App::uses('CakeEmail', 'Network/Email');
 
 class ClientsController extends AppController {
     var $uses = [
@@ -156,22 +159,13 @@ class ClientsController extends AppController {
 	                Output::__output($res);
 	            }
 	            
-	            if(!empty($post['request_id'])){
-	                $this->TblMstepClientRequest->id = $post['request_id'];
-	                $data = [];
-	                $data['status'] = 'created';
-	                $data['client_id'] = $client_id;
-					$data['creator']=$this->Auth->user('id');
-	                $this->TblMstepClientRequest->save($data);
-	            }
-	            
 	            // create database for host
-	            if($conn = mysqli_connect($post['db_host'], $post['db_user'], $post['db_password'], $post['db_name'], $post['db_port'])){
-	                $sql = file_get_contents(SQL.'database_structure.sql');
-	                // add account admin
-	                $password = $this->randomPassword();
+				$password = $this->randomPassword();
+				if($conn = mysqli_connect($post['db_host'], $post['db_user'], $post['db_password'], $post['db_name'], $post['db_port'])){
+					$sql = file_get_contents(SQL.'database_structure.sql');
+					// add account admin
 	                $sql .= "INSERT INTO `tbl_mstep_master_users` (`id`, `worker_id`, `first_name`, `last_name`, `login_id`, `login_pass`, `email`, `area_id`, `address`, `authority`, `del_flg`, `created`, `modified`) VALUES";
-	                $sql .= "(1, 0, '', '', 'admin', '".$password['hash']."', '', 0, '', 'master', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00')";
+	                $sql .= "(1, 0, '', '', '".CLIENT_MASTER_ACCOUNT."', '".$password['hash']."', '', 0, '', 'master', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00')";
 	                
 	                mysqli_multi_query($conn, $sql);
 	                mysqli_close($conn);
@@ -181,6 +175,36 @@ class ClientsController extends AppController {
 	                $res['status'] = "DB";
 	                Output::__output($res);
 	            }
+		
+				if(!empty($post['request_id'])){
+					$this->TblMstepClientRequest->id = $post['request_id'];
+					$data = [];
+					$data['status'] = 'created';
+					$data['client_id'] = $client_id;
+					$data['creator']=$this->Auth->user('id');
+					$this->TblMstepClientRequest->save($data);
+			
+					// get request information
+			
+					$request_data=$this->TblMstepClientRequest->read();
+					// Send email
+					$Email=new CakeEmail('updateRequestStatus');
+					$Email->subject(SUBJECT_CREATE_CLIENT_FROM_REQUEST);
+			
+					if(!empty($request_data['Requester']['email'])) {
+						$Email->to($request_data['Requester']['email']);
+					}
+					// render
+					$Email->viewVars(array(
+						'domain'=>$post['short_name'].'.'.DOMAIN_NAME_MSTEP,
+						'account'=>CLIENT_MASTER_ACCOUNT,
+						'password'=>$password['show'],
+						'request_url'=>Router::url(array('controller'=>'ClientRequest','action'=>'detail',$post['request_id']),true),
+						'client_url'=>Router::url(array('controller'=>'Clients','action'=>'detail',$client_id),true)
+					));
+					$Email->template('created_client_from_request');
+					$Email->send();
+				}
 	        }
 	        
 	        $datasource->commit();

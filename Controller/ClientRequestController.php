@@ -8,9 +8,13 @@
  *
  * @property TblMstepClientRequest $TblMstepClientRequest
  */
+
+App::uses('CakeEmail', 'Network/Email');
+
 class ClientRequestController extends AppController {
 	var $name = "ClientRequest";
 	var $uses = array('TblMstepClientRequest');
+	var $components=array('Email');
 	
 	public function beforeFilter(){
 		parent::beforeFilter();
@@ -60,10 +64,12 @@ class ClientRequestController extends AppController {
 		if(!$this->request->is('ajax')){return false;}
 		if(!$this->data) {return false;}
 		$data=$this->data;
+		$request_id=0;
 		
 		if(!empty($data['id'])){
 			$data['modified_date']=date('Y-m-d H:i:s');
 			$this->TblMstepClientRequest->id=$data['id'];
+			$request_id=$data['id'];
 			unset($data['id']);
 		} else {
 			$data['requester']=$this->Auth->user('id');
@@ -77,9 +83,23 @@ class ClientRequestController extends AppController {
 		$this->TblMstepClientRequest->set($data);
 		
 		if(!$this->TblMstepClientRequest->save()) {
+			$request_id = $this->TblMstepClientRequest->getInsertID();
 			$res['message']=__('Cannot not save Client request, please try again',true);
 			Output::__outputNo($res);
 		}
+		// send email
+		$Email=new CakeEmail('updateRequestStatus');
+		if($request_id!=''){
+			$Email->subject(SUBJECT_UPDATE_REQUEST);
+		} else {
+			$Email->subject(SUBJECT_NEW_REQUEST);
+		}
+		$Email->viewVars(array(
+			'url'=>Router::url(array('controller'=>'ClientRequest','action'=>'detail',$request_id),true)
+		));
+		$Email->to($this->Auth->user('email'));
+		$Email->template('update_request');
+		$Email->send();
 		
 		// save success
 		$res['message']=__('Your request has been saved success');
@@ -101,7 +121,6 @@ class ClientRequestController extends AppController {
 		
 		// update request status
 		$data=$this->data;
-		
 		
 		// get reason to update
 		$reason='';
@@ -125,6 +144,26 @@ class ClientRequestController extends AppController {
 			$res['message']=__('Cannot save Client Request, please try again',true);
 			Output::__outputNo($res);
 		}
+		$request_data=$this->TblMstepClientRequest->getRequestByID($request_id);
+		
+		// Send email
+		$Email=new CakeEmail('updateRequestStatus');
+		if($data['status']=='returned') {
+			$Email->subject(SUBJECT_RETURN_REQUEST);
+		} else if($data['status']=='rejected'){
+			$Email->subject(SUBJECT_REJECT_REQUEST);
+		}
+		if(!empty($request_data['Requester']['email'])) {
+			$Email->to($request_data['Requester']['email']);
+		}
+		$Email->viewVars(array(
+			'reason'=>$reason,
+			'status'=>$data['status'],
+			'url'=>Router::url(array('controller'=>'ClientRequest','action'=>'detail',$request_id),true)
+		));
+		$Email->template('update_request_status');
+		$Email->send();
+		
 		// save success
 		$res['message']=__('Status has beed updated success to '.$data['status'],true);
 		Output::__outputYes($res);
