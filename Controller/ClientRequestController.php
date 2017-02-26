@@ -77,6 +77,8 @@ class ClientRequestController extends AppController {
 			$this->TblMstepClientRequest->create();
 		}
 		
+		$edit=$request_id>0;
+		
 		// alway set status is Requested
 		$data['status']='requested';
 		
@@ -86,16 +88,20 @@ class ClientRequestController extends AppController {
 			$res['message']=__('Cannot not save Client request, please try again',true);
 			Output::__outputNo($res);
 		}
-		if($request_id==0) {
+		
+		// get class insert id
+		if(!$edit) {
 			$request_id = $this->TblMstepClientRequest->getLastInsertID();
 		}
 		// send email
 		$Email=new CakeEmail('updateRequestStatus');
-		if($request_id>0){
+		
+		if($edit){
 			$Email->subject(SUBJECT_UPDATE_REQUEST);
 		} else {
 			$Email->subject(SUBJECT_NEW_REQUEST);
 		}
+		
 		$Email->viewVars(array(
 			'url'=>Router::url(array('controller'=>'ClientRequest','action'=>'detail',$request_id),true)
 		));
