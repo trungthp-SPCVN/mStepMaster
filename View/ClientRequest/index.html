@@ -116,7 +116,7 @@
 									<?php if(($allows=='all' or (isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-return tooltip-warning" data-rel="tooltip" title="<?php echo __('Return');?>">
-											<span class="warning">
+											<span class="yellow">
 												<i class="ace-icon fa fa-reply bigger-120"></i>
 											</span>
 										</a>
@@ -125,7 +125,7 @@
 									<?php if(($allows=='all' or (isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-reject tooltip-error" data-rel="tooltip" title="<?php echo __('Reject');?>">
-											<span class="red2">
+											<span class="red">
 												<i class="ace-icon fa fa-times bigger-120"></i>
 											</span>
 										</a>
@@ -134,7 +134,7 @@
 									<?php if(($allows=='all' or (isset($allows['Clients']['add']) and $allows['Clients']['add'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-create tooltip-success" data-rel="tooltip" title="<?php echo __('Create');?>">
-											<span class="red2">
+											<span class="green">
 												<i class="ace-icon fa fa-share bigger-120"></i>
 											</span>
 										</a>
