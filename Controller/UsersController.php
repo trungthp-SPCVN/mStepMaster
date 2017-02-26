@@ -61,7 +61,7 @@ class UsersController extends AppController {
 					if(!is_array($allow_address)){
 						$allow_address=preg_split('/[,;]/', $allow_address);
 					}
-					if(!in_array($ip_address, $allow_address)){
+					if(in_array($ip_address, $allow_address)){
 						throw new ForbiddenException("You don't have permission to access from ip address: ".$ip_address);
 						die;
 					}
