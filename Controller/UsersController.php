@@ -64,7 +64,7 @@ class UsersController extends AppController {
 					if(in_array($ip_address, $allow_address)){
 //						throw new ForbiddenException("You don't have permission to access from ip address: ".$ip_address);
 						$this->Session->setFlash("You don't have permission to access from ip address: ".$ip_address);
-						$this->redirect($this->Auth->logoutRedirect);
+						$this->logout();
 						die;
 					}
 				}
