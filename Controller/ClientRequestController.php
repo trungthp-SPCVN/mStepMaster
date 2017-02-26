@@ -51,6 +51,11 @@ class ClientRequestController extends AppController {
 		$this->set(compact('request'));
 	}
 	
+	/**
+	 * Only for add and edit
+	 * @return bool
+	 *
+	 */
 	public function save_process(){
 		if(!$this->request->is('ajax')){return false;}
 		if(!$this->data) {return false;}
@@ -65,6 +70,9 @@ class ClientRequestController extends AppController {
 			$data['created_date']=date('Y-m-d H:i:s');
 			$this->TblMstepClientRequest->create();
 		}
+		
+		// alway set status is Requested
+		$data['status']='requested';
 		
 		$this->TblMstepClientRequest->set($data);
 		

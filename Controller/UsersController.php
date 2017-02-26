@@ -54,6 +54,20 @@ class UsersController extends AppController {
 		// if we get the post information, try to authenticate
 		if ($this->request->is('post')) {
 			if ($this->Auth->login()) {
+				// check Allow ip address
+				if(!empty(ALLOW_IP_ADRR[$this->Auth->user('authority')])){
+					$ip_address=$this->request->clientIp();
+					$allow_address=ALLOW_IP_ADRR[$this->Auth->user('authority')];
+					if(!is_array($allow_address)){
+						$allow_address=preg_split('/[,;]/', $allow_address);
+					}
+					if(!in_array($ip_address, $allow_address)){
+						throw new ForbiddenException("You don't have permission to access from ip address: ".$ip_address);
+						die;
+					}
+				}
+				
+				// allow access
 				$this->redirect($this->Auth->redirectUrl());
 			} else {
 				$this->Session->setFlash(__('パスワードが違います。'));

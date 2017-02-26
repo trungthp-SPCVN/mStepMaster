@@ -1,7 +1,8 @@
 <div class="row">
 	<form name="frm_request" class="form-horizontal" role="form" action="/client_request/save_process" method="post" novalidate>
+		<input type="hidden" name="id" value="<?php echo ((isset($request['TblMstepClientRequest']['id']))?$request['TblMstepClientRequest']['id']:'');?>"/>
+		<input type="hidden" name="status" value="<?php echo ((isset($request['TblMstepClientRequest']['status']))?$request['TblMstepClientRequest']['status']:'');?>"/>
 		<div class="col col-xs-12">
-			<input type="hidden" name="id" value="<?php echo ((isset($request['TblMstepClientRequest']['id']))?$request['TblMstepClientRequest']['id']:'');?>"/>
 			<h4 class="lighter block green"><?php echo __('Client information');?></h4>
 			<div class="form-group">
 				<label class="col-sm-3 control-label no-padding-right" for="txt_client_name"><?php echo __('Name');?><span class="required">※</span> </label>

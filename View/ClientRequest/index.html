@@ -35,37 +35,37 @@
 						<input type="hidden" name="client_id" value="<?php echo $row['TblMstepClientRequest']['client_id'];?>"/>
 						<input type="hidden" name="request_status" value="<?php echo $row['TblMstepClientRequest']['status'];?>"/>
 						<div class="hidden-sm hidden-xs action-buttons">
-							<?php if((isset($allows['ClientRequest']['detail']) and $allows['ClientRequest']['detail'])) :?>
+							<?php if($allows=='all' or ((isset($allows['ClientRequest']['detail']) and $allows['ClientRequest']['detail']))) :?>
 							<button class="btn-detail btn btn-info btn-xs" title="Detail">
 								<i class="fa ace-icon fa-eye bigger-130 icon-only"></i>
 							</button>
 							<?php endif;?>
-							<?php if((isset($allows['Clients']['detail']) and $allows['Clients']['detail']) and $row['TblMstepClientRequest']['status']=='created') :?>
+							<?php if(($allows=='all' or (isset($allows['Clients']['detail']) and $allows['Clients']['detail'])) and $row['TblMstepClientRequest']['status']=='created') :?>
 							<button class="btn-client-detail btn btn-yellow btn-xs" title="Client Detail">
 								<i class="fa ace-icon fa-external-link bigger-130 icon-only"></i>
 							</button>
 							<?php endif;?>
-							<?php if((isset($allows['ClientRequest']['edit']) and $allows['ClientRequest']['edit']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+							<?php if(($allows=='all' or (isset($allows['ClientRequest']['edit']) and $allows['ClientRequest']['edit'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-edit btn btn-success btn-xs" title="Edit">
 								<i class="fa ace-icon fa-edit bigger-130 icon-only"></i>
 							</button>
 							<?php endif;?>
-							<?php if((isset($allows['ClientRequest']['delete']) and $allows['ClientRequest']['delete']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+							<?php if(($allows=='all' or (isset($allows['ClientRequest']['delete']) and $allows['ClientRequest']['delete'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-delete btn btn-danger btn-xs" title="Delete">
 								<i class="fa ace-icon fa-trash bigger-130 icon-only"></i>
 							</button>
 							<?php endif;?>
-							<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+							<?php if(($allows=='all' or (isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','returned','rejected'))) :?>
 							<button class="btn-return btn btn-warning btn-xs" title="Return">
 								<i class="fa ace-icon fa-reply bigger-130 icon-only"></i>
 							</button>
 							<?php endif;?>
-							<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+							<?php if(($allows=='all' or (isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-reject btn btn-danger btn-xs" title="Reject">
 								<i class="fa ace-icon fa-times bigger-130 icon-only"></i>
 							</button>
 							<?php endif;?>
-							<?php if((isset($allows['Clients']['add']) and $allows['Clients']['add']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+							<?php if(($allows=='all' or (isset($allows['Clients']['add']) and $allows['Clients']['add'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 							<button class="btn-create btn btn-success btn-xs" title="Create">
 								<i class="fa ace-icon fa-share bigger-130 icon-only"></i>
 							</button>
@@ -77,7 +77,7 @@
 									<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-									<?php if((isset($allows['ClientRequest']['detail']) and $allows['ClientRequest']['detail'])) :?>
+									<?php if($allows=='all' or (isset($allows['ClientRequest']['detail']) and $allows['ClientRequest']['detail'])) :?>
 									<li>
 										<a href="#" class="btn-detail tooltip-info" data-rel="tooltip" title="<?php echo __('Detail');?>">
 											<span class="blue">
@@ -86,7 +86,7 @@
 										</a>
 									</li>
 									<?php endif;?>
-									<?php if((isset($allows['Clients']['detail']) and $allows['Clients']['detail']) and $row['TblMstepClientRequest']['status']=='created') :?>
+									<?php if(($allows=='all' or (isset($allows['Clients']['detail']) and $allows['Clients']['detail'])) and $row['TblMstepClientRequest']['status']=='created') :?>
 									<li>
 										<a href="#" class="btn-client-detail tooltip-warning" data-rel="tooltip" title="<?php echo __('Client detail');?>">
 											<span class="yellow">
@@ -95,7 +95,7 @@
 										</a>
 									</li>
 									<?php endif;?>
-									<?php if((isset($allows['ClientRequest']['edit']) and $allows['ClientRequest']['edit']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<?php if(($allows=='all' or (isset($allows['ClientRequest']['edit']) and $allows['ClientRequest']['edit'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-edit tooltip-success" data-rel="tooltip" title="<?php echo __('Edit');?>">
 											<span class="success">
@@ -104,7 +104,7 @@
 										</a>
 									</li>
 									<?php endif;?>
-									<?php if((isset($allows['ClientRequest']['delete']) and $allows['ClientRequest']['delete']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<?php if(($allows=='all' or (isset($allows['ClientRequest']['delete']) and $allows['ClientRequest']['delete'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-delete tooltip-error" data-rel="tooltip" title="<?php echo __('Delete');?>">
 											<span class="red">
@@ -113,7 +113,7 @@
 										</a>
 									</li>
 									<?php endif;?>
-									<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<?php if(($allows=='all' or (isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-return tooltip-warning" data-rel="tooltip" title="<?php echo __('Return');?>">
 											<span class="warning">
@@ -122,7 +122,7 @@
 										</a>
 									</li>
 									<?php endif;?>
-									<?php if((isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<?php if(($allows=='all' or (isset($allows['ClientRequest']['update_status']) and $allows['ClientRequest']['update_status'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-reject tooltip-error" data-rel="tooltip" title="<?php echo __('Reject');?>">
 											<span class="red2">
@@ -131,7 +131,7 @@
 										</a>
 									</li>
 									<?php endif;?>
-									<?php if((isset($allows['Clients']['add']) and $allows['Clients']['add']) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
+									<?php if(($allows=='all' or (isset($allows['Clients']['add']) and $allows['Clients']['add'])) and !in_array($row['TblMstepClientRequest']['status'],array('created','rejected'))) :?>
 									<li>
 										<a href="#" class="btn-create tooltip-success" data-rel="tooltip" title="<?php echo __('Create');?>">
 											<span class="red2">
