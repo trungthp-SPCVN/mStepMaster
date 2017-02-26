@@ -83,7 +83,7 @@ class ClientRequestController extends AppController {
 		$this->TblMstepClientRequest->set($data);
 		
 		if(!$this->TblMstepClientRequest->save()) {
-			$request_id = $this->TblMstepClientRequest->getInsertID();
+			$request_id = $this->TblMstepClientRequest->getLastInsertID();
 			$res['message']=__('Cannot not save Client request, please try again',true);
 			Output::__outputNo($res);
 		}
