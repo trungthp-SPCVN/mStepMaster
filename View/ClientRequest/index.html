@@ -76,13 +76,24 @@
 									<i class="ace-icon fa fa-caret-down icon-only bigger-120"></i>
 								</button>
 								<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+									<?php if((isset($allows['ClientRequest']['detail']) and $allows['ClientRequest']['detail'])) :?>
 									<li>
-										<a href="#" class="btn-client-detail tooltip-info" data-rel="tooltip" title="Detail">
+										<a href="#" class="btn-detail tooltip-info" data-rel="tooltip" title="<?php echo __('Detail');?>">
 											<span class="blue">
 												<i class="ace-icon fa fa-eye bigger-120"></i>
 											</span>
 										</a>
 									</li>
+									<?php endif;?>
+									<?php if((isset($allows['Clients']['detail']) and $allows['Clients']['detail']) and $row['TblMstepClientRequest']['status']=='created') :?>
+									<li>
+										<a href="#" class="btn-client-detail tooltip-info" data-rel="tooltip" title="<?php echo __('Client detail');?>">
+											<span class="btn-yellow">
+												<i class="ace-icon fa fa-external-link bigger-120"></i>
+											</span>
+										</a>
+									</li>
+									<?php endif;?>
 								</ul>
 							</div>
 						</div>
