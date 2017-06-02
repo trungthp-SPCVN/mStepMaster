@@ -3,7 +3,7 @@
 		try{ace.settings.loadState('sidebar')}catch(e){}
 	</script>
 
-	<?php //echo $this->element('sidebar_shortcut');?>
+	<?php echo $this->element('sidebar_shortcut');?>
 	<ul class="nav nav-list">
 		<!--<li class="">
 			<a href="index.html">
@@ -24,7 +24,7 @@
 
 			<b class="arrow"></b>
 			<ul class="submenu">
-				<?php if($allows=='all' or (isset($allows['Clients']['index']) and $allows['Clients']['index'])) :?>
+				<?php if($allows=='all' or (isset($allows['Clients']['index']) and $allows['Clients']['index']) and !$is_out_ip) :?>
 				<li class="<?php echo (($current_page=='clientsindex')?'active':'');?>">
 					<a href="/clients/index">
 						<i class="menu-icon fa fa-caret-right"></i>
@@ -35,7 +35,7 @@
 				</li>
 				<?php endif;?>
 
-				<?php if($allows=='all' or (isset($allows['Clients']['add']) and $allows['Clients']['add'])) :?>
+				<!-- <?php if($allows=='all' or (isset($allows['Clients']['add']) and $allows['Clients']['add'])) :?>
 				<li class="<?php echo (($current_page=='clientsadd')?'active':'');?>">
 					<a href="/clients/add">
 						<i class="menu-icon fa fa-caret-right"></i>
@@ -44,8 +44,8 @@
 
 					<b class="arrow"></b>
 				</li>
-				<?php endif;?>
-				<?php if($allows=='all' or (isset($allows['ClientRequest']['index']) and $allows['ClientRequest']['index'])) :?>
+				<?php endif;?> -->
+				<?php if($allows=='all' or (isset($allows['ClientRequest']['index']) and $allows['ClientRequest']['index']) and !$is_out_ip) :?>
 				<li class="<?php echo (($current_page=='client_requestindex')?'active':'');?>">
 					<a href="/client_request">
 						<i class="menu-icon fa fa-caret-right"></i>
@@ -60,6 +60,26 @@
 					<a href="/client_request/add">
 						<i class="menu-icon fa fa-caret-right"></i>
 						<?php echo __('New Request');?>
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				<?php endif;?>
+				<?php if($allows=='all' or (isset($allows['DatabaseUpdate']['index']) and $allows['DatabaseUpdate']['index'])) :?>
+				<li class="<?php echo (($current_page=='databaseupdateindex')?'active':'');?>">
+					<a href="<?php echo Router::url(array( 'controller' => 'DatabaseUpdate','action' => 'index'), true)?>">
+						<i class="menu-icon fa fa-caret-right"></i>
+						<?php echo __('DatabaseUpdate');?>
+					</a>
+
+					<b class="arrow"></b>
+				</li>
+				<?php endif;?>
+				<?php if($allows=='all' or (isset($allows['DatabaseStructure']['index']) and $allows['DatabaseStructure']['index'])) :?>
+				<li class="<?php echo (($current_page=='databasestructureindex')?'active':'');?>">
+					<a href="<?php echo Router::url(array( 'controller' => 'DatabaseStructure','action' => 'index'), true)?>">
+						<i class="menu-icon fa fa-caret-right"></i>
+						<?php echo __('DatabaseStructure');?>
 					</a>
 
 					<b class="arrow"></b>

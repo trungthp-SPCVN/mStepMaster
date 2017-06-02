@@ -3,7 +3,7 @@
         <div class="clearfix">
             <div class="pull-right tableTools-container"></div>
         </div>
-        <div class="table-header">Clients
+        <div class="table-header"><?php echo __('Clients');?>
         </div>
         <div class="dataTable_wrapper">
             <table id="dynamic-table" class="table table-striped table-bordered table-hover">
@@ -15,7 +15,9 @@
                         <th class="hidden-480"><?= __('Contact name') ?></th>
                         <th class="hidden-480"><?= __('Phone') ?></th>
                         <th><?= __('Status') ?></th>
+                        <th class="hidden-480"><?= __('Last login') ?></th>
                         <th class="hidden-480"><?= __('DB connection') ?></th>
+                        <th class="hidden-480"><?= __('DB Size(MB)') ?></th>
                         <th><?= __('Action') ?></th>
                     </tr>
                 </thead>
@@ -27,28 +29,38 @@
                         <td><?= $client['Clients'][0]['short_name']?></td>
                         <td class="hidden-480"><?= $client['ClientProfile']['contact_name']?></td>
                         <td class="hidden-480"><?= $client['ClientProfile']['contact_mobile']?></td>
-                        <td data-type="client-status"><?= ($client['Clients'][0]['del_flg']==0)?'Activated':'Deactivated'?></td>
-                        <td class="hidden-480" data-type="check-db-status" data-db='{"host":"<?=$client['Clients'][0]['db_host']?>","user":"<?=$client['Clients'][0]['db_user']?>","name":"<?=$client['Clients'][0]['db_name']?>","pass":"<?=$client['Clients'][0]['db_password']?>","port":"<?=$client['Clients'][0]['db_port']?>"}'>Checking...</td>
+                        <td data-type="client-status"><?= ($client['Clients'][0]['del_flg']==0)?__('Activated'):__('Deactivated')?></td>
+                        <td class="hidden-480"><?= (($client['Clients'][0]['last_login']!=='')?$client['Clients'][0]['last_login']:'')?></td>
+                        <td class="hidden-480" data-type="check-db-status" data-db='{"host":"<?=$client['Clients'][0]['db_host']?>","user":"<?=$client['Clients'][0]['db_user']?>","name":"<?=$client['Clients'][0]['db_name']?>","pass":"<?=$client['Clients'][0]['db_password']?>","port":"<?=$client['Clients'][0]['db_port']?>"}'><?= __('Checking...') ?></td>
+                        <td>
+                            <?php 
+                                foreach ($dbsInfo as $kDbsInfo => $vDbsInfo) {
+                                    if($vDbsInfo['TABLES']['db_name'] == $client['Clients'][0]['db_name']){
+                                        echo $this->Number->precision($vDbsInfo[0]['size_mb'], 4) ." MB";
+                                    }
+                                }
+                            ?>
+                        </td>
                         <td class="actions">
                             <div class="hidden-sm hidden-xs action-buttons button-list">
+                                <button class="btn-redirect btn btn-info btn-xs" data-href="/clients/detail/<?=$client['ClientProfile']['id']?>">
+                                    <i class="ace-icon fa fa-eye bigger-130"></i>
+                                </button>
+                                <?php if(($allows=='all' or (isset($allows['Clients']['add']) and $allows['Clients']['add']))) :?>
+                                    <button class="btn-redirect btn btn-success btn-xs" data-href="/clients/add/<?=$client['ClientProfile']['id']?>">
+                                        <i class="ace-icon fa fa-edit bigger-130"></i>
+                                    </button>
+                                <?php endif;?>
                                 <?php if(($allows=='all' or (isset($allows['Clients']['updateStatus']) and $allows['Clients']['updateStatus']))) :?>
                                 <button class="btn btn-success btn-xs" onclick="return false;" data-type="btn-active" <?=($client['Clients'][0]['del_flg']==0)?"style='display:none'":""?>>
                                     <i class="ace-icon fa fa-check bigger-130"></i>
                                 </button>
                                 <?php endif;?>
                                 <?php if(($allows=='all' or (isset($allows['Clients']['updateStatus']) and $allows['Clients']['updateStatus']))) :?>
-                                <button class="btn btn-warning btn-xs" onclick="return false;" data-type="btn-deactive" <?=($client['Clients'][0]['del_flg']==1)?"style='display:none'":""?>>
-                                    <i class="ace-icon fa fa-ban bigger-130"></i>
+                                <button class="btn btn-danger btn-xs" onclick="return false;" data-type="btn-deactive" <?=($client['Clients'][0]['del_flg']==1)?"style='display:none'":""?>>
+                                    <i class="ace-icon fa fa-remove bigger-130"></i>
                                 </button>
                                 <?php endif;?>
-                                <?php if(($allows=='all' or (isset($allows['Clients']['add']) and $allows['Clients']['add']))) :?>
-                                <button class="btn-redirect btn btn-success btn-xs" data-href="/clients/add/<?=$client['ClientProfile']['id']?>">
-                                    <i class="ace-icon fa fa-edit bigger-130"></i>
-                                </button>
-                                <?php endif;?>
-                                <button class="btn-redirect btn btn-info btn-xs" data-href="/clients/detail/<?=$client['ClientProfile']['id']?>">
-                                    <i class="ace-icon fa fa-eye bigger-130"></i>
-                                </button>
                             </div>
 
                             <div class="hidden-md hidden-lg button-list">
@@ -103,24 +115,46 @@
         </div>
     </div>
 </div>
-<?php echo $this->Html->script(['/assets/js/jquery.dataTables.min','/assets/js/dataTables.select.min','/assets/js/jquery.dataTables.bootstrap.min'],array('block'=>'script_library')); ?>
 
+<?php echo $this->Html->script(['/assets/js/jquery.dataTables.min','/assets/js/dataTables.select.min','/assets/js/jquery.dataTables.bootstrap.min'],['block'=>'plugin_script']); ?>
 <?php $this->start('second_script');?>
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-    $('#dynamic-table').DataTable();
-
     $(function(){
     	var host=location.host;
         var BASE_URL   ="//"+host+"/";
 
-        $("td[data-type=\"check-db-status\"]").each(function(){
-        	var target = $(this);
-        	var params = target.data('db');
-        	$.post(BASE_URL+'clients/checkConnectDB', params, function (res) {
-            	target.html(res['status']);
-			}, 'json');
+        function checkDB(){
+	        $("td[data-type=\"check-db-status\"]").each(function(){
+	        	var target = $(this);
+	        	var params = target.data('db');
+	        	$.post(BASE_URL+'clients/checkConnectDB', params, function (res) {
+	            	target.html(res['status']);
+				}, 'json');
+	        });
+        }
+        
+        $('#dynamic-table').DataTable({
+            language: {
+                paginate:{
+                    first:"<?php echo __('First');?>",
+                    previous:"<?php echo __('Previous');?>",
+                    next:"<?php echo __('Next');?>",
+                    last:"<?php echo __('Last');?>"
+                },
+                'search':"<?php echo __('Search');?>",
+                'lengthMenu':"<?php echo __('Display 10 records');?>",
+                'info':"<?php echo __('Showing 1 to 5 of 5 entries');?>"
+            },
+        	"initComplete": function(){
+        		checkDB();
+        	}
         });
+        
+        $('#dynamic-table').on('draw.dt', function(){
+        	checkDB();
+        });
+        
         // button edit and detail
         $(document).on('click', '.btn-redirect',function(e){
             var obj=$(this);
@@ -128,7 +162,7 @@
                 location.href=obj.data('href');
             }
             return false;
-        })
+        });
     	
     	$(document).on("mouseup", '[data-type=\"btn-active\"]',function(e){
     		var target=$(this);
@@ -140,7 +174,7 @@
             var client_status=client_list_tr.children("td[data-type=\"client-status\"]");
 
             $.confirm({
-                title: '<?php echo __('Alert');?>',
+                title: '',
                 content:'<?php echo __('Do you want to active client');?> ' +client_name,
                 buttons:{
                     yes:{
@@ -152,11 +186,11 @@
                             params["status"]=0;
                             $.post(BASE_URL+'clients/updateStatus', params, function (res) {
                                 if (res.status=='YES') {
-                                    client_status.html('Activated');
+                                    client_status.html('<?php echo __('Activated');?>');
                                     target.css("display","none");
                                     client_deactive_btn.css("display","inline-block");
                                     $.confirm({
-                                        title: "<?php echo __('Alert');?>",
+                                        title: "",
                                         content: '<?php echo __('Success');?>',
                                         buttons: {
                                             yes: {
@@ -170,7 +204,7 @@
                                     });
                                 }else{
                                     $.confirm({
-                                        title: "<?php echo __('Alert');?>",
+                                        title: "",
                                         content: '<?php echo __('Fail');?>',
                                         buttons: {
                                             yes: {
@@ -204,7 +238,7 @@
             var client_status=client_list_tr.children("td[data-type=\"client-status\"]");
             
             $.confirm({
-				title:"<?php echo __('Alert');?>",
+				title:"",
                 content:"<?php echo __('Do you want to deactive client');?> "+client_name,
                 buttons:{
 				    yes:{
@@ -216,11 +250,11 @@
                             params["status"]=1;
                             $.post(BASE_URL+'clients/updateStatus', params, function (res) {
                                 if (res.status=='YES') {
-                                    client_status.html('Deactivated');
+                                    client_status.html('<?php echo __('Deactivated');?>');
                                     target.css("display","none");
                                     client_active_btn.css("display","inline-block");
                                     $.confirm({
-                                        title: "<?php echo __('Alert');?>",
+                                        title: "",
                                         content: '<?php echo __('Success');?>',
                                         buttons:{
                                             yes: {
@@ -234,7 +268,7 @@
                                     });
                                 }else{
                                     $.confirm({
-                                        title: "<?php echo __('Alert');?>",
+                                        title: "",
                                         content: '<?php echo __('Fail');?>',
                                         buttons:{
                                             yes:{
@@ -250,9 +284,12 @@
                             }, 'json');
                         }
                     },
-                    cancel:function(){
-                        target.one(e.type,arguments.callee);
-                    },
+                    cancel:{
+                        text: '<?php echo __('Cancel');?>',
+                        action:function(){
+	                        target.one(e.type,arguments.callee);
+	                    },
+                    }
                 }
         	});
     	});

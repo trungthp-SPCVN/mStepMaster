@@ -16,10 +16,14 @@ class ClientsController extends AppController {
     var $uses = [
             'ClientProfile',
             'Clients',
-            'TblMstepClientRequest'
+            'TblMstepClientRequest',
+			'TblMstepMasterUser',
     ];
+	var $components=array('DatabaseConnection');
 
 	public function index(){
+		
+		$this->page_title=__('Clients');
 	    $this->ClientProfile->bindModel(array(
             'hasMany' => array(
                     'Clients' => array(
@@ -32,23 +36,16 @@ class ClientsController extends AppController {
 	    $order[] = "ClientProfile.created_date DESC";
 	    $clients = $this->ClientProfile->findAll(null, null, $order);
 	    
-	    $old_config_debug = Configure::read('debug');
-	    Configure::write('debug', 0);
-// 	    foreach($clients as &$client){
-//             if($conn = mysqli_connect($client['Clients'][0]['db_host'], $client['Clients'][0]['db_user'], $client['Clients'][0]['db_password'], $client['Clients'][0]['db_name'])){
-//                 $client['Clients'][0]['db_status'] = "OK";
-//             }else{
-//                 $client['Clients'][0]['db_status'] = "Fail";
-//             }
-// 	    }
-	    Configure::write('debug', $old_config_debug);
-	    $this->set(compact('clients'));
+      $dbsInfo = $this->_dbStatus();
+
+	    $this->set(compact('clients','dbsInfo'));
 	}
 	
 	public function detail($id = null){
 	    if (!is_numeric($id)) {
 	        throw new NotFoundException();
 	    }
+		$this->page_title=__('Clients');
 	    $this->ClientProfile->bindModel(array(
 	            'hasMany' => array(
 	                    'Clients' => array(
@@ -60,7 +57,20 @@ class ClientsController extends AppController {
         );
 	    
 	    $client = $this->ClientProfile->findById($id);
-	    $this->set(compact('client'));
+		// get Client Master information;
+		
+		$DBConnectionName=$client['Clients']['0']['short_name'];
+		
+		// get Client master user information
+		$master_data=array();
+		if($this->DatabaseConnection->createDBConnection($client['Clients']['0'],$DBConnectionName)) {
+			// set new database connection to Client
+			$this->TblMstepMasterUser->setDataSource($DBConnectionName);
+			// get master user information
+			$master_data=$this->TblMstepMasterUser->find('first',array('conditions'=>array("TblMstepMasterUser.authority='master'")));
+		}
+		
+		$this->set(compact('client','master_data'));
 	}
 	
 	function updateStatus(){
@@ -83,11 +93,14 @@ class ClientsController extends AppController {
 	    $is_request = false;
 	    
 	    if(isset($this->request->query['request_id'])){
+	        if(!in_array($this->Auth->user("authority"), ["master", "spc"])){
+	            throw new unAuthorizedException();
+	        }
 	        $request_id=$this->request->query['request_id'];
 	        
 	        $this->TblMstepClientRequest->unbindFully();
 	        $request = $this->TblMstepClientRequest->findById($request_id);
-	        if(!is_numeric($request_id) || !$request){
+	        if(!is_numeric($request_id) || !$request || $request['TblMstepClientRequest']['client_id'] > 0){
 	            throw new NotFoundException();
 	        }else{
 	            $is_request = true;
@@ -108,6 +121,8 @@ class ClientsController extends AppController {
     	        if(!$client || !is_numeric($client_id)){
     	            throw new NotFoundException();
     	        }
+    	    }else{
+    	        throw new NotFoundException();
     	    }
 	    }
 	    $this->set(compact('is_request','client','request'));
@@ -121,8 +136,14 @@ class ClientsController extends AppController {
 	        
 	        $datasource = $this->Clients->getDataSource();
 	        $datasource->begin();
-	        
-	        if(!empty($post['client_id'])){
+			
+			// db default
+			if($post['db_host']=='') { $post['db_host']=DEFAULT_DATABASE_SERVER; }
+			if($post['db_user']=='') { $post['db_user']=DEFAULT_DATABASE_USER_NAME; }
+			if($post['db_port']=='') { $post['db_port']=DEFAULT_DATABASE_PORT; }
+			if($post['db_password']=='') { $post['db_password']=DEFAULT_DATABASE_PASSWORD; }
+		
+			if(!empty($post['client_id'])){
 	            
 	            if($conn = mysqli_connect($post['db_host'], $post['db_user'], $post['db_password'], $post['db_name'], $post['db_port'])){
 	            }else{
@@ -223,16 +244,16 @@ class ClientsController extends AppController {
 	        $old_config_debug = Configure::read('debug');
 	        Configure::write('debug', 0);
             if($conn = mysqli_connect($post['host'], $post['user'], $post['pass'], $post['name'], $post['port'])){
-                $res['status'] = "OK";
+                $res['status'] = __("Ok");
             }else{
-                $res['status'] = "Fail";
+                $res['status'] = __("Fail");
             }
             Output::__output($res);
 	        Configure::write('debug', $old_config_debug);
 	    }
 	}
 	
-	function randomPassword() {
+	private function randomPassword() {
 	    $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 	    $password=[];
 	    $pass = array(); //remember to declare $pass as an array
@@ -249,4 +270,73 @@ class ClientsController extends AppController {
 	    return $password;
 	    
 	}
+    
+    public function reset_passwd(){
+        if($this->request->is('Ajax')){
+            $user_data=$this->data;
+            
+            if(empty($user_data['client_id'])) { Output::__output(1); }
+            if(empty($user_data['user_id'])) { Output::__output(2); }
+            
+            // get client information
+            $this->Clients->id=$user_data['client_id'];
+            $client=$this->Clients->read();
+            if(empty($client)) { Output::__output(3); }
+
+//			v($client);
+            // create new database config
+            $config_name=$this->DatabaseConnection->createDBConnection($client['Clients']);
+            $this->TblMstepMasterUser->setDataSource($config_name);
+            $this->TblMstepMasterUser->id=$user_data['user_id'];
+            // set new password
+            $this->TblMstepMasterUser->set(array('login_pass'=>$user_data['passwd']));
+            // Do save action
+            if($this->TblMstepMasterUser->save()) {
+                $user=$this->TblMstepMasterUser->read();
+                Output::__outputYes(
+                    array(
+                        'message' => __('New password has been saved as bellow'),
+                        'login_id'=>array('caption'=>__('Login ID'), 'value'=>$user['TblMstepMasterUser']['login_id']),
+                        'password'=>array('caption'=>__('Password'), 'value'=>$user_data['passwd'])
+                    )
+                );
+            }
+        }
+        
+        Output::__outputNo();
+    }
+    
+    
+    public function checkDomainTaken(){
+        $this->autoRender=false;
+        if($this->request->is('ajax')) {
+            if(empty($this->request->data['sub_domain']) or in_array($this->request->data['sub_domain'], SPECIFIC_SUB_DOMAIN)) {
+                echo "false";
+            } else {
+                $clients = $this->Clients->find('first', ['conditions' => [
+                    'short_name' => $this->request->data['sub_domain']
+                ]]);
+                if (sizeof($clients) > 0) {
+                    echo "false";
+                } else {
+    
+                    echo "true";
+                }
+            }
+        } else {
+            echo "false";
+        }
+        die;
+    }
+
+    private function _dbStatus(){
+      $sql = 'SELECT table_schema "db_name", 
+              sum( data_length + index_length ) / 1024 / 
+              1024 "size_mb", 
+              sum( data_free )/ 1024 / 1024 "free_space_mb" 
+              FROM information_schema.TABLES 
+              GROUP BY table_schema ; ';
+      $result = $this->ClientProfile->query($sql);
+      return $result;
+    }
 }

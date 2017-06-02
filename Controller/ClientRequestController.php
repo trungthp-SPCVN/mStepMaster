@@ -24,10 +24,10 @@ class ClientRequestController extends AppController {
 	
 	public function index(){
 		$this->paginate=[
-			'limit'=>10,
 			'conditions'=>[
 				'TblMstepClientRequest.del_flg'=>0
-			]
+			],
+			'order'=>'TblMstepClientRequest.id DESC'
 		];
 		
 		$request=$this->paginate('TblMstepClientRequest');
@@ -85,7 +85,7 @@ class ClientRequestController extends AppController {
 		$this->TblMstepClientRequest->set($data);
 		
 		if(!$this->TblMstepClientRequest->save()) {
-			$res['message']=__('Cannot not save Client request, please try again',true);
+			$res['message']=__('Cannot save Client request, please try again',true);
 			Output::__outputNo($res);
 		}
 		
@@ -110,8 +110,9 @@ class ClientRequestController extends AppController {
 		$Email->send();
 		
 		// save success
-		$res['message']=__('Your request has been saved success');
+		$res['message']=__('Your request has been saved success',true);
 		Output::__outputYes($res);
+		return false;
 	}
 	
 	/**
@@ -173,7 +174,7 @@ class ClientRequestController extends AppController {
 		$Email->send();
 		
 		// save success
-		$res['message']=__('Status has beed updated success to '.$data['status'],true);
+		$res['message']=__('Status has beed updated success to ',true).$data['status'];
 		Output::__outputYes($res);
 	}
 	

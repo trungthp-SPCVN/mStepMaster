@@ -36,21 +36,8 @@
 		<!-- inline styles related to this page -->
 
 		<!-- ace settings handler -->
-
-		<script src="/assets/js/jquery-2.1.4.min.js"></script>
-
-		<!--[if IE]>
-		<script src="/assets/js/jquery-1.11.3.min.js"></script>
-		<![endif]-->
 		<script src="/assets/js/ace-extra.min.js"></script>
-		<script src="/assets/js/jquery.validate.min.js"></script>
-
-		<!-- fetch library from view -->
-		<?php echo $this->fetch('script_library');?>
-
-		<!-- uiAlert -->
-		<script src="/assets/js/spc_functions.js"></script>
-		<script src="/assets/js/jquery-confirm.js"></script>
+		
 
 		<!-- HTML5shiv and Respond.js for IE8 to support HTML5 elements and media queries -->
 
@@ -77,7 +64,7 @@
 					<?php echo $this->element('breadcrumbs');?>
 
 					<div class="page-content">
-						<?php echo $this->element('settings_container');?>
+<!--						--><?php //echo $this->element('settings_container');?>
 						<?php echo $this->element('page_header');?>
 
 						<div class="row">
@@ -100,19 +87,27 @@
 		</div><!-- /.main-container -->
 
 		<!-- basic scripts -->
-
+		<!--[if !IE]> -->
+		<script src="/assets/js/jquery-2.1.4.min.js"></script>
+		
+		<!-- <![endif]-->
+		
+		<!--[if IE]>
+		<script src="/assets/js/jquery-1.11.3.min.js"></script>
+		<![endif]-->
 		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
 		<script src="/assets/js/bootstrap.min.js"></script>
-
+		<script src="/assets/js/jquery.validate.min.js"></script>
+		<script src="/assets/js/jquery-additional-methods.min.js"></script>
+		
+		<!-- uiAlert -->
+		<script src="/assets/js/spc_functions.js"></script>
+		<script src="/assets/js/jquery-confirm.js"></script>
 		<!-- page specific plugin scripts -->
-
-		<!--[if lte IE 8]>
-		  <script src="/assets/js/excanvas.min.js"></script>
-		<![endif]-->
-		<script src="/assets/js/jquery-ui.custom.min.js"></script>
-		<script src="/assets/js/jquery.ui.touch-punch.min.js"></script>
+		
+		<?php echo $this->fetch('plugin_script');?>
 
 		<!-- ace scripts -->
 		<script src="/assets/js/ace-elements.min.js"></script>

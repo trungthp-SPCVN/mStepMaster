@@ -47,8 +47,8 @@ class AppController extends Controller {
 	public $components = array(
 		'Session',
 		'Auth' => array(
-			'loginRedirect' => array('controller' => 'clients', 'action' => 'index'),
-			'logoutRedirect' => array('controller' => 'users', 'action' => 'login'),
+			'loginRedirect' => ROOT_DOMAIN.'/clients/index',
+			'logoutRedirect' => ROOT_DOMAIN.'/users/login',
 			'authenticate' => array(
 				'Form' => array(
 					'fields' => array('username' => 'login_id',
@@ -87,6 +87,7 @@ class AppController extends Controller {
 		
 		$this->check_authentication = $this->Auth->user("authority") === "master";
 		$this->set('role', $this->check_authentication);
+		$this->set('allow_add_client', in_array($this->Auth->user("authority"), ["master", "spc"]));
 		//Update 2017.02.20 Hung Nguyen start
 		// add name for show on header
 		$this->set("login_name",($this->Auth->user("first_name").$this->Auth->user("last_name")));
@@ -108,18 +109,34 @@ class AppController extends Controller {
 					'randomPassword'=>(!$is_mobile?true:false),
 					'detail'=>true,
 					'checkConnectDB'=>true,
+					'checkDomainTaken'=>true,
+					'reset_passwd'=>(!$is_mobile?true:false),
 				),
 				'ClientRequest'=>array(
 					'index'=>(!$is_mobile?true:false),
 					'update_status'=>(!$is_mobile?true:false),
 					'detail'=>true,
+				),
+		        'DatabaseUpdate'=>array(
+	                'index'=>(!$is_mobile?true:false),
+	                'applySQL'=>(!$is_mobile?true:false),
+	                'update_worker_price'=>(!$is_mobile?true:false),
+		        ),
+		        'DatabaseStructure'=>array(
+		                'index'=>(!$is_mobile?true:false),
+		                'updateStruct'=>(!$is_mobile?true:false),
+		        ),
+				'Users'=>array(
+					
 				)
 			),
 			'mstep'=>array(
 				'Clients'=>array(
 					'index'=>true,
 					'detail'=>true,
-					'checkConnectDB'=>true
+					'checkConnectDB'=>true,
+			        'add'=>(!$is_mobile?true:false),
+					'checkDomainTaken'=>true,
 				),
 				'ClientRequest'=>array(
 					'index'=>true,
@@ -153,11 +170,20 @@ class AppController extends Controller {
 	 */
 	public function isAuthorized($user) {
 
+		// check out of ip
+		if($this->Session->read('out_of_ip')){
+		    $allows = $this->Session->read('allow_permission');
+		    if(isset($allows[$user['authority']][$this->name][$this->action])
+				and $allows[$user['authority']][$this->name][$this->action]){
+		        return true;
+		    }
+		}else{
 		// Admin can access every action
-		if (isset($user['authority']) && $user['authority'] === 'master' or
-			(isset($this->allows[$user['authority']][$this->name][$this->action])
-				and $this->allows[$user['authority']][$this->name][$this->action])) {
-			return true;
+    		if (isset($user['authority']) && $user['authority'] === 'master' or
+    			(isset($this->allows[$user['authority']][$this->name][$this->action])
+    				and $this->allows[$user['authority']][$this->name][$this->action])) {
+    			return true;
+    		}
 		}
 		
 		// Default deny
@@ -177,6 +203,7 @@ class AppController extends Controller {
 		$this->set('page_title',(!empty($this->page_title)?$this->page_title:$this->name));
 		$this->set('page_desc',$this->page_desc);
 		$this->set('auth', $this->Auth->user());
+		$this->set('is_out_ip',($this->Session->read('out_of_ip')?$this->Session->read('out_of_ip'):false));
 	}
 
 	function __arrangeAry($data = array(), $key) {

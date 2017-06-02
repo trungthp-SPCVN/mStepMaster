@@ -1,3 +1,6 @@
+<style type="text/css">
+	div.domain-row span.domain-txt {position: absolute; right: 0px; top: 0px; padding-right:19px; padding-top:7px;}
+</style>
 <div class="row">
 	<div class="col-xs-12">
 		<div class="widget-box">
@@ -29,7 +32,7 @@
 						<div class="step-content pos-rel">
 							<div class="step-pane active input-step" data-step="1">
 
-								<form class="form-horizontal" id="client-form">
+								<form class="form-horizontal" id="client-form" autocomplete="off" >
 									<input type="hidden" name="client_id" id="client-id" />
 									<input type="hidden" name="request_id" id="request-id" />
 									<h3 class="lighter block green"><?= __('General Information') ?></h3>
@@ -37,7 +40,7 @@
 										<label for="client-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Client Name') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="client_name" id="client-name" required class="width-100" />
+												<input type="text" name="client_name" id="client-name" autocomplete="off" required data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-user"></i>
 											</span>
 										</div>
@@ -46,7 +49,7 @@
 										<label for="address" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Address') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="client_address" id="address" required class="width-100" />
+												<input type="text" name="client_address" id="address" autocomplete="off" required data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-map-marker"></i>
 											</span>
 										</div>
@@ -55,7 +58,7 @@
 										<label for="phone" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Phone') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="tel" name="client_tel" id="phone" required class="width-100" />
+												<input type="tel" name="client_tel" id="phone" autocomplete="off" required data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-phone"></i>
 											</span>
 										</div>
@@ -64,24 +67,16 @@
 										<label for="email-s" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="email" name="client_email" id="email-s" required class="width-100" />
+												<input type="email" name="client_email" autocomplete="off" id="email-s" required data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-envelope"></i>
 											</span>
-										</div>
-										<div class="help-block col-xs-12 col-sm-reset inline">
-											<div class="checkbox">
-												<label>
-													<input name="form-field-checkbox" type="checkbox" class="ace cp_chk" data-s="#email" data-d="#email-s">
-													<span class="lbl"><?= __('Using Contact Email') ?></span>
-												</label>
-											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="fax" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Fax') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="tel" name="client_fax" id="fax" class="width-100" />
+												<input type="tel" name="client_fax" id="fax" autocomplete="off" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-fax"></i>
 											</span>
 										</div>
@@ -92,7 +87,7 @@
 										<label for="contact-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Contact Name') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="contact_name" id="contact-name" required class="width-100" />
+												<input type="text" name="contact_name" autocomplete="off" id="contact-name" required data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-user"></i>
 											</span>
 										</div>
@@ -101,7 +96,7 @@
 										<label for="job-title" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Job title') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="contact_jobtitle" id="job-title" class="width-100" />
+												<input type="text" name="contact_jobtitle" autocomplete="off" id="job-title" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-ellipsis-h"></i>
 											</span>
 										</div>
@@ -110,16 +105,24 @@
 										<label for="email" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Email') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="email" name="contact_email" id="email" required class="width-100" />
+												<input type="email" name="contact_email" autocomplete="off" id="email" required data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-envelope"></i>
 											</span>
+										</div>
+										<div class="help-inline col-xs-12 col-sm-reset inline">
+											<div class="checkbox">
+												<label>
+													<input name="form-field-checkbox" autocomplete="off" type="checkbox" class="ace cp_chk" data-s="#email-s" data-d="#email">
+													<span class="lbl"><?= __('Using Company Email') ?></span>
+												</label>
+											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="mobile" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Mobile') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="tel" name="contact_mobile" id="mobile" class="width-100" />
+												<input type="tel" name="contact_mobile" autocomplete="off" id="mobile" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-mobile"></i>
 											</span>
 										</div>
@@ -128,45 +131,46 @@
 										<label for="phone-c" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Phone') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="tel" name="contact_tel" id="phone-c" class="width-100" />
+												<input type="tel" name="contact_tel" autocomplete="off" id="phone-c" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-phone"></i>
 											</span>
 										</div>
-										<div class="help-block col-xs-12 col-sm-reset inline">
+										<div class="help-inline col-xs-12 col-sm-reset inline">
 											<div class="checkbox">
 												<label>
-													<input name="form-field-checkbox" type="checkbox" class="ace cp_chk" data-s="#phone" data-d="#phone-c">
+													<input name="form-field-checkbox" type="checkbox" autocomplete="off" class="ace cp_chk" data-s="#phone" data-d="#phone-c">
 													<span class="lbl"><?= __('Using Company Phone') ?></span>
 												</label>
 											</div>
 										</div>
 									</div>
 
+									<?php if($allow_add_client) :?>
 									<h3 class="lighter block green"><?= __('System Information') ?></h3>
 									<div class="form-group">
 										<label for="domain" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('Domain') ?><span class="required">※</span></label>
-										<div class="col-xs-12 col-sm-4">
+										<div class="domain-row col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="short_name" id="domain" required class="width-100" />
+												<input type="text" name="short_name" id="domain" autocomplete="off" maxlength="10" required data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-globe"></i>
 											</span>
+											<span class="domain-txt lbl">.<?=DOMAIN_NAME_MSTEP?></span>
 										</div>
-										<div class="help-block col-xs-12 col-sm-reset inline"> .<?=DOMAIN_NAME_MSTEP?></div>
 									</div>
 									<div class="form-group">
-										<label for="db-host" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Host') ?><span class="required">※</span></label>
+										<label for="db-host" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Host') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="db_host" id="db-host" required class="width-100" />
+												<input type="text" name="db_host" id="db-host" autocomplete="off" placeholder="<?=DEFAULT_DATABASE_SERVER?>" data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-server"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="db-port" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Port') ?><span class="required">※</span></label>
+										<label for="db-port" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Port') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="db_port" id="db-port" required class="width-100" />
+												<input type="text" name="db_port" id="db-port" autocomplete="off" placeholder="<?=DEFAULT_DATABASE_PORT?>" data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-server"></i>
 											</span>
 										</div>
@@ -175,16 +179,16 @@
 										<label for="db-name" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Name') ?><span class="required">※</span></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="db_name" id="db-name" required class="width-100" />
+												<input type="text" name="db_name" id="db-name" autocomplete="off" required data-msg="<?php echo __('This field is required.');?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-database"></i>
 											</span>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="db-user" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB User') ?><span class="required">※</span></label>
+										<label for="db-user" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB User') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="text" name="db_user" id="db-user" required class="width-100" />
+												<input type="text" name="db_user" id="db-user" autocomplete="off" placeholder="<?=DEFAULT_DATABASE_USER_NAME?>" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-user"></i>
 											</span>
 										</div>
@@ -193,11 +197,12 @@
 										<label for="db-password" class="col-xs-12 col-sm-3 control-label no-padding-right"><?= __('DB Password') ?></label>
 										<div class="col-xs-12 col-sm-5">
 											<span class="block input-icon">
-												<input type="password" name="db_password" id="db-password" class="width-100" />
+												<input type="password" name="db_password" id="db-password" autocomplete="off" class="width-100" />
 												<i class="ace-icon fa fa-fw fa-key"></i>
 											</span>
 										</div>
 									</div>
+									<?php endif;?>
 								</form>
 							</div>
 							<div class="step-pane confirm-step" data-step="2"></div>
@@ -210,7 +215,7 @@
 											<div class="profile-user-info">
 												<div class="profile-info-row">
 													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('CLIENT') ?></label>
-													<span class="profile-info-value col col-lg-9 col-md-8 client-name">.<?=DOMAIN_NAME_MSTEP?></span>
+													<span class="profile-info-value col col-lg-9 col-md-8 client-name"></span>
 												</div>
 												<div class="profile-info-row">
 													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Domain') ?></label>
@@ -227,11 +232,11 @@
 												<h4 class="lighter block blue"><?= __('Access Information') ?></h4>
 												<div class="profile-info-row">
 													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Domain') ?></label>
-													<span class="profile-info-value col col-lg-9 col-md-8 domain">.<?=DOMAIN_NAME_MSTEP?></span>
+													<span class="profile-info-value col col-lg-9 col-md-8 domain"></span>
 												</div>
 												<div class="profile-info-row">
 													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('User(Master)') ?></label>
-													<span class="profile-info-value col col-lg-9 col-md-8">admin</span>
+													<span class="profile-info-value col col-lg-9 col-md-8"><?=CLIENT_MASTER_ACCOUNT?></span>
 												</div>
 												<div class="profile-info-row">
 													<label class="col col-lg-3 col-md-4 profile-info-name"><?= __('Password') ?></label>
@@ -252,10 +257,10 @@
 					<hr />
 					<div class="wizard-actions">
 						<button class="btn btn-prev">
-							<i class="ace-icon fa fa-fw fa-arrow-left"></i> Prev
+							<i class="ace-icon fa fa-fw fa-arrow-left"></i> <?= __('Prev') ?>
 						</button>
 
-						<button class="btn btn-success btn-next" data-last="OK"> Next
+						<button class="btn btn-success btn-next" data-last="<?= __('Ok') ?>"> <?= __('Next') ?>
 							<i class="ace-icon fa fa-fw fa-arrow-right icon-on-right"></i>
 						</button>
 					</div>
@@ -264,7 +269,7 @@
 		</div>
 	</div>
 </div>
-<?php echo $this->Html->script(['/assets/js/wizard.min','/assets/js/jquery-additional-methods.min','/assets/js/bootbox','/assets/js/jquery.maskedinput.min','/assets/js/select2.min'],['block'=>'script_library']);?>
+<?php echo $this->Html->script(['/assets/js/wizard.min','/assets/js/jquery-additional-methods.min','/assets/js/bootbox','/assets/js/jquery.maskedinput.min','/assets/js/select2.min'],['block'=>'plugin_script']);?>
 <?php echo $this->start('second_script');?>
 <script type="text/javascript">
 	var host=location.host;
@@ -291,6 +296,9 @@
 	var db_password = $('#db-password');
 	var email_s = $('#email-s');
 	
+	// set padding right into textbox domain
+	$('div.domain-row input#domain').css({'padding-right':$('div.domain-row .domain-txt').outerWidth()+parseInt($('div.domain-row').css('padding-right'))+'px'});
+	
 	if(is_request){
 		var request = <?php echo json_encode($request); ?>;
 		$("#request-id").val(request['TblMstepClientRequest']['id']);
@@ -305,6 +313,7 @@
 		mobile.val(request['TblMstepClientRequest']['contact_mobile']);
 		phone_c.val(request['TblMstepClientRequest']['contact_tel']);
 		email_s.val(request['TblMstepClientRequest']['client_email']);
+		domain.val(request['TblMstepClientRequest']['sub_domain']);
 	}else{
 		if($.isNumeric(client_id)) {
 			var client = <?php echo json_encode($client); ?>;
@@ -360,11 +369,13 @@
 		//buttons: '.wizard-actions:eq(0)'
 	})
 	.on('actionclicked.fu.wizard' , function(e, info){
+		console.log(info);
 		if(info.step == 1){
 			// validate form
 			if(!$('#client-form').valid()){
 				e.preventDefault();
 			}else{
+				
 				$('.input-step form').find('input').each(function(index, el) {
 					var lag = $(this).attr('id');
 					if(lag == 'domain'){
@@ -379,6 +390,11 @@
 						}else{
 							$('.confirm-step').find('span#'+lag).html($(this).val());
 						}
+					}
+					
+					// check default value with placeholder
+					if($(this).val()==''){
+						$('.confirm-step').find('span#'+lag).html($(this).attr('placeholder'));
 					}
 				});
 			}
@@ -400,16 +416,17 @@
 		        		}else{
 		        			$('.finish-step').find('span.password').html("********");
 		        		}
-		        		
-		        		$('#fuelux-wizard-container').wizard('selectedItem', {step: 3});
-		        	}else{
+				
+						$("button.btn-prev").remove();
+						$('#fuelux-wizard-container').wizard('selectedItem', {step: 3});
+					}else{
 		        		if(res.status=='DB'){
 		        			$.confirm({
 		        				title: "<?php echo __('Alert');?>",
 		        				content:"<?php echo __('DB connect fail!');?>",
 								buttons: {
 									yes:{
-										text: 'OK',
+										text: 'Ok',
 							            btnClass: 'btn-blue',
 							            action: function () {
 							                
@@ -420,10 +437,10 @@
 		        		}else{
 		        			$.confirm({
 		        				title: "<?php echo __('Alert');?>",
-		        				content:"<?php echo __('Fail!');?>",
+		        				content:"<?php echo __('Fail');?>",
 								buttons: {
 									yes:{
-										text: 'OK',
+										text: 'Ok',
 							            btnClass: 'btn-blue',
 							            action: function () {
 							            	window.location=BASE_URL+"clients/add";
@@ -434,6 +451,8 @@
 		        		}
 		        	}
 				}, 'json');
+				
+				
 			}
 		}
 	})
@@ -444,8 +463,8 @@
 	});
 	
 	$.validator.addMethod("notEqual", function(value, element, param) {
-		  return param.indexOf(value);
-		}, "Please specify a different (non-default) value");
+		  return (param.indexOf(value)<0);
+		}, "<?php echo __('Please input a different (non-default) value');?>");
 	
 	$('#client-form').validate({
 		rules: {
@@ -456,24 +475,62 @@
 				pattern: /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/,
 			},
 			short_name:{
-				notEqual:["pm", "lp", "demo", "master"],
+				pattern: /(((^[a-z]{1,})([a-z0-9]{0,}))|(^[a-z]([a-z0-9\_\-]{1,})([a-z0-9]{1,})))$/,
+				remote: {
+					url:'/clients/checkDomainTaken',
+					type: "post",
+					data: {
+						'sub_domain': function(){
+							return $('input[name=short_name]').val();
+						}
+					}
+				}
 			},
 			client_tel:{
-				pattern: /[0-9\-]+/,
+				pattern: /^[0-9\.\+\- ]+$/,
 			},
 			client_fax:{
-				pattern: /[0-9\-]+/,
+				pattern: /^[0-9\.\+\- ]+$/,
 			},
 			contact_mobile:{
-				pattern: /[0-9\-]+/,
+				pattern: /^[0-9\.\+\- ]+$/,
 			},
 			contact_tel:{
-				pattern: /[0-9\-]+/,
+				pattern: /^[0-9\.\+\- ]+$/,
 			},
+			db_name:{
+				pattern: /(((^[a-z]{1,})([a-z0-9]{0,}))|(^[a-z]([a-z0-9\_]{1,})([a-z0-9]{1,})))$/
+			}
 		},
-		
+		messages:{
+			short_name:{
+				pattern: "<?php echo __("sub_domain is not valid")?>",
+				remote: $.validator.format("<?php echo __('sub_domain is use already');?>"),
+			},
+			client_email:{	
+				pattern: "<?php echo __('Email format invalid');?>",
+			},
+			contact_email:{
+				pattern: "<?php echo __('Email format invalid');?>",
+			},
+			client_tel:{
+				pattern: "<?php echo __('Phone format invalid');?>",
+			},
+			client_fax:{
+				pattern: "<?php echo __('Fax format invalid');?>",
+			},
+			contact_mobile:{
+				pattern: "<?php echo __('Mobile format invalid');?>",
+			},
+			contact_tel:{
+				pattern: "<?php echo __('Phone format invalid');?>",
+			},
+			db_name:{
+				pattern: "<?php echo __('Db name invalid');?>",
+			}
+		},
 		errorElement: 'div',
-		errorClass: 'invalid',
+		errorClass: 'help-block',
 		focusInvalid: false,
 		ignore: "",
 		highlight: function (e) {
@@ -503,12 +560,13 @@
 	// Update html step2
 	$(document).ready(function() {
 		var _step2 = $('.confirm-step').html($('.input-step').html());
+		_step2.find('span.domain-txt.lbl').remove();
 		_step2.find('input').each(function(index, el) {
 			$(this).replaceWith($('<span id="' + $(this).attr('id') + '" style="vertical-align:-webkit-baseline-middle">' + $(this).val() + '</span>'));
 		});
 		_step2.find('label').addClass('grey');
 		_step2.find('i').remove();
-		_step2.find('.help-block').remove();
+		_step2.find('.help-inline').remove();
 		_step2.find('.form-group > div').css({
 			'height': '28px',
 			'border-bottom': '1px dotted #ccc',

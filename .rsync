@@ -1,0 +1,40 @@
+# all exclude
+#- *
+
+# includes
+#+ /home/mstep/stg/html/web/Config
+#+ /home/mstep/stg/html/web/Console
+#+ /home/mstep/stg/html/web/Controller
+#+ /home/mstep/stg/html/web/Lib
+#+ /home/mstep/stg/html/web/Locale
+#+ /home/mstep/stg/html/web/Model
+#+ /home/mstep/stg/html/web/Plugin
+#+ /home/mstep/stg/html/web/Test
+#+ /home/mstep/stg/html/web/Vendor
+#+ /home/mstep/stg/html/web/View
+#+ /home/mstep/stg/html/web/View
+#+ /home/mstep/stg/html/web/index.php
+#+ /home/mstep/stg/html/web/webroot
+#
+#- /home/mstep/stg/html/web/.git
+#- /home/mstep/stg/html/web/.git/**
+#- /home/mstep/stg/html/web/.gitignore
+#- /home/mstep/stg/html/web/tmp
+#
+#
+
+- /.gitignore
+- /.git
+- /.git/*
+- /tmp
+- /tmp/*
+- .htaccess
+- /.rsync
+- /rsync_master_dandori.sh
+
+#- web/.gitignore
+#- web/.git
+#- web/.git/*
+#- web/tmp
+#- web/tmp/*
+#- .htaccess

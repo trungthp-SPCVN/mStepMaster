@@ -12,17 +12,19 @@
  */
 
 App::uses('AuthComponent', 'Controller/Component');
-
+App::uses('SimplePasswordHasher', 'Controller/Component/Auth');
 /**
  * Users Controller
  *
  */
 class UsersController extends AppController {
 	var $name = 'Users';
-	var $uses = array('TblMstepMasterUser');
+	var $uses = array('TblMstepMasterUser','Clients');
+	var $components=array('DatabaseConnection');
 
 	public function beforeFilter() {
 
+	    $this->Auth->allow('hashPassword');
 		$this->Auth->loginError='';
 		
 		parent::beforeFilter();
@@ -49,7 +51,8 @@ class UsersController extends AppController {
 		$this->layout='login';
 		//if already logged-in, redirect
 		if ($this->Session->check('Auth.User')) {
-			$this->redirect($this->Auth->redirectUrl());
+			$this->redirect(ROOT_DOMAIN.'/clients/index');
+//			$this->redirect($this->Auth->redirectUrl());
 		}
 
 		// if we get the post information, try to authenticate
@@ -64,17 +67,34 @@ class UsersController extends AppController {
 					}
 					if(!in_array($ip_address, $allow_address)){
 //						throw new ForbiddenException("You don't have permission to access from ip address: ".$ip_address);
-						$this->Session->setFlash("You don't have permission to access from ip address: ".$ip_address);
-						$this->logout();
-						die;
+                        // Change permission
+						//$this->Session->setFlash(__("You don't have permission to access from ip address: ",true).$ip_address);
+						//$this->logout();
+						//die;
+						
+					    if($this->Auth->user('authority') == "mstep"){
+					        $this->Session->write("out_of_ip", true);
+					        $allows=array(
+                    			'mstep'=>array(
+                    				'ClientRequest'=>array(
+                    					'add'=>true,
+                    					'save_process'=>true,
+                    				)
+                    			)
+                    		);
+					        $this->Session->write("allow_permission", $allows);
+					        
+					        $this->redirect(ROOT_DOMAIN.'/client_request/add');
+					    }
 					}
 				}
 				
 				file_put_contents(LOGS . 'logged.log', 'Last logged: '.date('D M dS Y H:i:s')." from ".$ip_address);
 				// allow access
-				$this->redirect($this->Auth->redirectUrl());
+				$this->redirect(ROOT_DOMAIN.'/clients/index');
+//				$this->redirect($this->Auth->redirectUrl());
 			} else {
-				$this->Session->setFlash(__('Email address or password is wrong.'));
+				$this->Session->setFlash(__('Login ID or password is wrong.'));
 			}
 		}
 		
@@ -84,7 +104,22 @@ class UsersController extends AppController {
 
 	public function logout() {
 		if ($this->Auth->logout()) {
-			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		    $this->Session->destroy();
+			$this->redirect(ROOT_DOMAIN.'/users/login');
+//			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
 	}
+	
+	public function hashPassword($pass) {
+	    $password = [];
+	    $password['string'] = $pass;
+	     
+	    $passwordHasher = new SimplePasswordHasher(array('hashType' => 'sha1'));
+	    $password['hashed'] = $passwordHasher->hash($password['string']);
+	     
+	    v($password);
+	     
+	}
+	
+	
 }
